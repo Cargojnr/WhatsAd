@@ -4,8 +4,11 @@ import { Autoplay, Navigation, Pagination, Parallax } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
 import Header from "./Header";
-import About from "./about";
+
+import Features from "./Features";
+
 const slides = [
   {
     id: 1,
@@ -38,7 +41,7 @@ function Home() {
             loop
             slidesPerView={1}
             spaceBetween={0}
-            speed={1500}
+            speed={2000}
             className="w-full h-full"
           >
             {slides.map((slide) => (
@@ -50,37 +53,38 @@ function Home() {
                   <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>{" "}
                   {/* //color gradient */}
                 </div>
+
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6 z-10">
+                  <h1 className="text-2xl  tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]   ">
+                    Turn Your WhatsApp Status Into Income.
+                  </h1>
+                  <p className=" mt-5 text-muted-foreground text-slate-300 sm:text-xl mx-auto">
+                    Connect brands with your engaged WhatsApp audience. Share
+                    what you love, earn what you deserve.
+                  </p>
+                  <div className="mt-5 flex flex-col gap-3 min-[400px]:flex-row justify-center items-center">
+                    <Button
+                      size="lg"
+                      className="bg-green-600 hover:bg-green-700 cursor-pointer"
+                    >
+                      I'm a Brand
+                    </Button>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="text-zinc-500 bg-gray-100 hover:bg-gray-200 cursor-pointer"
+                    >
+                      I'm an Influencer
+                    </Button>
+                  </div>
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6 z-10">
-            <h1 className="text-2xl  tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]   ">
-              Turn Your WhatsApp Status Into Income.
-            </h1>
-            <p className=" mt-5 text-muted-foreground text-slate-300 sm:text-xl mx-auto">
-              Connect brands with your engaged WhatsApp audience. Share what you
-              love, earn what you deserve.
-            </p>
-            <div className="mt-5 flex flex-col gap-3 min-[400px]:flex-row justify-center items-center">
-              <Button
-                size="lg"
-                className="bg-green-600 hover:bg-green-700 cursor-pointer"
-              >
-                I'm a Brand
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-zinc-500 bg-gray-100 hover:bg-gray-200 cursor-pointer"
-              >
-                I'm an Influencer
-              </Button>
-            </div>
-          </div>
         </div>
       </section>
-      <section id="about">
-        <About />
+      <section id="about" className="container mx-auto px-4 py-2 mt-5">
+        <Features />
       </section>
     </div>
   );
