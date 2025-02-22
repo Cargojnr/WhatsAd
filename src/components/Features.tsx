@@ -43,10 +43,12 @@ function Features() {
       </div>
       <div className=" mt-10 mx-auto grid justify-center gap-7 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-4">
         {features.map((feature) => (
-          <Card key={feature.title}>
+          <Card
+            key={feature.title}
+            className="hover:shadow-lg hover:scale-105 transition-transform duration-300"
+          >
             <CardHeader>
               <feature.icon className="h-14 w-14 text-green-600" />
-
               <CardTitle className="text-xl">{feature.title}</CardTitle>
             </CardHeader>
             <CardContent>

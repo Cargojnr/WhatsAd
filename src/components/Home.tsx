@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import Header from "./Header";
 
 import Features from "./Features";
+import How_it_works from "./How_it_works";
 
 const slides = [
   {
@@ -85,6 +86,9 @@ function Home() {
       </section>
       <section id="about" className="container mx-auto px-4 py-2 mt-5">
         <Features />
+      </section>
+      <section>
+        <How_it_works />
       </section>
     </div>
   );
