@@ -4,7 +4,9 @@ import Home from "./components/Home";
 import { Routes, Route } from "react-router-dom";
 
 import LoginPage from "./components/LoginDialog";
-import SignUpPage from "./components/SignUpDialog";
+
+import BrandSignUpPage from "./components/brand/brandSignupDialog";
+import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog";
 
 function App() {
   return (
@@ -12,7 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/bsignup" element={<BrandSignUpPage />} />
+        <Route path="/isignup" element={<InfluencerSignUpPage />} />
       </Routes>
     </div>
   );
