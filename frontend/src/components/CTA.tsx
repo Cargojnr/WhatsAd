@@ -12,13 +12,13 @@ function CTA() {
           our platform to expand their reach and achieve their goals.
         </p>
         <div className="flex flex-col gap-3 min-[400px]:flex-row text-center justify-center items-center mt-5">
-          <Link to="/signup">
+          <Link to="/bsignup">
             {" "}
             <Button size="lg" className="bg-green-600 hover:bg-green-700">
               Start as a Brand
             </Button>
           </Link>
-          <Link to="/signup">
+          <Link to="/isignup">
             {" "}
             <Button size="lg" variant="outline">
               Start as an Influencer
