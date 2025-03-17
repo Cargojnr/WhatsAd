@@ -14,6 +14,14 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // const navItems = [
 //   // { name: "Home", path: "/" },
@@ -96,15 +104,41 @@ function Header() {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <div className=" hidden md:flex flex gap-4">
+        <div className="  md:flex flex gap-4">
           <Link to="/login">
             {" "}
             <Button variant="ghost">Log In</Button>
           </Link>
-          <Link to="/signup">
-            {" "}
-            <Button>Sign Up</Button>
-          </Link>
+          {/* <Link to="/signup"> <Button>Sign Up</Button></Link> */}
+          <Dialog>
+            <DialogTrigger>
+              <Button>Sign Up</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-center">Sign up</DialogTitle>
+                <DialogDescription>
+                  <div className="flex flex-col gap-3 min-[400px]:flex-row text-center justify-center items-center mt-5">
+                    <Link to="/bsignup">
+                      {" "}
+                      <Button
+                        size="lg"
+                        className="bg-green-600 hover:bg-green-700"
+                      >
+                        I am a Brand
+                      </Button>
+                    </Link>
+                    <Link to="/isignup">
+                      {" "}
+                      <Button size="lg" variant="outline">
+                        I am an Influencer
+                      </Button>
+                    </Link>
+                  </div>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="md:hidden flex items-center">

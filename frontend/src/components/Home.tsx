@@ -81,7 +81,7 @@ function Home() {
                       what you love, earn what you deserve.
                     </p>
                     <div className="mt-5 flex flex-col gap-3 min-[400px]:flex-row justify-center items-center">
-                      <Link to="/signup">
+                      <Link to="/bsignup">
                         {" "}
                         <Button
                           size="lg"
@@ -90,7 +90,7 @@ function Home() {
                           I'm a Brand
                         </Button>
                       </Link>
-                      <Link to="/signup">
+                      <Link to="/isignup">
                         <Button
                           size="lg"
                           variant="outline"

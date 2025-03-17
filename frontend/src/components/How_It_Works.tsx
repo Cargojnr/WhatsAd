@@ -1,5 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 const steps = [
   {
     title: "Create Your Profile",
@@ -56,12 +64,43 @@ function How_It_Works() {
           ))}
         </div>
         <div className="mt-12 flex justify-center">
-          <Link to="signup">
+          {/* <Link to="signup">
             {" "}
             <Button size="lg" className="bg-green-600 hover:bg-green-700">
               Get Started Now
             </Button>
-          </Link>
+          </Link> */}
+          <Dialog>
+            <DialogTrigger>
+              <Button size="lg" className="bg-green-600 hover:bg-green-700">
+                Get Started Now
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-center">Sign up</DialogTitle>
+                <DialogDescription>
+                  <div className="flex flex-col gap-3 min-[400px]:flex-row text-center justify-center items-center mt-5">
+                    <Link to="/bsignup">
+                      {" "}
+                      <Button
+                        size="lg"
+                        className="bg-green-600 hover:bg-green-700"
+                      >
+                        I am a Brand
+                      </Button>
+                    </Link>
+                    <Link to="/isignup">
+                      {" "}
+                      <Button size="lg" variant="outline">
+                        I am an Influencer
+                      </Button>
+                    </Link>
+                  </div>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>

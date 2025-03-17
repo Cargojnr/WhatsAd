@@ -9,6 +9,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Link } from "react-router-dom";
 
 export function LoginForm({
   className,
@@ -58,9 +67,38 @@ export function LoginForm({
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="/signup" className="underline underline-offset-4">
+              {/* <a href="/isignup" className="underline underline-offset-4">
                 Sign up
-              </a>
+              </a> */}
+              <Dialog>
+                <DialogTrigger>
+                  <p className="underline underline-offset-4">Sign Up</p>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle className="text-center">Sign up</DialogTitle>
+                    <DialogDescription>
+                      <div className="flex flex-col gap-3 min-[400px]:flex-row text-center justify-center items-center mt-5">
+                        <Link to="/bsignup">
+                          {" "}
+                          <Button
+                            size="lg"
+                            className="bg-green-600 hover:bg-green-700"
+                          >
+                            I am a Brand
+                          </Button>
+                        </Link>
+                        <Link to="/isignup">
+                          {" "}
+                          <Button size="lg" variant="outline">
+                            I am an Influencer
+                          </Button>
+                        </Link>
+                      </div>
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             </div>
           </form>
         </CardContent>
