@@ -76,7 +76,7 @@ function Home() {
                     <h1 className="text-2xl  tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1]   ">
                       Turn Your WhatsApp Status Into Income.
                     </h1>
-                    <p className=" mt-5 text-muted-foreground text-slate-300 sm:text-xl mx-auto">
+                    <p className=" mt-10 text-muted-foreground text-slate-300 sm:text-xl mx-auto">
                       Connect brands with your engaged WhatsApp audience. Share
                       what you love, earn what you deserve.
                     </p>

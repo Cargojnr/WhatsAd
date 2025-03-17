@@ -26,7 +26,7 @@ export function SignupForm({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form>
+            <form action={"http://192.168.56.1:5000/register"} method="POST">
               <div className="flex flex-col gap-6">
                 <div className="grid gap-1 ">
                   <Label htmlFor="name">Brand Name</Label>
@@ -37,15 +37,7 @@ export function SignupForm({
                     required
                   />
                 </div>
-                <div className="grid gap-1  ">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    type="name"
-                    placeholder="your name"
-                    required
-                  />
-                </div>
+
                 <div className="grid gap-1">
                   <Label htmlFor="tel">Phone-Number</Label>
                   <p>
