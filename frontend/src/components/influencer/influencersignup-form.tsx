@@ -26,7 +26,7 @@ export function SignupForm({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form>
+            <form action={"http://192.168.56.1:5000/register"} method="POST">
               <div className="flex flex-col  gap-3">
                 <div className="grid gap-1 grid-cols-2">
                   <div>
