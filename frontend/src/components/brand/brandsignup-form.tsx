@@ -91,6 +91,9 @@ export function SignupForm({
                     </a>
                   </Label>
                 </div>
+                <div className="">
+                  <input type="checkbox" checked />
+                </div>
 
                 <div className="flex flex-col gap-1">
                   <Button type="submit" className="w-full">
