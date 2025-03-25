@@ -26,22 +26,33 @@ export function SignupForm({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form>
-              <div className="flex flex-col gap-6">
-                <div className="grid gap-1  ">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    type="name"
-                    placeholder="your name"
-                    required
-                  />
+            <form action={"http://192.168.56.1:5000/register"} method="POST">
+              <div className="flex flex-col  gap-3">
+                <div className="grid gap-1 grid-cols-2">
+                  <div>
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      type="text"
+                      placeholder="John"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      type="text"
+                      placeholder="Doe"
+                      required
+                    />
+                  </div>
                 </div>
                 <div className="grid gap-1">
-                  <Label htmlFor="tel">Phone-Number</Label>
-                  <p>
-                    <span className="fi fi-gh"></span>
-                  </p>
+                  <Label htmlFor="tel">
+                    Phone-Number <span className="fi fi-gh"></span>
+                  </Label>
+
                   <Input
                     id="tel"
                     type="tel"
@@ -65,27 +76,24 @@ export function SignupForm({
                   <Input
                     id="password"
                     type="password"
-                    placeholder="create a password"
+                    placeholder="********"
                     required
                   />
                 </div>
                 <div className="grid gap-1">
                   <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Comfirm Password</Label>
                   </div>
                   <Input
                     id="password"
                     type="password"
-                    placeholder="confirm your password"
+                    placeholder="********"
                     required
                   />
                 </div>
                 <div className="flex flex-col gap-1">
                   <Button type="submit" className="w-full">
                     Sign Up
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    Sign Up with Google
                   </Button>
                 </div>
               </div>
