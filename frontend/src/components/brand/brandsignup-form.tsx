@@ -11,10 +11,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
+import { useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [searchParams] = useSearchParams();
+  const [userType, setUserType] = useState<string>("");
+
+  useEffect(() => {
+    const role = searchParams.get("role");
+    if (role === "brand" || role === "influencer") {
+      setUserType(role);
+    }
+  }, [searchParams]);
   return (
     <div>
       <div className={cn("flex flex-col gap-6 ", className)} {...props}>
@@ -91,10 +102,25 @@ export function SignupForm({
                     </a>
                   </Label>
                 </div>
-                <div className="">
-                  <input type="checkbox" checked />
-                </div>
+                <div className="hidden">
+                  <label className="flex items-center mb-4">
+                    <input
+                      type="checkbox"
+                      checked={userType === "brand"}
+                      onChange={() => setUserType("brand")}
+                    />
+                    <span className="ml-2">I am a Brand</span>
+                  </label>
 
+                  <label className="flex items-center mb-4">
+                    <input
+                      type="checkbox"
+                      checked={userType === "influencer"}
+                      onChange={() => setUserType("influencer")}
+                    />
+                    <span className="ml-2">I am an Influencer</span>
+                  </label>
+                </div>
                 <div className="flex flex-col gap-1">
                   <Button type="submit" className="w-full">
                     Sign Up

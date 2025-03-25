@@ -119,7 +119,7 @@ function Header() {
                 <DialogTitle className="text-center">Sign up</DialogTitle>
                 <DialogDescription>
                   <div className="flex flex-col gap-3 min-[400px]:flex-row text-center justify-center items-center mt-5">
-                    <Link to="/bsignup">
+                    <Link to="/bsignup?role=brand">
                       {" "}
                       <Button
                         size="lg"
@@ -128,7 +128,7 @@ function Header() {
                         I am a Brand
                       </Button>
                     </Link>
-                    <Link to="/isignup">
+                    <Link to="/isignup?role=influencer">
                       {" "}
                       <Button size="lg" variant="outline">
                         I am an Influencer
@@ -212,10 +212,6 @@ function Header() {
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-          {/* <div className="flex-col gap-10">
-            <Button variant="ghost">Sign In</Button>
-            <Button>Get Started</Button>
-          </div> */}
         </div>
       </div>
     </header>
