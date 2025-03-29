@@ -26,7 +26,7 @@ export function SignupForm({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form action={"http://192.168.56.1:5000/register"} method="POST">
+            <form action={"http://localhost:5000/register"} method="POST">
               <div className="flex flex-col  gap-3">
                 <div className="grid gap-1 grid-cols-2">
                   <div>
@@ -48,15 +48,17 @@ export function SignupForm({
                     />
                   </div>
                 </div>
-                <div className="grid gap-1">
+                <div className="flex flex-col grid gap-1">
                   <Label htmlFor="tel">
                     Phone-Number <span className="fi fi-gh"></span>
                   </Label>
 
+                  <Input id="code" type="text" name="code" value="+233" readOnly/>
+
                   <Input
                     id="tel"
-                    type="tel"
-                    placeholder="+233 53 020 2061"
+                    type="text"
+                    placeholder="53 020 2061"
                     required
                   />
                 </div>

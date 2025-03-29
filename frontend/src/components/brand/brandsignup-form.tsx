@@ -27,7 +27,7 @@ export function SignupForm({
           </CardHeader>
           <CardContent>
             <form action={"http://192.168.56.1:5000/register"} method="POST">
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-6">
                 <div className="grid gap-1 ">
                   <Label htmlFor="name">Brand Name</Label>
                   <Input
@@ -37,12 +37,20 @@ export function SignupForm({
                     required
                   />
                 </div>
-
+                <div className="grid gap-1  ">
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    id="name"
+                    type="name"
+                    placeholder="your name"
+                    required
+                  />
+                </div>
                 <div className="grid gap-1">
-                  <Label htmlFor="tel">
-                    Phone-Number <span className="fi fi-gh"></span>
-                  </Label>
-
+                  <Label htmlFor="tel">Phone-Number</Label>
+                  <p>
+                    <span className="fi fi-gh"></span>
+                  </p>
                   <Input
                     id="tel"
                     type="tel"
@@ -66,38 +74,27 @@ export function SignupForm({
                   <Input
                     id="password"
                     type="password"
-                    placeholder="********"
+                    placeholder="create a password"
                     required
                   />
                 </div>
                 <div className="grid gap-1">
                   <div className="flex items-center">
-                    <Label htmlFor="password">Comfirm Password</Label>
+                    <Label htmlFor="password">Password</Label>
                   </div>
                   <Input
                     id="password"
                     type="password"
-                    placeholder="********"
+                    placeholder="confirm your password"
                     required
                   />
                 </div>
-
-                <div className="flex items-center gap-2 hidden ">
-                  <Input id="terms" type="checkbox" required />
-                  <Label htmlFor="terms">
-                    I agree to the{" "}
-                    <a href="/terms" className="underline">
-                      terms and conditions
-                    </a>
-                  </Label>
-                </div>
-                <div className="">
-                  <input type="checkbox" checked />
-                </div>
-
                 <div className="flex flex-col gap-1">
                   <Button type="submit" className="w-full">
                     Sign Up
+                  </Button>
+                  <Button variant="outline" className="w-full">
+                    Sign Up with Google
                   </Button>
                 </div>
               </div>
@@ -106,14 +103,6 @@ export function SignupForm({
                 <a href="/login" className="underline underline-offset-4">
                   Log In
                 </a>
-              </div>
-              <div className="items-center gap-1 text-sm">
-                <Label htmlFor="terms">
-                  <input type="checkbox" name="" id="" /> I agree to the{" "}
-                  <a href="/terms" className="underline">
-                    terms and conditions
-                  </a>
-                </Label>
               </div>
             </form>
           </CardContent>

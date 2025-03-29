@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardDescription,  
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -33,14 +33,20 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={"http://localhost:5000/login"} method="POST">
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="phone">Phone</Label>
+                <Input 
+                id="code"
+                name="code"
+                value="+233"
+                readOnly />
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="your email"
+                  id="phone"
+                  name="tel"
+                  type="tel"
+                  placeholder="50 201 2302"
                   required
                 />
               </div>
