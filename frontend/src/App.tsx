@@ -7,6 +7,8 @@ import LoginPage from "./components/LoginDialog";
 
 import BrandSignUpPage from "./components/brand/brandSignupDialog";
 import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog";
+import { AppSidebar } from "./components/dashboards/app-sidebar";
+import Layout from "./components/dashboards/app/layout";
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/bsignup" element={<BrandSignUpPage />} />
         <Route path="/isignup" element={<InfluencerSignUpPage />} />
+        <Route path="/layout" element={<Layout children={undefined} />} />
       </Routes>
     </div>
   );

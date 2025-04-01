@@ -22,7 +22,10 @@ export function SignupForm({
 
   useEffect(() => {
     const role = searchParams.get("role");
-    if (role === "brand" || role === "influencer") {
+    // if (role === "brand" || role === "influencer") {
+    //   setUserType(role);
+    // }
+    if (role === "brand") {
       setUserType(role);
     }
   }, [searchParams]);
@@ -42,36 +45,56 @@ export function SignupForm({
                 <div className="grid gap-1 ">
                   <Label htmlFor="name">Brand Name</Label>
                   <Input
+                    name="bName"
                     id="name"
                     type="name"
                     placeholder="your name"
                     required
                   />
                 </div>
-                <div className="grid gap-1  ">
-                  <Label htmlFor="name">Name</Label>
+
+                {/* <div className="grid gap-1 ">
+                  <Label htmlFor="tel">
+                    Phone-Number <span className="fi fi-gh"></span>
+                  </Label>
+
                   <Input
-                    id="name"
-                    type="name"
-                    placeholder="your name"
-                    required
+                    value="+233"
+                    id="code"
+                    name="code"
+                    type="text"
+                    readOnly
                   />
-                </div>
-                <div className="grid gap-1">
-                  <Label htmlFor="tel">Phone-Number</Label>
-                  <p>
-                    <span className="fi fi-gh"></span>
-                  </p>
                   <Input
                     id="tel"
+                    name="tel"
                     type="tel"
-                    placeholder="+233 53 020 2061"
+                    placeholder="53 020 2061"
                     required
                   />
+                </div> */}
+                <div className="grid gap-1">
+                  <Label htmlFor="tel">
+                    Phone-Number <span className="fi fi-gh"></span>
+                  </Label>
+                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <span className="px-3 ">+233</span>
+                    <Input
+                      id="tel"
+                      name="tel"
+                      type="tel"
+                      inputMode="tel"
+                      placeholder="53 020 2061"
+                      required
+                      className="flex-1 border-none focus:ring-0"
+                    />
+                  </div>
                 </div>
+
                 <div className="grid gap-1">
                   <Label htmlFor="email">Email</Label>
                   <Input
+                    name="email"
                     id="email"
                     type="email"
                     placeholder="example@gmail.com"
@@ -79,10 +102,19 @@ export function SignupForm({
                   />
                 </div>
                 <div className="grid gap-1">
+                  <Label htmlFor="region">Region</Label>
+                  <select name="region">
+                    <option value="Ashanti">Ashanti</option>
+                    <option value=" Central"> Central</option>
+                    <option value="Greater Accra">Greater Accra</option>
+                  </select>
+                </div>
+                <div className="grid gap-1">
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
                   </div>
                   <Input
+                    name="password"
                     id="password"
                     type="password"
                     placeholder="create a password"
@@ -100,18 +132,7 @@ export function SignupForm({
                     required
                   />
                 </div>
-<<<<<<< HEAD
-=======
 
-                <div className="flex items-center gap-2 hidden ">
-                  <Input id="terms" type="checkbox" required />
-                  <Label htmlFor="terms">
-                    I agree to the{" "}
-                    <a href="/terms" className="underline">
-                      terms and conditions
-                    </a>
-                  </Label>
-                </div>
                 <div className="hidden">
                   <label className="flex items-center mb-4">
                     <input
@@ -122,16 +143,15 @@ export function SignupForm({
                     <span className="ml-2">I am a Brand</span>
                   </label>
 
-                  <label className="flex items-center mb-4">
+                  {/* <label className="flex items-center mb-4">
                     <input
                       type="checkbox"
                       checked={userType === "influencer"}
                       onChange={() => setUserType("influencer")}
                     />
                     <span className="ml-2">I am an Influencer</span>
-                  </label>
+                  </label> */}
                 </div>
->>>>>>> a081daee3b5bee87e0da5fa36b17037fd08fbb20
                 <div className="flex flex-col gap-1">
                   <Button type="submit" className="w-full">
                     Sign Up

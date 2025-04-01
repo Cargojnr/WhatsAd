@@ -108,6 +108,9 @@ function Home() {
         </section>
         <section id="features">
           <Features />
+          <Link to="/layout">
+            <Button size="lg">dashboard</Button>
+          </Link>
         </section>
       </motion.div>
       <section>
