@@ -134,6 +134,7 @@ export function SignupForm({
 
                     <label className="flex items-center mb-4">
                       <input
+                        name="purpose"
                         type="checkbox"
                         checked={userType === "influencer"}
                         onChange={() => setUserType("influencer")}

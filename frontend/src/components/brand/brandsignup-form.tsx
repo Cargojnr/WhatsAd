@@ -136,6 +136,7 @@ export function SignupForm({
                 <div className="hidden">
                   <label className="flex items-center mb-4">
                     <input
+                      name="purpose"
                       type="checkbox"
                       checked={userType === "brand"}
                       onChange={() => setUserType("brand")}
