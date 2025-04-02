@@ -7,7 +7,7 @@ import LoginPage from "./components/LoginDialog";
 
 import BrandSignUpPage from "./components/brand/brandSignupDialog";
 import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog";
-import { AppSidebar } from "./components/dashboards/app-sidebar";
+
 import Layout from "./components/dashboards/app/layout";
 
 function App() {
