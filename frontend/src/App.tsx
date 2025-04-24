@@ -8,19 +8,31 @@ import LoginPage from "./components/LoginDialog";
 import BrandSignUpPage from "./components/brand/brandSignupDialog";
 import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog";
 
-import Layout from "./components/dashboards/app/layout";
+// import { AppSidebar } from "./dasboards/app-sidebar";
+// import { DashboardOverview } from "../iDashboard/dashboard-overview";
 
+import Page from "./dasboards/01dashboard";
+import { CampaignRequests } from "./dasboards/campaign-requests";
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/bsignup" element={<BrandSignUpPage />} />
-        <Route path="/isignup" element={<InfluencerSignUpPage />} />
-        <Route path="/layout" element={<Layout children={undefined} />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/bsignup" element={<BrandSignUpPage />} />
+      <Route path="/isignup" element={<InfluencerSignUpPage />} />
+      <Route
+        path="/idashboard"
+        element={
+          // <Layout>
+          //   <DashboardOverview />
+          // </Layout>
+          <Page />
+        }
+      />
+      <Route path="/dasboard" element={<Page />} />
+      <Route path="/campaign-requests" element={<CampaignRequests />} />
+      {/* <Route path="/dasboard" element={<Layout children={undefined} />} /> */}
+    </Routes>
   );
 }
 

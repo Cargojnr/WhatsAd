@@ -101,6 +101,13 @@ function Header() {
                   <NavigationMenuLink className="">Business</NavigationMenuLink>
                 </a>
               </NavigationMenuItem>
+              <NavigationMenuItem className="ml-4">
+                <a href="/dasboard">
+                  <NavigationMenuLink className="">
+                    Dashboards
+                  </NavigationMenuLink>
+                </a>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -208,6 +215,13 @@ function Header() {
               <NavigationMenuItem>
                 <a href="/Business">
                   <NavigationMenuLink className="">Business</NavigationMenuLink>
+                </a>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <a href="/dasboard">
+                  <NavigationMenuLink className="">
+                    Dashboards
+                  </NavigationMenuLink>
                 </a>
               </NavigationMenuItem>
             </NavigationMenuList>
