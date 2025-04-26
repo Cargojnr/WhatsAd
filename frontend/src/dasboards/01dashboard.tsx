@@ -82,7 +82,7 @@ export default function Page() {
     pendingRequests: 3,
     totalEarnings: 1250,
     completedPromotions: 8,
-    viewCount: 15200,
+    viewCount: 1520,
   };
   return (
     <SidebarProvider>

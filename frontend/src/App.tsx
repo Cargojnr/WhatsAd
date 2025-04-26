@@ -13,6 +13,10 @@ import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog
 
 import Page from "./dasboards/01dashboard";
 import { CampaignRequests } from "./dasboards/campaign-requests";
+import { StatusTracker } from "./dasboards/status-tracker";
+import { EarningsOverview } from "./dasboards/earnings";
+import { ProfileStats } from "./dasboards/profile-stats";
+import { Settings } from "./dasboards/settings";
 function App() {
   return (
     <Routes>
@@ -31,6 +35,10 @@ function App() {
       />
       <Route path="/dasboard" element={<Page />} />
       <Route path="/campaign-requests" element={<CampaignRequests />} />
+      <Route path="/status-tracker" element={<StatusTracker />} />
+      <Route path="/earnings" element={<EarningsOverview />} />
+      <Route path="/profile-stats" element={<ProfileStats />} />
+      <Route path="/settings" element={<Settings />} />
       {/* <Route path="/dasboard" element={<Layout children={undefined} />} /> */}
     </Routes>
   );
