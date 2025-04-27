@@ -21,7 +21,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useLocation, Link } from "react-router-dom";
-// import { href } from "react-router-dom";
 
 // Menu items.
 const sidebarLinks = [

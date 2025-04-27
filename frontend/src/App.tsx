@@ -11,12 +11,12 @@ import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog
 // import { AppSidebar } from "./dasboards/app-sidebar";
 // import { DashboardOverview } from "../iDashboard/dashboard-overview";
 
-import Page from "./dasboards/01dashboard";
-import { CampaignRequests } from "./dasboards/campaign-requests";
-import { StatusTracker } from "./dasboards/status-tracker";
-import { EarningsOverview } from "./dasboards/earnings";
-import { ProfileStats } from "./dasboards/profile-stats";
-import { Settings } from "./dasboards/settings";
+import Page from "./dashboards/01dashboard";
+import { CampaignRequests } from "./dashboards/campaign-requests";
+import { StatusTracker } from "./dashboards/status-tracker";
+import { EarningsOverview } from "./dashboards/earnings";
+import { ProfileStats } from "./dashboards/profile-stats";
+import { Settings } from "./dashboards/settings";
 function App() {
   return (
     <Routes>
@@ -33,7 +33,7 @@ function App() {
           <Page />
         }
       />
-      <Route path="/dasboard" element={<Page />} />
+      <Route path="/dashboard" element={<Page />} />
       <Route path="/campaign-requests" element={<CampaignRequests />} />
       <Route path="/status-tracker" element={<StatusTracker />} />
       <Route path="/earnings" element={<EarningsOverview />} />

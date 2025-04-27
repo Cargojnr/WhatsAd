@@ -102,7 +102,7 @@ function Header() {
                 </a>
               </NavigationMenuItem>
               <NavigationMenuItem className="ml-4">
-                <a href="/dasboard">
+                <a href="/dashboard">
                   <NavigationMenuLink className="">
                     Dashboards
                   </NavigationMenuLink>
