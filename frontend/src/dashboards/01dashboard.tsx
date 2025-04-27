@@ -120,7 +120,7 @@ export default function Page() {
                 </p>
               </CardContent>
               <CardFooter>
-                <Link to="" className="w-full">
+                <Link to="/campaign-requests" className="w-full">
                   <Button variant="outline" size="sm" className="w-full">
                     View Requests{" "}
                   </Button>
@@ -143,7 +143,7 @@ export default function Page() {
                 </p>
               </CardContent>
               <CardFooter>
-                <Link to="/dashboard/earnings" className="w-full">
+                <Link to="/earnings" className="w-full">
                   <Button variant="outline" size="sm" className="w-full">
                     View Earnings
                   </Button>
@@ -168,7 +168,7 @@ export default function Page() {
                 </p>
               </CardContent>
               <CardFooter>
-                <Link to="/dashboard/status-tracker" className="w-full">
+                <Link to="/status-tracker" className="w-full">
                   <Button variant="outline" size="sm" className="w-full">
                     View History
                   </Button>
@@ -193,7 +193,7 @@ export default function Page() {
                 </p>
               </CardContent>
               <CardFooter>
-                <Link to="/dashboard/profile-stats" className="w-full">
+                <Link to="/profile-stats" className="w-full">
                   <Button variant="outline" size="sm" className="w-full">
                     View Stats
                   </Button>
@@ -268,7 +268,7 @@ export default function Page() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Link to="/dashboard/campaign-requests" className="w-full">
+                <Link to="/campaign-requests" className="w-full">
                   <Button variant="outline" className="w-full">
                     View All Requests
                   </Button>
@@ -313,7 +313,7 @@ export default function Page() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Link to="/dashboard/messages" className="w-full">
+                <Link to="/messages" className="w-full">
                   <Button variant="outline" className="w-full">
                     View All Messages
                   </Button>
