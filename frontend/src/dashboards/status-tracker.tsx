@@ -26,7 +26,7 @@ import {
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calendar, Check, Clock, DollarSign, Upload } from "lucide-react";
+import { Calendar, Check, Clock, BadgeCent, Upload } from "lucide-react";
 import { AppSidebar } from "./app-sidebar";
 
 import IdashboardHeader from "./idashboard-header";
@@ -38,7 +38,7 @@ const promotions = [
     campaign: "Summer Collection Promotion",
     brand: "Fashion Brand Co.",
     description: "Showcase our summer collection in your WhatsApp Status",
-    budget: "$200",
+    budget: "GH₵200",
     deadline: "2023-07-20",
     status: "in_progress",
     proofSubmitted: false,
@@ -48,7 +48,7 @@ const promotions = [
     campaign: "New Smartphone Launch",
     brand: "Tech Gadgets Inc.",
     description: "Feature our new smartphone in your WhatsApp Status",
-    budget: "$350",
+    budget: "GH₵350",
     deadline: "2023-07-25",
     status: "in_progress",
     proofSubmitted: true,
@@ -58,7 +58,7 @@ const promotions = [
     campaign: "Organic Snacks Promotion",
     brand: "Healthy Foods",
     description: "Share our organic snacks in your WhatsApp Status",
-    budget: "$150",
+    budget: "GH₵150",
     deadline: "2023-07-15",
     status: "completed",
     proofSubmitted: true,
@@ -68,7 +68,7 @@ const promotions = [
     campaign: "Home Workout Equipment",
     brand: "Fitness Gear Pro",
     description: "Demonstrate our workout equipment in your WhatsApp Status",
-    budget: "$250",
+    budget: "GH₵250",
     deadline: "2023-06-30",
     status: "completed",
     proofSubmitted: true,
@@ -161,7 +161,7 @@ export function StatusTracker() {
                       <p className="text-sm">{promotion.description}</p>
                       <div className="grid grid-cols-3 gap-4">
                         <div className="flex items-center gap-2">
-                          <DollarSign className="h-4 w-4 text-muted-foreground" />
+                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
                           <div>
                             <p className="text-sm font-medium">Budget</p>
                             <p className="text-sm text-muted-foreground">
@@ -301,7 +301,7 @@ export function StatusTracker() {
                     <p className="text-sm">{promotion.description}</p>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
                         <div>
                           <p className="text-sm font-medium">Earned</p>
                           <p className="text-sm text-muted-foreground">

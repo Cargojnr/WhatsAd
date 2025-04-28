@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { DollarSign, LineChart } from "lucide-react";
+import { BadgeCent, LineChart } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import { AppSidebar } from "./app-sidebar";
@@ -29,7 +29,7 @@ const earnings = [
     id: "PAY001",
     campaign: "Summer Sale Promotion",
     brand: "Fashion Brand Co.",
-    amount: "$350",
+    amount: "GH₵350",
     status: "paid",
     date: "2023-05-15",
   },
@@ -37,7 +37,7 @@ const earnings = [
     id: "PAY002",
     campaign: "Product Launch",
     brand: "Tech Gadgets Inc.",
-    amount: "$500",
+    amount: "GH₵500",
     status: "pending",
     date: "2023-06-01",
   },
@@ -45,7 +45,7 @@ const earnings = [
     id: "PAY003",
     campaign: "Brand Awareness",
     brand: "Healthy Foods",
-    amount: "$300",
+    amount: "GH₵300",
     status: "paid",
     date: "2023-04-20",
   },
@@ -53,7 +53,7 @@ const earnings = [
     id: "PAY004",
     campaign: "Holiday Special",
     brand: "Gift Shop Online",
-    amount: "$400",
+    amount: "GH₵400",
     status: "processing",
     date: "2023-06-10",
   },
@@ -80,10 +80,12 @@ export function EarningsOverview() {
                 <CardTitle className="text-sm font-medium">
                   Total Earnings
                 </CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                  <BadgeCent className="h-4 w-4 text-yellow-600" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$1,550</div>
+                <div className="text-2xl font-bold">GH₵1,550</div>
                 <p className="text-xs text-muted-foreground">
                   Lifetime earnings
                 </p>
@@ -92,10 +94,12 @@ export function EarningsOverview() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Pending</CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                  <BadgeCent className="h-4 w-4 text-yellow-600" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$900</div>
+                <div className="text-2xl font-bold">GH₵900</div>
                 <p className="text-xs text-muted-foreground">To be paid</p>
               </CardContent>
             </Card>
@@ -104,12 +108,14 @@ export function EarningsOverview() {
                 <CardTitle className="text-sm font-medium">
                   This Month
                 </CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                  <BadgeCent className="h-4 w-4 text-yellow-600" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$500</div>
+                <div className="text-2xl font-bold">GH₵500</div>
                 <p className="text-xs text-muted-foreground">
-                  +$200 from last month
+                  +GH₵200 from last month
                 </p>
               </CardContent>
             </Card>
@@ -118,10 +124,12 @@ export function EarningsOverview() {
                 <CardTitle className="text-sm font-medium">
                   Average Per Campaign
                 </CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
+                  <BadgeCent className="h-4 w-4 text-yellow-600" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$387</div>
+                <div className="text-2xl font-bold">GH₵387</div>
                 <p className="text-xs text-muted-foreground">
                   Based on 4 campaigns
                 </p>

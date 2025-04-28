@@ -17,13 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DollarSign,
-  Eye,
-  MessageSquare,
-  ShoppingBag,
-  TrendingUp,
-} from "lucide-react";
+import { BadgeCent, Eye, ShoppingBag, TrendingUp } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import { Button } from "@/components/ui/button";
@@ -133,11 +127,13 @@ export default function Page() {
                   Total Earnings
                 </CardTitle>
                 <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
-                  <DollarSign className="h-5 w-5 text-yellow-600" />
+                  <BadgeCent className="h-5 w-5 text-yellow-600" />
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">${stats.totalEarnings}</div>
+                <div className="text-2xl font-bold">
+                  GH₵{stats.totalEarnings}
+                </div>
                 <p className="text-xs text-muted-foreground">
                   Lifetime earnings
                 </p>
@@ -203,7 +199,7 @@ export default function Page() {
           </div>
           {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
 
-          <div className="grid auto-rows-min gap-4 md:grid-cols-2 mt-20">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-20">
             <Card>
               <CardHeader>
                 <CardTitle>Recent Campaign Requests</CardTitle>
@@ -250,7 +246,7 @@ export default function Page() {
                   {campaignRequests.map((req, i) => (
                     <div key={i} className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                        <ShoppingBag className="h-5 w-5 text-muted-foreground" />
+                        <ShoppingBag className="h-5 w-5 text-green-600" />
                       </div>
                       <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium leading-none">
@@ -275,7 +271,7 @@ export default function Page() {
                 </Link>
               </CardFooter>
             </Card>
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Recent Messages</CardTitle>
                 <CardDescription>
@@ -287,7 +283,7 @@ export default function Page() {
                   {[1, 2, 3].map((i) => (
                     <div key={i} className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                        <MessageSquare className="h-5 w-5 text-muted-foreground" />
+                        <MessageSquare className="h-5 w-5 text-blue-600" />
                       </div>
                       <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium leading-none">
@@ -319,7 +315,7 @@ export default function Page() {
                   </Button>
                 </Link>
               </CardFooter>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </SidebarInset>

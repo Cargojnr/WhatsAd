@@ -26,7 +26,7 @@ import {
   X,
   MessageSquare,
   Calendar,
-  DollarSign,
+  BadgeCent,
   Info,
 } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -47,7 +47,7 @@ const promotionRequests = [
     campaign: "Summer Collection Promotion",
     description:
       "We're looking for influencers to showcase our new summer collection in their WhatsApp Status. The promotion should highlight our colorful summer dresses and accessories.",
-    budget: "$200",
+    budget: "GH₵200",
     duration: "1 week",
     status: "pending",
     date: "2023-07-15",
@@ -61,7 +61,7 @@ const promotionRequests = [
     campaign: "New Smartphone Launch",
     description:
       "Help us promote our latest smartphone release. We'd like you to showcase the phone's key features in your WhatsApp Status updates over a period of 3 days.",
-    budget: "$350",
+    budget: "GH₵350",
     duration: "3 days",
     status: "pending",
     date: "2023-07-18",
@@ -75,7 +75,7 @@ const promotionRequests = [
     campaign: "Organic Snacks Promotion",
     description:
       "Promote our range of organic snacks in your WhatsApp Status. We'll provide product samples and key messaging points to highlight.",
-    budget: "$150",
+    budget: "GH₵150",
     duration: "5 days",
     status: "accepted",
     date: "2023-07-10",
@@ -89,7 +89,7 @@ const promotionRequests = [
     campaign: "Home Workout Equipment",
     description:
       "Showcase our home workout equipment in your WhatsApp Status. Demonstrate how easy it is to use and the benefits of working out at home.",
-    budget: "$250",
+    budget: "GH₵250",
     duration: "1 week",
     status: "completed",
     date: "2023-06-25",
@@ -103,7 +103,7 @@ const promotionRequests = [
     campaign: "Summer Vacation Packages",
     description:
       "Promote our summer vacation packages in your WhatsApp Status. Highlight the destinations, accommodations, and special offers.",
-    budget: "$300",
+    budget: "GH₵300",
     duration: "10 days",
     status: "rejected",
     date: "2023-06-20",
@@ -201,7 +201,7 @@ export function CampaignRequests() {
                       <p className="text-sm">{promotion.description}</p>
                       <div className="grid grid-cols-3 gap-4">
                         <div className="flex items-center gap-2">
-                          <DollarSign className="h-4 w-4 text-muted-foreground" />
+                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
                           <div>
                             <p className="text-sm font-medium">Budget</p>
                             <p className="text-sm text-muted-foreground">
@@ -275,7 +275,7 @@ export function CampaignRequests() {
                     <p className="text-sm">{promotion.description}</p>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
                         <div>
                           <p className="text-sm font-medium">Budget</p>
                           <p className="text-sm text-muted-foreground">
@@ -332,7 +332,7 @@ export function CampaignRequests() {
                     <p className="text-sm">{promotion.description}</p>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
                         <div>
                           <p className="text-sm font-medium">Earned</p>
                           <p className="text-sm text-muted-foreground">
@@ -382,7 +382,7 @@ export function CampaignRequests() {
                     <p className="text-sm">{promotion.description}</p>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
                         <div>
                           <p className="text-sm font-medium">Budget</p>
                           <p className="text-sm text-muted-foreground">

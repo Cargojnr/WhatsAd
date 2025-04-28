@@ -82,7 +82,9 @@ export function ProfileStats() {
                 <CardTitle className="text-sm font-medium">
                   Total Promotions
                 </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-blue-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -98,7 +100,9 @@ export function ProfileStats() {
                 <CardTitle className="text-sm font-medium">
                   Average Views
                 </CardTitle>
-                <Eye className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                  <Eye className="h-5 w-5 text-purple-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -114,7 +118,9 @@ export function ProfileStats() {
                 <CardTitle className="text-sm font-medium">
                   Average Rating
                 </CardTitle>
-                <Star className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+                  <Star className="h-4 w-4 text-yellow-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stats.averageRating}</div>
@@ -126,7 +132,9 @@ export function ProfileStats() {
                 <CardTitle className="text-sm font-medium">
                   Completion Rate
                 </CardTitle>
-                <BarChart className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                  <BarChart className="h-5 w-5 text-red-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
