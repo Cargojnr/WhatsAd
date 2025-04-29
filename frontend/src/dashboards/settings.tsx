@@ -57,8 +57,8 @@ export function Settings() {
     username: "@johndoe",
     bio: "WhatsApp Status influencer sharing lifestyle content",
     viewCount: 15200,
-    whatsappNumber: "+1234567890",
-    location: "New York, USA",
+    whatsappNumber: "+233 530000000",
+    location: "Accra, GH",
     avatar: "/placeholder.svg?height=40&width=40",
   });
   const [isSaving, setIsSaving] = useState(false);
@@ -156,6 +156,9 @@ export function Settings() {
                           <FormControl>
                             <Input placeholder="Your name" {...field} />
                           </FormControl>
+                          <FormDescription>
+                            This will be your Name on the platform
+                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
