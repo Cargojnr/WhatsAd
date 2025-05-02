@@ -30,9 +30,19 @@ import { Calendar, Check, Clock, BadgeCent, Upload } from "lucide-react";
 import { AppSidebar } from "./app-sidebar";
 
 import IdashboardHeader from "./idashboard-header";
+type Promotion = {
+  id: string;
+  campaign: string;
+  brand: string;
+  description: string;
+  budget: string;
+  deadline: string;
+  status: "in_progress" | "completed";
+  proofSubmitted: boolean;
+};
 
 // Mock data for promotions
-const promotions = [
+const promotionsTracker: Promotion[] = [
   {
     id: "promo1",
     campaign: "Summer Collection Promotion",
@@ -76,7 +86,10 @@ const promotions = [
 ];
 
 export function StatusTracker() {
-  const [selectedPromotion, setSelectedPromotion] = useState<any>(null);
+  const [promotions, setPromotions] = useState<Promotion[]>(promotionsTracker);
+  const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null>(
+    null
+  );
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isCompleteDialogOpen, setIsCompleteDialogOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -99,13 +112,25 @@ export function StatusTracker() {
     setSelectedFile(null);
   };
 
+  // const handleMarkAsCompleted = () => {
+  //   // In a real app, you would call your API to update the status
+  //   console.log("Marking promotion as completed:", selectedPromotion?.id);
+  //   setIsCompleteDialogOpen(false);
+  // };
   const handleMarkAsCompleted = () => {
-    // In a real app, you would call your API to update the status
-    console.log("Marking promotion as completed:", selectedPromotion?.id);
+    if (selectedPromotion) {
+      setPromotions((prevPromotions) =>
+        prevPromotions.map((promo) =>
+          promo.id === selectedPromotion.id
+            ? { ...promo, status: "completed" }
+            : promo
+        )
+      );
+    }
     setIsCompleteDialogOpen(false);
+    setSelectedPromotion(null);
   };
-
-  const getPromotionsByStatus = (status: string) => {
+  const getPromotionsByStatus = (status: Promotion["status"]): Promotion[] => {
     return promotions.filter((promo) => promo.status === status);
   };
 

@@ -3,7 +3,6 @@ import {
   BarChart3,
   DollarSign,
   Home,
-  MessageSquare,
   Settings,
   ShoppingBag,
   Upload,
@@ -44,11 +43,7 @@ const sidebarLinks = [
     href: "/earnings",
     icon: DollarSign,
   },
-  {
-    title: "Messages",
-    href: "/messages",
-    icon: MessageSquare,
-  },
+
   {
     title: "Profile Stats",
     href: "/profile-stats",
