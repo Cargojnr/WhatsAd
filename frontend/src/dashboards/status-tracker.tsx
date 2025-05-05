@@ -100,16 +100,33 @@ export function StatusTracker() {
     }
   };
 
+  // const handleUploadProof = () => {
+  //   // In a real app, you would upload the file to your backend
+  //   console.log(
+  //     "Uploading proof for promotion:",
+  //     selectedPromotion?.id,
+  //     "File:",
+  //     selectedFile
+  //   );
+  //   setIsUploadDialogOpen(false);
+  //   setSelectedFile(null);
+  // };
+
   const handleUploadProof = () => {
-    // In a real app, you would upload the file to your backend
-    console.log(
-      "Uploading proof for promotion:",
-      selectedPromotion?.id,
-      "File:",
-      selectedFile
-    );
-    setIsUploadDialogOpen(false);
+    if (selectedPromotion) {
+      setPromotions((prevPromotions) =>
+        prevPromotions.map((promo) =>
+          promo.id === selectedPromotion.id
+            ? { ...promo, proofSubmitted: true }
+            : promo
+        )
+      );
+    }
+
+    console.log("Uploading proof...", selectedPromotion?.id, selectedFile);
     setSelectedFile(null);
+    setIsUploadDialogOpen(false);
+    setSelectedPromotion(null); // optional
   };
 
   // const handleMarkAsCompleted = () => {
