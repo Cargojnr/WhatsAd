@@ -39,6 +39,7 @@ type Promotion = {
   deadline: string;
   status: "in_progress" | "completed";
   proofSubmitted: boolean;
+  completedDate?: string; // Optional field for completed promotions
 };
 
 // Mock data for promotions
@@ -94,6 +95,9 @@ export function StatusTracker() {
   const [isCompleteDialogOpen, setIsCompleteDialogOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  const [viewDetails, setViewDetails] = useState<Promotion | null>(null);
+  const [isViewDetailsDialogOpen, setIsViewDetailsDialogOpen] = useState(false);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setSelectedFile(e.target.files[0]);
@@ -124,8 +128,9 @@ export function StatusTracker() {
     }
 
     console.log("Uploading proof...", selectedPromotion?.id, selectedFile);
+
     setSelectedFile(null);
-    setIsUploadDialogOpen(false);
+    setIsUploadDialogOpen(false); // This closes the dialog
     setSelectedPromotion(null); // optional
   };
 
@@ -139,7 +144,12 @@ export function StatusTracker() {
       setPromotions((prevPromotions) =>
         prevPromotions.map((promo) =>
           promo.id === selectedPromotion.id
-            ? { ...promo, status: "completed" }
+            ? {
+                ...promo,
+                status: "completed",
+
+                completedDate: new Date().toISOString(), // Update the status and add completedDate
+              }
             : promo
         )
       );
@@ -216,9 +226,11 @@ export function StatusTracker() {
                           <div>
                             <p className="text-sm font-medium">Deadline</p>
                             <p className="text-sm text-muted-foreground">
-                              {new Date(
-                                promotion.deadline
-                              ).toLocaleDateString()}
+                              {promotion.completedDate
+                                ? new Date(
+                                    promotion.completedDate
+                                  ).toLocaleDateString()
+                                : "N/A"}
                             </p>
                           </div>
                         </div>
@@ -236,11 +248,18 @@ export function StatusTracker() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Dialog>
+                      <Dialog
+                        open={isUploadDialogOpen}
+                        onOpenChange={setIsUploadDialogOpen}
+                      >
                         <DialogTrigger asChild>
                           <Button
                             variant="outline"
-                            onClick={() => setSelectedPromotion(promotion)}
+                            onClick={() => {
+                              setSelectedPromotion(promotion);
+
+                              setIsUploadDialogOpen(true);
+                            }}
                             disabled={promotion.proofSubmitted}
                           >
                             <Upload className="mr-2 h-4 w-4" />
@@ -287,7 +306,10 @@ export function StatusTracker() {
                           </DialogFooter>
                         </DialogContent>
                       </Dialog>
-                      <Dialog>
+                      <Dialog
+                        open={isCompleteDialogOpen}
+                        onOpenChange={setIsCompleteDialogOpen}
+                      >
                         <DialogTrigger asChild>
                           <Button
                             onClick={() => setSelectedPromotion(promotion)}
@@ -356,7 +378,11 @@ export function StatusTracker() {
                         <div>
                           <p className="text-sm font-medium">Completed</p>
                           <p className="text-sm text-muted-foreground">
-                            {new Date(promotion.deadline).toLocaleDateString()}
+                            {promotion.completedDate
+                              ? new Date(
+                                  promotion.completedDate
+                                ).toLocaleDateString()
+                              : "N/A"}
                           </p>
                         </div>
                       </div>
@@ -372,9 +398,67 @@ export function StatusTracker() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button variant="outline" className="w-full">
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        setViewDetails(promotion);
+                        setIsViewDetailsDialogOpen(true);
+                      }}
+                    >
                       View Details
                     </Button>
+                    <Dialog
+                      open={isViewDetailsDialogOpen}
+                      onOpenChange={setIsViewDetailsDialogOpen}
+                    >
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Promotion Details</DialogTitle>
+                        </DialogHeader>
+                        {viewDetails && (
+                          <div className="space-y-2">
+                            <p>
+                              <strong>Campaign:</strong> {viewDetails.campaign}
+                            </p>
+                            <p>
+                              <strong>Brand:</strong> {viewDetails.brand}
+                            </p>
+                            <p>
+                              <strong>Description:</strong>{" "}
+                              {viewDetails.description}
+                            </p>
+                            <p>
+                              <strong>Budget:</strong> {viewDetails.budget}
+                            </p>
+                            <p>
+                              <strong>Deadline:</strong>{" "}
+                              {new Date(
+                                viewDetails.deadline
+                              ).toLocaleDateString()}
+                            </p>
+                            <p>
+                              <strong>Completed On:</strong>{" "}
+                              {viewDetails.completedDate
+                                ? new Date(
+                                    viewDetails.completedDate
+                                  ).toLocaleString()
+                                : "N/A"}
+                            </p>
+                            <p>
+                              <strong>Status:</strong> Completed
+                            </p>
+                          </div>
+                        )}
+                        <DialogFooter>
+                          <Button
+                            onClick={() => setIsViewDetailsDialogOpen(false)}
+                          >
+                            Close
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </CardFooter>
                 </Card>
               ))}
