@@ -63,6 +63,8 @@ export function Settings() {
   });
   const [isSaving, setIsSaving] = useState(false);
 
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -114,7 +116,11 @@ export function Settings() {
               <div className="flex items-center gap-6">
                 <Avatar className="h-24 w-24">
                   <AvatarImage
-                    src={user.avatar || "/placeholder.svg"}
+                    src={
+                      selectedImage
+                        ? URL.createObjectURL(selectedImage)
+                        : user.avatar || "/placeholder.svg"
+                    }
                     alt={user.fullName}
                   />
                   <AvatarFallback className="text-2xl">
@@ -123,11 +129,40 @@ export function Settings() {
                       : "U"}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex flex-col gap-2">
+                {/* <div className="flex flex-col gap-2">
                   <Button variant="outline" size="sm" className="w-fit">
                     <Upload className="mr-2 h-4 w-4" />
                     Upload new photo
                   </Button>
+                  <p className="text-xs text-muted-foreground">
+                    JPG, GIF or PNG. Max size of 2MB.
+                  </p>
+                </div> */}
+                <div className="flex flex-col gap-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setSelectedImage(e.target.files[0]);
+                      }
+                    }}
+                    id="profile-upload"
+                    className="hidden"
+                  />
+                  <label htmlFor="profile-upload">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-fit"
+                      asChild
+                    >
+                      <span>
+                        <Upload className="mr-2 h-4 w-4" />
+                        Upload new photo
+                      </span>
+                    </Button>
+                  </label>
                   <p className="text-xs text-muted-foreground">
                     JPG, GIF or PNG. Max size of 2MB.
                   </p>
