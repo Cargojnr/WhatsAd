@@ -8,15 +8,12 @@ import LoginPage from "./components/LoginDialog";
 import BrandSignUpPage from "./components/brand/brandSignupDialog";
 import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog";
 
-// import { AppSidebar } from "./dasboards/app-sidebar";
-// import { DashboardOverview } from "../iDashboard/dashboard-overview";
-
-import Page from "./dashboards/01dashboard";
-import { CampaignRequests } from "./dashboards/campaign-requests";
-import { StatusTracker } from "./dashboards/status-tracker";
-import { EarningsOverview } from "./dashboards/earnings";
-import { ProfileStats } from "./dashboards/profile-stats";
-import { Settings } from "./dashboards/settings";
+import Page from "./InfluencerDashboard/01dashboard";
+import { CampaignRequests } from "./InfluencerDashboard/campaign-requests";
+import { StatusTracker } from "./InfluencerDashboard/status-tracker";
+import { EarningsOverview } from "./InfluencerDashboard/earnings";
+import { ProfileStats } from "./InfluencerDashboard/profile-stats";
+import { Settings } from "./InfluencerDashboard/settings";
 function App() {
   return (
     <Routes>
@@ -24,22 +21,13 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/bsignup" element={<BrandSignUpPage />} />
       <Route path="/isignup" element={<InfluencerSignUpPage />} />
-      <Route
-        path="/idashboard"
-        element={
-          // <Layout>
-          //   <DashboardOverview />
-          // </Layout>
-          <Page />
-        }
-      />
+      <Route path="/idashboard" element={<Page />} />
       <Route path="/dashboard" element={<Page />} />
       <Route path="/campaign-requests" element={<CampaignRequests />} />
       <Route path="/status-tracker" element={<StatusTracker />} />
       <Route path="/earnings" element={<EarningsOverview />} />
       <Route path="/profile-stats" element={<ProfileStats />} />
       <Route path="/settings" element={<Settings />} />
-      {/* <Route path="/dasboard" element={<Layout children={undefined} />} /> */}
     </Routes>
   );
 }

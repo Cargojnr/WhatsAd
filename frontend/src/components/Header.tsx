@@ -218,7 +218,7 @@ function Header() {
                 </a>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <a href="/dasboard">
+                <a href="/dashboard">
                   <NavigationMenuLink className="">
                     Dashboards
                   </NavigationMenuLink>
