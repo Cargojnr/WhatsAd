@@ -51,16 +51,28 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
+interface User {
+  fullName: string;
+  username: string;
+  bio: string;
+  viewCount: number;
+  whatsappNumber: string;
+  location: string;
+  avatar: string;
+}
+const defaultUser: User = {
+  fullName: "John Doe",
+  username: "@johndoe",
+  bio: "WhatsApp Status influencer sharing lifestyle content",
+  viewCount: 15200,
+  whatsappNumber: "+233 530000000",
+  location: "Accra, GH",
+  avatar: "/placeholder.svg?height=40&width=40",
+};
+
 export function Settings() {
-  const [user, setUser] = useState<any>({
-    fullName: "John Doe",
-    username: "@johndoe",
-    bio: "WhatsApp Status influencer sharing lifestyle content",
-    viewCount: 15200,
-    whatsappNumber: "+233 530000000",
-    location: "Accra, GH",
-    avatar: "/placeholder.svg?height=40&width=40",
-  });
+  const [user, setUser] = useState<User>(defaultUser); // Replace with your user data fetching logic
+
   const [isSaving, setIsSaving] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
