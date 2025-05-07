@@ -49,6 +49,7 @@ interface Promotion {
   duration: string;
   status: "pending" | "accepted" | "completed" | "rejected";
   date: string;
+  submitDate?: string;
 }
 
 // Mock data for promotion requests
@@ -142,7 +143,14 @@ export function CampaignRequests() {
   const handleAccept = (promotion: Promotion) => {
     setPromotions((prevPromotions) =>
       prevPromotions.map((promo) =>
-        promo.id === promotion.id ? { ...promo, status: "accepted" } : promo
+        promo.id === promotion.id
+          ? {
+              ...promo,
+              status: "accepted",
+
+              submitDate: new Date().toISOString(),
+            }
+          : promo
       )
     );
   };
@@ -155,7 +163,13 @@ export function CampaignRequests() {
   const handleCompleted = (promotion: Promotion) => {
     setPromotions((prevPromotions) =>
       prevPromotions.map((promo) =>
-        promo.id === promotion.id ? { ...promo, status: "completed" } : promo
+        promo.id === promotion.id
+          ? {
+              ...promo,
+              status: "completed",
+              submitDate: new Date().toISOString(),
+            }
+          : promo
       )
     );
   };
@@ -179,7 +193,12 @@ export function CampaignRequests() {
       setPromotions((prevPromotions) =>
         prevPromotions.map((promo) =>
           promo.id === selectedPromotion.id
-            ? { ...promo, status: "rejected" }
+            ? {
+                ...promo,
+                status: "rejected",
+
+                submitDate: new Date().toISOString(),
+              }
             : promo
         )
       );
@@ -553,9 +572,11 @@ export function CampaignRequests() {
                                     : "Rejected On"}
                                 </p>
                                 <p className="text-sm text-muted-foreground">
-                                  {new Date(
-                                    promotion.date
-                                  ).toLocaleDateString()}
+                                  {promotion.submitDate
+                                    ? new Date(
+                                        promotion.submitDate
+                                      ).toLocaleDateString()
+                                    : "N/A"}
                                 </p>
                               </div>
                             </div>
