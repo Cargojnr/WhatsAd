@@ -120,15 +120,9 @@ export function SignupForm({
                     placeholder="********"
                     required
                   />
-                  <div className="hidden">
+                  <div className="">
                     <label className="flex items-center mb-4">
-                      <input
-                        name="purpose"
-                        type="checkbox"
-                        checked={userType === "influencer"}
-                        onChange={() => setUserType("influencer")}
-                      />
-                      <span className="ml-2">I am an Influencer</span>
+                      <Input name="purpose" type="text" value={userType} />
                     </label>
                   </div>
                 </div>
