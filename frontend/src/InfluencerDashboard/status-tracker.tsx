@@ -167,7 +167,7 @@ export function StatusTracker() {
       <SidebarInset>
         <IdashboardHeader />
         {/* <div className="space-y-8"> */}
-        <div className="flex flex-1 flex-col gap-3 md:p-8 ">
+        <div className="flex flex-1 flex-col gap-4 p-4">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">
               Status Promotion Tracker
@@ -261,8 +261,9 @@ export function StatusTracker() {
                               setIsUploadDialogOpen(true);
                             }}
                             disabled={promotion.proofSubmitted}
+                            className="h-full w-full mr-1"
                           >
-                            <Upload className="mr-2 h-4 w-4" />
+                            <Upload className="  mr-2 h-4 w-4" />
                             {promotion.proofSubmitted
                               ? "Proof Submitted"
                               : "Upload Proof"}
@@ -314,8 +315,9 @@ export function StatusTracker() {
                           <Button
                             onClick={() => setSelectedPromotion(promotion)}
                             disabled={!promotion.proofSubmitted}
+                            className="h-full w-full"
                           >
-                            <Check className="mr-2 h-4 w-4" />
+                            <Check className="mr-1 h-2 w-2" />
                             Mark as Completed
                           </Button>
                         </DialogTrigger>
