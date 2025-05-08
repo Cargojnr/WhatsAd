@@ -21,14 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Check,
-  X,
-  MessageSquare,
-  Calendar,
-  BadgeCent,
-  Info,
-} from "lucide-react";
+import { Check, X, Calendar, BadgeCent, Info } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import { Button } from "@/components/ui/button";
@@ -584,10 +577,10 @@ export function CampaignRequests() {
                         </CardContent>
                         {(status === "pending" || status === "accepted") && (
                           <CardFooter className="flex justify-between">
-                            <Button variant="outline" size="sm">
+                            {/* <Button variant="outline" size="sm">
                               <MessageSquare className="mr-2 h-4 w-4" />
                               Message Brand
-                            </Button>
+                            </Button> */}
                             <div className="flex gap-2">
                               {status === "pending" && (
                                 <>
