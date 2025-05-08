@@ -22,9 +22,7 @@ export function SignupForm({
 
   useEffect(() => {
     const role = searchParams.get("role");
-    // if (role === "brand" || role === "influencer") {
-    //   setUserType(role);
-    // }
+
     if (role === "influencer") {
       setUserType(role);
     }
@@ -123,15 +121,6 @@ export function SignupForm({
                     required
                   />
                   <div className="hidden">
-                    {/* <label className="flex items-center mb-4">
-                      <input
-                        type="checkbox"
-                        checked={userType === "brand"}
-                        onChange={() => setUserType("brand")}
-                      />
-                      <span className="ml-2">I am a Brand</span>
-                    </label> */}
-
                     <label className="flex items-center mb-4">
                       <input
                         name="purpose"

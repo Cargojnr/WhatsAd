@@ -81,7 +81,7 @@ function Home() {
                       what you love, earn what you deserve.
                     </p>
                     <div className="mt-5 flex flex-col gap-3 min-[400px]:flex-row justify-center items-center">
-                      <Link to="/bsignup?role=brand">
+                      <Link to="/signup?role=brand">
                         {" "}
                         <Button
                           size="lg"
@@ -90,7 +90,7 @@ function Home() {
                           I'm a Brand
                         </Button>
                       </Link>
-                      <Link to="/isignup?role=influencer">
+                      <Link to="/signup?role=influencer">
                         <Button
                           size="lg"
                           variant="outline"
@@ -108,9 +108,6 @@ function Home() {
         </section>
         <section id="features">
           <Features />
-          <Link to="/layout">
-            <Button size="lg">dashboard</Button>
-          </Link>
         </section>
       </motion.div>
       <section>
