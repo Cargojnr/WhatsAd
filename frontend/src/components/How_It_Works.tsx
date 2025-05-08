@@ -81,7 +81,7 @@ function How_It_Works() {
                 <DialogTitle className="text-center">Sign up</DialogTitle>
                 <DialogDescription>
                   <div className="flex flex-col gap-3 min-[400px]:flex-row text-center justify-center items-center mt-5">
-                    <Link to="/bsignup?role=brand">
+                    <Link to="/signup?role=brand">
                       {" "}
                       <Button
                         size="lg"
@@ -90,7 +90,7 @@ function How_It_Works() {
                         I am a Brand
                       </Button>
                     </Link>
-                    <Link to="/isignup?role=influencer">
+                    <Link to="/signup?role=influencer">
                       {" "}
                       <Button size="lg" variant="outline">
                         I am an Influencer
