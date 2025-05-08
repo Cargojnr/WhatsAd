@@ -67,7 +67,7 @@ export function SignupForm({
                     Phone-Number <span className="fi fi-gh"></span>
                   </Label>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                    <span className="px-3 ">+233</span>
+                    <span className="px-3 "><Input name="code" value="+233" disabled /></span>
                     <Input
                       id="tel"
                       name="tel"
