@@ -17,12 +17,13 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { BadgeCent, LineChart } from "lucide-react";
+import { BadgeCent } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import { AppSidebar } from "./app-sidebar";
 
 import IdashboardHeader from "./idashboard-header";
+import { EarningsCharts } from "./earnings-charts";
 
 const earnings = [
   {
@@ -31,7 +32,7 @@ const earnings = [
     brand: "Fashion Brand Co.",
     amount: "GH₵350",
     status: "paid",
-    date: "2023-05-15",
+    date: "2025-05-15",
   },
   {
     id: "PAY002",
@@ -39,7 +40,7 @@ const earnings = [
     brand: "Tech Gadgets Inc.",
     amount: "GH₵500",
     status: "pending",
-    date: "2023-06-01",
+    date: "2025-06-01",
   },
   {
     id: "PAY003",
@@ -47,7 +48,7 @@ const earnings = [
     brand: "Healthy Foods",
     amount: "GH₵300",
     status: "paid",
-    date: "2023-04-20",
+    date: "2025-04-20",
   },
   {
     id: "PAY004",
@@ -55,7 +56,7 @@ const earnings = [
     brand: "Gift Shop Online",
     amount: "GH₵400",
     status: "processing",
-    date: "2023-06-10",
+    date: "2025-06-10",
   },
 ];
 
@@ -137,7 +138,7 @@ export function EarningsOverview() {
             </Card>
           </div>
 
-          <Card>
+          {/* <Card>
             <CardHeader>
               <CardTitle>Earnings Over Time</CardTitle>
               <CardDescription>Your earnings history by month</CardDescription>
@@ -150,7 +151,8 @@ export function EarningsOverview() {
                 </span>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
+          <EarningsCharts />
 
           <Tabs defaultValue="all" className="space-y-4">
             <TabsList>

@@ -1,30 +1,30 @@
 // import { AppSidebar1 } from "@/components/app-sidebar";
 
 // for the chart
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+// import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+// import {
+//   ChartConfig,
+//   ChartContainer,
+//   ChartTooltip,
+//   ChartTooltipContent,
+// } from "@/components/ui/chart";
 
-const chartData = [
-  { month: "January", earnings: 186 },
-  { month: "February", earnings: 305 },
-  { month: "March", earnings: 237 },
-  { month: "April", earnings: 73 },
-  { month: "May", earnings: 209 },
-  { month: "June", earnings: 214 },
-];
+// const chartData = [
+//   { month: "January", earnings: 186 },
+//   { month: "February", earnings: 305 },
+//   { month: "March", earnings: 237 },
+//   { month: "April", earnings: 73 },
+//   { month: "May", earnings: 209 },
+//   { month: "June", earnings: 214 },
+// ];
 
-const chartConfig = {
-  earnings: {
-    label: "Earnings",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig;
+// const chartConfig = {
+//   earnings: {
+//     label: "Earnings",
+//     color: "hsl(var(--chart-1))",
+//   },
+// } satisfies ChartConfig;
 
 import { useState } from "react";
 // import {
@@ -56,6 +56,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import IdashboardHeader from "./idashboard-header";
+import { EarningsCharts } from "./earnings-charts";
+import { ProfileStatsCharts } from "./profile_stats-charts";
 const campaignRequests: {
   title: string;
   brand: string;
@@ -225,7 +227,7 @@ export default function Page() {
             </Card>
           </div>
           {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
-          <div>
+          {/* <div>
             <Card>
               <CardHeader>
                 <CardTitle>Line Chart</CardTitle>
@@ -273,6 +275,11 @@ export default function Page() {
                 </div>
               </CardFooter>
             </Card>
+          </div> */}
+
+          <div className="grid auto-rows-min gap-4 md:grid-cols-2 mt-20">
+            <EarningsCharts />
+            <ProfileStatsCharts />
           </div>
           <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-20">
             <Card>

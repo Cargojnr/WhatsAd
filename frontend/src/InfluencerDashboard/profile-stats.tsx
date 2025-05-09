@@ -21,38 +21,39 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import { AppSidebar } from "./app-sidebar";
 //for the chart
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+// import {
+//   ChartConfig,
+//   ChartContainer,
+//   ChartTooltip,
+//   ChartTooltipContent,
+// } from "@/components/ui/chart";
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-const chartData = [
-  { month: "January", completed: 20, pending: 2, rejected: 1 },
-  { month: "February", completed: 3, pending: 1, rejected: 0 },
-  { month: "March", completed: 4, pending: 3, rejected: 1 },
-  { month: "April", completed: 2, pending: 2, rejected: 0 },
-  { month: "May", completed: 6, pending: 1, rejected: 1 },
-  { month: "June", completed: 8, pending: 0, rejected: 9 },
-];
-const chartConfig = {
-  completed: {
-    label: "Completed",
-    color: "hsl(var(--chart-1))",
-  },
-  pending: {
-    label: "Pending",
-    color: "hsl(var(--chart-2))",
-  },
-  rejected: {
-    label: "Rejected",
-    color: "hsl(var(--chart-3))",
-  },
-} satisfies ChartConfig;
+// import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+// const chartData = [
+//   { month: "January", completed: 20, pending: 2, rejected: 1 },
+//   { month: "February", completed: 3, pending: 1, rejected: 0 },
+//   { month: "March", completed: 4, pending: 3, rejected: 1 },
+//   { month: "April", completed: 2, pending: 2, rejected: 0 },
+//   { month: "May", completed: 6, pending: 1, rejected: 1 },
+//   { month: "June", completed: 8, pending: 0, rejected: 9 },
+// ];
+// const chartConfig = {
+//   completed: {
+//     label: "Completed",
+//     color: "hsl(var(--chart-1))",
+//   },
+//   pending: {
+//     label: "Pending",
+//     color: "hsl(var(--chart-2))",
+//   },
+//   rejected: {
+//     label: "Rejected",
+//     color: "hsl(var(--chart-3))",
+//   },
+// } satisfies ChartConfig;
 
 import IdashboardHeader from "./idashboard-header";
+import { ProfileStatsCharts } from "./profile_stats-charts";
 // Mock data for profile stats
 const stats = {
   totalPromotions: 12,
@@ -72,7 +73,7 @@ const ratings = [
     campaign: "Summer Collection Promotion",
     rating: 5,
     feedback: "Great work! The content was exactly what we were looking for.",
-    date: "2023-05-15",
+    date: "2025-05-15",
   },
   {
     id: "rating2",
@@ -80,7 +81,7 @@ const ratings = [
     campaign: "Product Launch",
     rating: 4.5,
     feedback: "Good job showcasing our product features.",
-    date: "2023-06-01",
+    date: "2025-06-01",
   },
   {
     id: "rating3",
@@ -88,7 +89,7 @@ const ratings = [
     campaign: "Organic Snacks Promotion",
     rating: 5,
     feedback: "Excellent promotion! We saw a significant increase in interest.",
-    date: "2023-04-20",
+    date: "2025-04-20",
   },
 ];
 
@@ -217,7 +218,7 @@ export function ProfileStats() {
                     </span>
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <Card>
                     <CardHeader>
                       <CardTitle>Total Visitors</CardTitle>
@@ -238,7 +239,7 @@ export function ProfileStats() {
                             data={chartData}
                             margin={{ left: 12, right: 12 }}
                           >
-                            {/* <defs>
+                            <defs>
                               <linearGradient
                                 id="fillDesktop"
                                 x1="0"
@@ -275,7 +276,7 @@ export function ProfileStats() {
                                   stopOpacity={0.1}
                                 />
                               </linearGradient>
-                            </defs> */}
+                            </defs>
                             <CartesianGrid vertical={false} />
                             <XAxis
                               dataKey="month"
@@ -318,7 +319,9 @@ export function ProfileStats() {
                       </CardContent>
                     </CardHeader>
                   </Card>
-                </div>
+                </div> */}
+
+                <ProfileStatsCharts />
                 {/* <div className="h-[200px] w-full rounded-md border border-dashed p-4">
                   <div className="flex h-full items-center justify-center">
                     <BarChart className="h-24 w-24 text-muted-foreground" />
