@@ -108,7 +108,7 @@ export function Settings() {
       <SidebarInset>
         <IdashboardHeader />
 
-        <div className="flex flex-1 flex-col gap-3 md:p-8 ">
+        <div className="flex flex-1 flex-col gap-4 p-4 ">
           {/* <div className="space-y-8"> */}
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
@@ -141,15 +141,7 @@ export function Settings() {
                       : "U"}
                   </AvatarFallback>
                 </Avatar>
-                {/* <div className="flex flex-col gap-2">
-                  <Button variant="outline" size="sm" className="w-fit">
-                    <Upload className="mr-2 h-4 w-4" />
-                    Upload new photo
-                  </Button>
-                  <p className="text-xs text-muted-foreground">
-                    JPG, GIF or PNG. Max size of 2MB.
-                  </p>
-                </div> */}
+
                 <div className="flex flex-col gap-2">
                   <input
                     type="file"
@@ -201,7 +193,11 @@ export function Settings() {
                         <FormItem>
                           <FormLabel>Full Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Your name" {...field} />
+                            <Input
+                              placeholder="Your name"
+                              {...field}
+                              readOnly
+                            />
                           </FormControl>
                           <FormDescription>
                             This will be your Name on the platform
@@ -273,7 +269,11 @@ export function Settings() {
                         <FormItem>
                           <FormLabel>WhatsApp Number</FormLabel>
                           <FormControl>
-                            <Input placeholder="+1234567890" {...field} />
+                            <Input
+                              placeholder="+1234567890"
+                              {...field}
+                              readOnly
+                            />
                           </FormControl>
                           <FormDescription>
                             Only shared with brands after you accept a promotion

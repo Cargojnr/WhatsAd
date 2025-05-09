@@ -247,7 +247,7 @@ export function StatusTracker() {
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter className="flex justify-between">
+                    <CardFooter className="flex justify-between gap-1">
                       <Dialog
                         open={isUploadDialogOpen}
                         onOpenChange={setIsUploadDialogOpen}
@@ -261,9 +261,9 @@ export function StatusTracker() {
                               setIsUploadDialogOpen(true);
                             }}
                             disabled={promotion.proofSubmitted}
-                            className="h-full w-full mr-1"
+                            className=" px-2 py-1 text-sm"
                           >
-                            <Upload className="  mr-2 h-4 w-4" />
+                            <Upload className="  mr-1 h-3 w-3" />
                             {promotion.proofSubmitted
                               ? "Proof Submitted"
                               : "Upload Proof"}
@@ -315,10 +315,9 @@ export function StatusTracker() {
                           <Button
                             onClick={() => setSelectedPromotion(promotion)}
                             disabled={!promotion.proofSubmitted}
-                            className="h-full w-full"
                           >
-                            <Check className="mr-1 h-2 w-2" />
-                            Mark as Completed
+                            <Check className="mr-1 h-3 w-3" />
+                            Completed
                           </Button>
                         </DialogTrigger>
                         <DialogContent>

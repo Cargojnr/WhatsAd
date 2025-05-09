@@ -201,7 +201,7 @@ export function CampaignRequests() {
           </div>
 
           <Tabs defaultValue="pending" className="space-y-4 ">
-            <TabsList className="grid w-full grid-cols-4 gap-0">
+            <TabsList className="overflow-x-auto whitespace-nowrap flex justify-between text-sm sm:text-base w-full sm:w-[25%]">
               {(["pending", "accepted", "completed", "rejected"] as const).map(
                 (status) => (
                   <TabsTrigger key={status} value={status}>
