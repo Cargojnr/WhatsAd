@@ -152,7 +152,9 @@ export function EarningsOverview() {
               </div>
             </CardContent>
           </Card> */}
-          <EarningsCharts />
+          <div>
+            <EarningsCharts />
+          </div>
 
           <Tabs defaultValue="all" className="space-y-4">
             <TabsList>
