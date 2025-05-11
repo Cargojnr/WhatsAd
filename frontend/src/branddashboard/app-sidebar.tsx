@@ -1,12 +1,11 @@
 // import { useState } from "react";
 import {
   BarChart3,
+  Building,
   DollarSign,
   Home,
   Settings,
-  ShoppingBag,
-  Upload,
-  User,
+  UserPlus,
 } from "lucide-react";
 
 import {
@@ -25,38 +24,38 @@ import { useLocation, Link } from "react-router-dom";
 const sidebarLinks = [
   {
     title: "Dashboard",
-    href: "/idashboard",
+    href: "/bdashboard",
     icon: Home,
   },
   {
-    title: "Campaign Requests",
-    href: "/campaign-requests",
-    icon: ShoppingBag,
+    title: "Campaigns",
+    href: "/campaings",
+    icon: Building,
   },
   {
-    title: "Status Tracker",
-    href: "/status-tracker",
-    icon: Upload,
+    title: "Find Influencers",
+    href: "/influencers",
+    icon: UserPlus,
   },
   {
-    title: "Earnings",
-    href: "/earnings",
-    icon: DollarSign,
+    title: "Analytics",
+    href: "/analytics",
+    icon: BarChart3,
   },
 
   {
-    title: "Profile Stats",
-    href: "/profile-stats",
-    icon: BarChart3,
+    title: "Payments",
+    href: "/payments",
+    icon: DollarSign,
   },
   {
     title: "Settings",
-    href: "/settings",
+    href: "/brandsettings",
     icon: Settings,
   },
 ];
 
-export function AppSidebar() {
+export function BrandSidebar() {
   //   const [activeItem, setActiveItem] = useState<string>("Dashboard");
   //   const pathname = usePathname();
   const location = useLocation();
@@ -65,8 +64,8 @@ export function AppSidebar() {
       <SidebarContent className="flex h-full flex-col gap-2 p-4">
         <SidebarGroup>
           <SidebarGroupLabel>
-            <User className="h-6 w-6 mr-2" />
-            <span className="text-lg font-semibold">Influencer</span>
+            <Building className="h-6 w-6 mr-2" />
+            <span className="text-lg font-semibold">Brand Portal</span>
           </SidebarGroupLabel>
 
           <SidebarGroupContent>
