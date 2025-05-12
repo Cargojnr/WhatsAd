@@ -311,6 +311,7 @@ export function CampaignRequests() {
                                   <Button
                                     size="sm"
                                     onClick={() => handleAccept(promotion)}
+                                    className="bg-green-600"
                                   >
                                     <Check className="mr-2 h-4 w-4" />
                                     Accept
@@ -321,6 +322,7 @@ export function CampaignRequests() {
                                 <Button
                                   size="sm"
                                   onClick={() => handleCompleted(promotion)}
+                                  className="bg-green-600"
                                 >
                                   Mark as Completed
                                 </Button>

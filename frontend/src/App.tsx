@@ -18,6 +18,7 @@ import BrandDashboardOverview from "./branddashboard/dashboard-overview";
 import { Campaigns } from "./branddashboard/campaigns";
 import { FindInfluencers } from "./branddashboard/find-influencers";
 import { BrandSettings } from "./branddashboard/settings";
+import { Payments } from "./branddashboard/payments";
 // import { BrandDashboardOverview } from "./branddashboard/dashboard-overview";
 
 function IsignupPage() {
@@ -46,6 +47,7 @@ function App() {
       <Route path="/campaings" element={<Campaigns />} />
       <Route path="/influencers" element={<FindInfluencers />} />
       <Route path="/brandsettings" element={<BrandSettings />} />
+      <Route path="/payments" element={<Payments />} />
       <Route path="/dashboard" element={<Page />} />
       <Route path="/campaign-requests" element={<CampaignRequests />} />
       <Route path="/status-tracker" element={<StatusTracker />} />

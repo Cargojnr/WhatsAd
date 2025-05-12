@@ -315,6 +315,7 @@ export function StatusTracker() {
                           <Button
                             onClick={() => setSelectedPromotion(promotion)}
                             disabled={!promotion.proofSubmitted}
+                            className="bg-green-600"
                           >
                             <Check className="mr-1 h-3 w-3" />
                             Completed
@@ -338,7 +339,10 @@ export function StatusTracker() {
                             >
                               Cancel
                             </Button>
-                            <Button onClick={handleMarkAsCompleted}>
+                            <Button
+                              onClick={handleMarkAsCompleted}
+                              className="bg-green-600"
+                            >
                               Mark as Completed
                             </Button>
                           </DialogFooter>
