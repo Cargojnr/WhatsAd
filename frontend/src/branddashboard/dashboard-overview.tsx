@@ -7,9 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  BadgeCent,
   BarChart3,
-  DollarSign,
-  MessageSquare,
   TrendingUp,
   UserPlus,
   Users,
@@ -59,7 +58,9 @@ export default function BrandDashboardOverview() {
                 <CardTitle className="text-sm font-medium">
                   Active Campaigns
                 </CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <TrendingUp className="h-5 w-5 text-blue-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -82,7 +83,9 @@ export default function BrandDashboardOverview() {
                 <CardTitle className="text-sm font-medium">
                   Total Budget
                 </CardTitle>
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+                  <BadgeCent className="h-5 w-5 text-yellow-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">${stats.totalBudget}</div>
@@ -103,7 +106,9 @@ export default function BrandDashboardOverview() {
                 <CardTitle className="text-sm font-medium">
                   Active Influencers
                 </CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-green-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -126,7 +131,9 @@ export default function BrandDashboardOverview() {
                 <CardTitle className="text-sm font-medium">
                   Average Reach
                 </CardTitle>
-                <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                  <BarChart3 className="h-5 w-5 text-purple-600" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
@@ -144,7 +151,7 @@ export default function BrandDashboardOverview() {
             </Card>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-1">
             <Card>
               <CardHeader>
                 <CardTitle>Active Campaigns</CardTitle>
@@ -156,8 +163,8 @@ export default function BrandDashboardOverview() {
                 <div className="space-y-4">
                   {[1, 2, 3].map((i) => (
                     <div key={i} className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                        <TrendingUp className="h-5 w-5 text-muted-foreground" />
+                      <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <TrendingUp className="h-5 w-5 text-blue-600" />
                       </div>
                       <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium leading-none">
@@ -199,7 +206,7 @@ export default function BrandDashboardOverview() {
               </CardFooter>
             </Card>
 
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Recent Messages</CardTitle>
                 <CardDescription>
@@ -243,7 +250,7 @@ export default function BrandDashboardOverview() {
                   </Button>
                 </Link>
               </CardFooter>
-            </Card>
+            </Card> */}
           </div>
 
           <Card>
@@ -257,8 +264,8 @@ export default function BrandDashboardOverview() {
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
-                      <UserPlus className="h-6 w-6 text-muted-foreground" />
+                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                      <UserPlus className="h-6 w-6 text-green-400" />
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
