@@ -88,7 +88,7 @@ export default function BrandDashboardOverview() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">${stats.totalBudget}</div>
+                <div className="text-2xl font-bold">GH₵{stats.totalBudget}</div>
                 <p className="text-xs text-muted-foreground">
                   Allocated for campaigns
                 </p>
