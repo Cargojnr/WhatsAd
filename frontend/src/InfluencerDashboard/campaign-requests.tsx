@@ -30,6 +30,7 @@ import { AppSidebar } from "./app-sidebar";
 
 import IdashboardHeader from "./idashboard-header";
 
+// Mock data for promotion requests
 interface Promotion {
   id: string;
   brand: {
@@ -45,7 +46,6 @@ interface Promotion {
   submitDate?: string;
 }
 
-// Mock data for promotion requests
 const promotionRequests: Promotion[] = [
   {
     id: "promo1",

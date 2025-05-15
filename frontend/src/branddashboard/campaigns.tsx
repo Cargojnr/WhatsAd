@@ -34,6 +34,18 @@ import {
 import { Link } from "react-router-dom";
 
 // Mock data for campaigns
+type Campaign = {
+  id: string;
+  name: string;
+  description: string;
+  budget: string;
+  status: "active" | "pending" | "draft" | "completed";
+  startDate: string;
+  endDate: string;
+  influencers: number;
+  totalViews: number;
+};
+
 const campaigns = [
   {
     id: "campaign1",
