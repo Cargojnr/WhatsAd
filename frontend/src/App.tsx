@@ -44,7 +44,7 @@ function App() {
       <Route path="/signup" element={<IsignupPage />} />
       <Route path="/idashboard" element={<Page />} />
       <Route path="/bdashboard" element={<BrandDashboardOverview />} />
-      <Route path="/campaings" element={<Campaigns />} />
+      <Route path="/campaigns" element={<Campaigns />} />
       <Route path="/influencers" element={<FindInfluencers />} />
       <Route path="/brandsettings" element={<BrandSettings />} />
       <Route path="/payments" element={<Payments />} />

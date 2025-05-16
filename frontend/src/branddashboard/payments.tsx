@@ -39,7 +39,7 @@ const payments = [
     id: "pay1",
     influencer: "Sarah Williams",
     campaign: "Summer Collection Promotion",
-    amount: "$200",
+    amount: "GH₵200",
     status: "completed",
     date: "2023-07-10",
   },
@@ -47,7 +47,7 @@ const payments = [
     id: "pay2",
     influencer: "Mike Johnson",
     campaign: "Product Launch",
-    amount: "$350",
+    amount: "GH₵350",
     status: "pending",
     date: "2023-07-15",
   },
@@ -55,7 +55,7 @@ const payments = [
     id: "pay3",
     influencer: "David Chen",
     campaign: "Brand Awareness",
-    amount: "$150",
+    amount: "GH₵150",
     status: "completed",
     date: "2023-06-28",
   },
@@ -63,7 +63,7 @@ const payments = [
     id: "pay4",
     influencer: "Emily Rodriguez",
     campaign: "Holiday Special",
-    amount: "$250",
+    amount: "GH₵250",
     status: "processing",
     date: "2023-07-12",
   },
@@ -145,7 +145,7 @@ export function Payments() {
                       <Label htmlFor="amount">Amount</Label>
                       <Input
                         id="amount"
-                        placeholder="$100"
+                        placeholder="GH₵100"
                         value={fundAmount}
                         onChange={(e) => setFundAmount(e.target.value)}
                       />
@@ -251,7 +251,7 @@ export function Payments() {
                 <Wallet className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$1,250</div>
+                <div className="text-2xl font-bold">GH₵1,250</div>
                 <p className="text-xs text-muted-foreground">
                   Available for campaigns
                 </p>
@@ -265,7 +265,7 @@ export function Payments() {
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$350</div>
+                <div className="text-2xl font-bold">GH₵350</div>
                 <p className="text-xs text-muted-foreground">Being processed</p>
               </CardContent>
             </Card>
@@ -277,7 +277,7 @@ export function Payments() {
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">$2,500</div>
+                <div className="text-2xl font-bold">GH₵2,500</div>
                 <p className="text-xs text-muted-foreground">
                   All-time spending
                 </p>

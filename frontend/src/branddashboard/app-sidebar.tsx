@@ -29,7 +29,7 @@ const sidebarLinks = [
   },
   {
     title: "Campaigns",
-    href: "/campaings",
+    href: "/campaigns",
     icon: Building,
   },
   {

@@ -47,7 +47,7 @@ export default function BrandDashboardOverview() {
                 performance.
               </p>
             </div>
-            <Button asChild>
+            <Button asChild className="bg-green-600 text-white">
               <Link to="/campaigns/new">Create New Campaign</Link>
             </Button>
           </div>
@@ -71,7 +71,7 @@ export default function BrandDashboardOverview() {
                 </p>
               </CardContent>
               <CardFooter>
-                <Link to="/campaings" className="w-full">
+                <Link to="/campaigns" className="w-full">
                   <Button variant="outline" size="sm" className="w-full">
                     View Campaigns
                   </Button>
@@ -183,6 +183,7 @@ export default function BrandDashboardOverview() {
                         </p>
                       </div>
                       <Badge
+                        className={i === 1 ? "bg-green-600 " : ""}
                         variant={
                           i === 1
                             ? "default"

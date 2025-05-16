@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import {
   Calendar,
-  DollarSign,
+  BadgeCent,
   FileEdit,
   Info,
   Trash,
@@ -34,17 +34,6 @@ import {
 import { Link } from "react-router-dom";
 
 // Mock data for campaigns
-type Campaign = {
-  id: string;
-  name: string;
-  description: string;
-  budget: string;
-  status: "active" | "pending" | "draft" | "completed";
-  startDate: string;
-  endDate: string;
-  influencers: number;
-  totalViews: number;
-};
 
 const campaigns = [
   {
@@ -52,7 +41,7 @@ const campaigns = [
     name: "Summer Collection Promotion",
     description:
       "Promote our new summer collection on WhatsApp Status. Highlight our colorful summer dresses and accessories.",
-    budget: "$1,000",
+    budget: "GH₵1,000",
     status: "active",
     startDate: "2023-07-01",
     endDate: "2023-07-15",
@@ -64,7 +53,7 @@ const campaigns = [
     name: "New Product Launch",
     description:
       "Help us launch our newest product. We need influencers to showcase the key features in their WhatsApp Status.",
-    budget: "$1,500",
+    budget: "GH₵1,500",
     status: "pending",
     startDate: "2023-07-20",
     endDate: "2023-08-05",
@@ -76,7 +65,7 @@ const campaigns = [
     name: "Brand Awareness Campaign",
     description:
       "Increase visibility of our brand among your WhatsApp audience with organic mentions.",
-    budget: "$800",
+    budget: "GH₵800",
     status: "draft",
     startDate: "",
     endDate: "",
@@ -87,7 +76,7 @@ const campaigns = [
     id: "campaign4",
     name: "Holiday Special",
     description: "Promote our special holiday offers and limited-time deals.",
-    budget: "$1,200",
+    budget: "GH₵1,200",
     status: "completed",
     startDate: "2023-05-01",
     endDate: "2023-05-15",
@@ -125,7 +114,7 @@ export function Campaigns() {
                 Manage your WhatsApp Status promotion campaigns
               </p>
             </div>
-            <Button asChild>
+            <Button asChild className="bg-green-600 text-white">
               <Link to="/dashboard/brand/campaigns/new">Create Campaign</Link>
             </Button>
           </div>
@@ -164,6 +153,9 @@ export function Campaigns() {
                         </CardDescription>
                       </div>
                       <Badge
+                        className={
+                          campaign.status === "active" ? "bg-green-600 " : ""
+                        }
                         variant={
                           campaign.status === "active"
                             ? "default"
@@ -183,7 +175,7 @@ export function Campaigns() {
                     <p className="text-sm">{campaign.description}</p>
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                       <div className="flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
                         <div>
                           <p className="text-sm font-medium">Budget</p>
                           <p className="text-sm text-muted-foreground">
@@ -269,7 +261,11 @@ export function Campaigns() {
                       </Link>
                     </Button>
                     {campaign.status === "active" && (
-                      <Button size="sm" asChild>
+                      <Button
+                        size="sm"
+                        asChild
+                        className="bg-green-600 text-white"
+                      >
                         <Link
                           to={`/dashboard/brand/campaigns/${campaign.id}/analytics`}
                         >
@@ -309,14 +305,16 @@ export function Campaigns() {
                           <CardTitle>{campaign.name}</CardTitle>
                           <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
                         </div>
-                        <Badge>Active</Badge>
+                        <Badge className="bg-green-600 text-white">
+                          Active
+                        </Badge>
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <p className="text-sm">{campaign.description}</p>
                       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                         <div className="flex items-center gap-2">
-                          <DollarSign className="h-4 w-4 text-muted-foreground" />
+                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
                           <div>
                             <p className="text-sm font-medium">Budget</p>
                             <p className="text-sm text-muted-foreground">
@@ -391,12 +389,314 @@ export function Campaigns() {
                           Details
                         </Link>
                       </Button>
-                      <Button size="sm" asChild>
+                      <Button
+                        size="sm"
+                        asChild
+                        className="bg-green-600 text-white"
+                      >
                         <Link
                           to={`/dashboard/brand/campaigns/${campaign.id}/analytics`}
                         >
                           <BarChart3 className="mr-2 h-4 w-4" />
                           View Analytics
+                        </Link>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))
+              )}
+            </TabsContent>
+            <TabsContent value="pending" className="space-y-4">
+              {getCampaignsByStatus("pending").length === 0 ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>No Active Campaigns</CardTitle>
+                    <CardDescription>
+                      You don't have any active campaigns at the moment.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Button asChild>
+                      <Link to="/dashboard/brand/campaigns/new">
+                        Create Campaign
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ) : (
+                getCampaignsByStatus("pending").map((campaign) => (
+                  <Card key={campaign.id}>
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <CardTitle>{campaign.name}</CardTitle>
+                          <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
+                        </div>
+                        <Badge variant="secondary">Pending</Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm">{campaign.description}</p>
+                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div className="flex items-center gap-2">
+                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Budget</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.budget}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Duration</p>
+                            <p className="text-sm text-muted-foreground">
+                              {`${Math.ceil(
+                                (new Date(campaign.endDate).getTime() -
+                                  new Date(campaign.startDate).getTime()) /
+                                  (1000 * 60 * 60 * 24)
+                              )} days`}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Influencers</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.influencers}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Total Views</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.totalViews.toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link
+                          to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
+                        >
+                          <FileEdit className="mr-2 h-4 w-4" />
+                          Edit
+                        </Link>
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setSelectedCampaign(campaign);
+                          setIsDeleteDialogOpen(true);
+                        }}
+                      >
+                        <Trash className="mr-2 h-4 w-4" />
+                        Delete
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
+                          <Info className="mr-2 h-4 w-4" />
+                          Details
+                        </Link>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))
+              )}
+            </TabsContent>
+            <TabsContent value="draft" className="space-y-4">
+              {getCampaignsByStatus("draft").length === 0 ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>No Active Campaigns</CardTitle>
+                    <CardDescription>
+                      You don't have any active campaigns at the moment.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Button asChild>
+                      <Link to="/dashboard/brand/campaigns/new">
+                        Create Campaign
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ) : (
+                getCampaignsByStatus("draft").map((campaign) => (
+                  <Card key={campaign.id}>
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <CardTitle>{campaign.name}</CardTitle>
+                          <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
+                        </div>
+                        <Badge variant="outline">Draft</Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm">{campaign.description}</p>
+                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div className="flex items-center gap-2">
+                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Budget</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.budget}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Duration</p>
+                            <p className="text-sm text-muted-foreground">
+                              {`${Math.ceil(
+                                (new Date(campaign.endDate).getTime() -
+                                  new Date(campaign.startDate).getTime()) /
+                                  (1000 * 60 * 60 * 24)
+                              )} days`}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Influencers</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.influencers}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Total Views</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.totalViews.toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link
+                          to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
+                        >
+                          <FileEdit className="mr-2 h-4 w-4" />
+                          Edit
+                        </Link>
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setSelectedCampaign(campaign);
+                          setIsDeleteDialogOpen(true);
+                        }}
+                      >
+                        <Trash className="mr-2 h-4 w-4" />
+                        Delete
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
+                          <Info className="mr-2 h-4 w-4" />
+                          Details
+                        </Link>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))
+              )}
+            </TabsContent>
+            <TabsContent value="completed" className="space-y-4">
+              {getCampaignsByStatus("completed").length === 0 ? (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>No Active Campaigns</CardTitle>
+                    <CardDescription>
+                      You don't have any active campaigns at the moment.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Button asChild>
+                      <Link to="/dashboard/brand/campaigns/new">
+                        Create Campaign
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ) : (
+                getCampaignsByStatus("completed").map((campaign) => (
+                  <Card key={campaign.id}>
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <CardTitle>{campaign.name}</CardTitle>
+                          <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
+                        </div>
+                        <Badge variant="secondary">completed</Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm">{campaign.description}</p>
+                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div className="flex items-center gap-2">
+                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Budget</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.budget}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Duration</p>
+                            <p className="text-sm text-muted-foreground">
+                              {`${Math.ceil(
+                                (new Date(campaign.endDate).getTime() -
+                                  new Date(campaign.startDate).getTime()) /
+                                  (1000 * 60 * 60 * 24)
+                              )} days`}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Influencers</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.influencers}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Total Views</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.totalViews.toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
+                          <Info className="mr-2 h-4 w-4" />
+                          Details
                         </Link>
                       </Button>
                     </CardFooter>

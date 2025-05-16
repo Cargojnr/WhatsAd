@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,7 +27,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Filter, MessageSquare, Search, Star, Users } from "lucide-react";
+import { Filter, Search, Star, Users } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { BrandSidebar } from "./app-sidebar";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
@@ -236,6 +236,7 @@ export function FindInfluencers() {
                           className="flex items-center space-x-2"
                         >
                           <Checkbox
+                            className="data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
                             id={`category-${category}`}
                             checked={selectedCategories.includes(category)}
                             onCheckedChange={() =>
@@ -297,7 +298,7 @@ export function FindInfluencers() {
             <TabsContent value="all" className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredInfluencers.map((influencer) => (
-                  <Card key={influencer.id} className="overflow-hidden">
+                  <Card key={influencer.id} className="overflow-hidden ">
                     <CardHeader className="p-4">
                       <div className="flex items-start gap-3">
                         <Avatar className="h-12 w-12">
@@ -323,7 +324,11 @@ export function FindInfluencers() {
                               ? "default"
                               : "secondary"
                           }
-                          className="ml-auto flex items-center gap-1"
+                          className={`ml-auto flex items-center gap-1 ${
+                            influencer.status === "available"
+                              ? "bg-green-600 text-white"
+                              : ""
+                          }`}
                         >
                           {influencer.status === "available"
                             ? "Available"
@@ -331,7 +336,7 @@ export function FindInfluencers() {
                         </Badge>
                       </div>
                     </CardHeader>
-                    <CardContent className="p-4 pt-0">
+                    <CardContent className="p-4 pt-0 ">
                       <p className="line-clamp-2 text-sm">{influencer.bio}</p>
                       <div className="mt-3 flex flex-wrap gap-1">
                         {influencer.categories.map((category) => (
@@ -369,14 +374,14 @@ export function FindInfluencers() {
                       >
                         View Profile
                       </Button>
-                      <Button size="sm" className="flex-1" asChild>
+                      {/* <Button size="sm" className="flex-1" asChild>
                         <Link
                           to={`/dashboard/brand/messages?id=${influencer.id}`}
                         >
                           <MessageSquare className="mr-2 h-4 w-4" />
                           Contact
                         </Link>
-                      </Button>
+                      </Button> */}
                     </CardFooter>
                   </Card>
                 ))}
@@ -445,7 +450,11 @@ export function FindInfluencers() {
                           ? "default"
                           : "secondary"
                       }
-                      className="ml-auto flex items-center gap-1"
+                      className={`ml-auto flex items-center gap-1 ${
+                        selectedInfluencer.status === "available"
+                          ? "bg-green-600 text-white"
+                          : ""
+                      }`}
                     >
                       {selectedInfluencer.status === "available"
                         ? "Available"
@@ -492,15 +501,17 @@ export function FindInfluencers() {
                     Close
                   </Button>
                   <div className="flex gap-2">
-                    <Button asChild>
+                    {/* <Button asChild>
                       <Link
                         to={`/dashboard/brand/messages?id=${selectedInfluencer.id}`}
                       >
                         <MessageSquare className="mr-2 h-4 w-4" />
                         Contact
                       </Link>
+                    </Button> */}
+                    <Button className="bg-green-600 text-white">
+                      Add to Campaign
                     </Button>
-                    <Button>Add to Campaign</Button>
                   </div>
                 </DialogFooter>
               </DialogContent>
