@@ -34,8 +34,18 @@ import {
 import { Link } from "react-router-dom";
 
 // Mock data for campaigns
-
-const campaigns = [
+interface Campaign {
+  id: string;
+  name: string;
+  description: string;
+  budget: string;
+  status: "active" | "pending" | "draft" | "completed";
+  startDate: string;
+  endDate: string;
+  influencers: number;
+  totalViews: number;
+}
+const campaigns: Campaign[] = [
   {
     id: "campaign1",
     name: "Summer Collection Promotion",
@@ -88,12 +98,14 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { BrandSidebar } from "./app-sidebar";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
 export function Campaigns() {
-  const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
+  const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
+    null
+  );
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const handleDeleteCampaign = () => {
     // In a real app, you would call your API to delete the campaign
-    console.log("Deleting campaign:", selectedCampaign.id);
+    console.log("Deleting campaign:", selectedCampaign?.id);
     setIsDeleteDialogOpen(false);
   };
 
@@ -120,7 +132,7 @@ export function Campaigns() {
           </div>
 
           <Tabs defaultValue="all" className="space-y-4">
-            <TabsList>
+            <TabsList className="w-full sm:w-[30%] overflow-x-auto whitespace-nowrap flex justify-between text-sm">
               <TabsTrigger value="all">All Campaigns</TabsTrigger>
               <TabsTrigger value="active">
                 Active ({getCampaignsByStatus("active").length})
