@@ -130,9 +130,8 @@ export function Campaigns() {
               <Link to="/dashboard/brand/campaigns/new">Create Campaign</Link>
             </Button>
           </div>
-
           <Tabs defaultValue="all" className="space-y-4">
-            <TabsList className="w-full sm:w-[30%] overflow-x-auto whitespace-nowrap flex justify-between text-sm">
+            <TabsList className="w-full sm:w-[60%] overflow-x-auto whitespace-nowrap flex justify-between text-sm">
               <TabsTrigger value="all">All Campaigns</TabsTrigger>
               <TabsTrigger value="active">
                 Active ({getCampaignsByStatus("active").length})

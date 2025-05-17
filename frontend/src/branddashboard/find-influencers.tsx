@@ -32,7 +32,21 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { BrandSidebar } from "./app-sidebar";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
 // Mock data for influencers
-const influencers = [
+interface Influencer {
+  id: string;
+  name: string;
+  username: string;
+  bio: string;
+  avatar: string;
+  viewCount: number;
+  categories: string[];
+  rating: number;
+  location: string;
+  pricePerStatus: string;
+  status: "available" | "working";
+}
+
+const influencers: Influencer[] = [
   {
     id: "inf1",
     name: "Sarah Williams",
@@ -43,7 +57,7 @@ const influencers = [
     categories: ["Fashion", "Lifestyle"],
     rating: 4.8,
     location: "New York, USA",
-    pricePerStatus: "$200",
+    pricePerStatus: "GH₵200",
     status: "available",
   },
   {
@@ -56,7 +70,7 @@ const influencers = [
     categories: ["Technology", "Gaming"],
     rating: 4.6,
     location: "San Francisco, USA",
-    pricePerStatus: "$180",
+    pricePerStatus: "GH₵180",
     status: "available",
   },
   {
@@ -69,7 +83,7 @@ const influencers = [
     categories: ["Fitness", "Food"],
     rating: 4.9,
     location: "Los Angeles, USA",
-    pricePerStatus: "$250",
+    pricePerStatus: "GH₵250",
     status: "available",
   },
   {
@@ -82,7 +96,7 @@ const influencers = [
     categories: ["Travel", "Photography"],
     rating: 4.7,
     location: "Miami, USA",
-    pricePerStatus: "$220",
+    pricePerStatus: "GH₵220",
     status: "available",
   },
   {
@@ -95,7 +109,7 @@ const influencers = [
     categories: ["Music", "Entertainment"],
     rating: 4.5,
     location: "Nashville, USA",
-    pricePerStatus: "$190",
+    pricePerStatus: "GH₵190",
     status: "working",
   },
   {
@@ -108,7 +122,7 @@ const influencers = [
     categories: ["Beauty", "Fashion"],
     rating: 4.9,
     location: "Chicago, USA",
-    pricePerStatus: "$270",
+    pricePerStatus: "GH₵270",
     status: "available",
   },
 ];
@@ -131,7 +145,8 @@ export function FindInfluencers() {
   const [viewRange, setViewRange] = useState([5000, 25000]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
-  const [selectedInfluencer, setSelectedInfluencer] = useState<any>(null);
+  const [selectedInfluencer, setSelectedInfluencer] =
+    useState<Influencer | null>(null);
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
 
   const filteredInfluencers = influencers.filter((influencer) => {
@@ -171,6 +186,9 @@ export function FindInfluencers() {
     setSearchTerm("");
   };
 
+  const getInfluencerByStatus = (status: string) => {
+    return influencers.filter((influencer) => influencer.status === status);
+  };
   return (
     <SidebarProvider>
       <BrandSidebar />
@@ -291,8 +309,12 @@ export function FindInfluencers() {
           <Tabs defaultValue="all" className="space-y-4">
             <TabsList>
               <TabsTrigger value="all">All Influencers</TabsTrigger>
-              <TabsTrigger value="available">Available Now</TabsTrigger>
-              <TabsTrigger value="working">Currently Working</TabsTrigger>
+              <TabsTrigger value="available">
+                Available Now ({getInfluencerByStatus("available").length})
+              </TabsTrigger>
+              <TabsTrigger value="working">
+                Currently Working({getInfluencerByStatus("working").length})
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="all" className="space-y-4">
@@ -402,7 +424,209 @@ export function FindInfluencers() {
                 </Card>
               )}
             </TabsContent>
+            <TabsContent value="available" className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredInfluencers
+                  .filter((influencer) => influencer.status === "available")
+                  .map((influencer) => (
+                    <Card key={influencer.id} className="overflow-hidden">
+                      <CardHeader className="p-4">
+                        <div className="flex items-start gap-3">
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage
+                              src={influencer.avatar || "/placeholder.svg"}
+                              alt={influencer.name}
+                            />
+                            <AvatarFallback>
+                              {influencer.name.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 space-y-1 overflow-hidden">
+                            <CardTitle className="text-base">
+                              {influencer.name}
+                            </CardTitle>
+                            <CardDescription className="truncate">
+                              {influencer.username}
+                            </CardDescription>
+                          </div>
+                          <Badge
+                            variant="default"
+                            className="ml-auto flex items-center gap-1 bg-green-600 text-white"
+                          >
+                            Available
+                          </Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0">
+                        <p className="line-clamp-2 text-sm">{influencer.bio}</p>
+                        <div className="mt-3 flex flex-wrap gap-1">
+                          {influencer.categories.map((category) => (
+                            <Badge
+                              key={category}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {category}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="mt-4 grid grid-cols-2 gap-2">
+                          <div className="flex items-center text-sm">
+                            <Users className="mr-1 h-4 w-4 text-muted-foreground" />
+                            <span>
+                              {influencer.viewCount.toLocaleString()} views
+                            </span>
+                          </div>
+                          <div className="flex items-center text-sm">
+                            <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <span>{influencer.rating} rating</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="flex gap-2 border-t p-4">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex-1"
+                          onClick={() => {
+                            setSelectedInfluencer(influencer);
+                            setIsProfileDialogOpen(true);
+                          }}
+                        >
+                          View Profile
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+              </div>
+              {filteredInfluencers.filter(
+                (influencer) => influencer.status === "available"
+              ).length === 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>No Available Influencers</CardTitle>
+                    <CardDescription>
+                      Try adjusting your filters or search terms
+                    </CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Button variant="outline" onClick={handleClearFilters}>
+                      Clear Filters
+                    </Button>
+                  </CardFooter>
+                </Card>
+              )}
+            </TabsContent>
 
+            <TabsContent value="working" className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredInfluencers
+                  .filter((influencer) => influencer.status === "working")
+                  .map((influencer) => (
+                    <Card key={influencer.id} className="overflow-hidden ">
+                      <CardHeader className="p-4">
+                        <div className="flex items-start gap-3">
+                          <Avatar className="h-12 w-12">
+                            <AvatarImage
+                              src={influencer.avatar || "/placeholder.svg"}
+                              alt={influencer.name}
+                            />
+                            <AvatarFallback>
+                              {influencer.name.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 space-y-1 overflow-hidden">
+                            <CardTitle className="text-base">
+                              {influencer.name}
+                            </CardTitle>
+                            <CardDescription className="truncate">
+                              {influencer.username}
+                            </CardDescription>
+                          </div>
+                          <Badge
+                            variant={
+                              influencer.status === "available"
+                                ? "default"
+                                : "secondary"
+                            }
+                            className={`ml-auto flex items-center gap-1 ${
+                              influencer.status === "available"
+                                ? "bg-green-600 text-white"
+                                : ""
+                            }`}
+                          >
+                            {influencer.status === "available"
+                              ? "Available"
+                              : "Working"}
+                          </Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0 ">
+                        <p className="line-clamp-2 text-sm">{influencer.bio}</p>
+                        <div className="mt-3 flex flex-wrap gap-1">
+                          {influencer.categories.map((category) => (
+                            <Badge
+                              key={category}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {category}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="mt-4 grid grid-cols-2 gap-2">
+                          <div className="flex items-center text-sm">
+                            <Users className="mr-1 h-4 w-4 text-muted-foreground" />
+                            <span>
+                              {influencer.viewCount.toLocaleString()} views
+                            </span>
+                          </div>
+                          <div className="flex items-center text-sm">
+                            <Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <span>{influencer.rating} rating</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="flex gap-2 border-t p-4">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex-1"
+                          onClick={() => {
+                            setSelectedInfluencer(influencer);
+                            setIsProfileDialogOpen(true);
+                          }}
+                        >
+                          View Profile
+                        </Button>
+                        {/* <Button size="sm" className="flex-1" asChild>
+                        <Link
+                          to={`/dashboard/brand/messages?id=${influencer.id}`}
+                        >
+                          <MessageSquare className="mr-2 h-4 w-4" />
+                          Contact
+                        </Link>
+                      </Button> */}
+                      </CardFooter>
+                    </Card>
+                  ))}
+              </div>
+              {filteredInfluencers.length === 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>No Influencers Found</CardTitle>
+                    <CardDescription>
+                      Try adjusting your filters or search terms
+                    </CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Button variant="outline" onClick={handleClearFilters}>
+                      Clear Filters
+                    </Button>
+                  </CardFooter>
+                </Card>
+              )}
+            </TabsContent>
             {/* Similar content for other tabs */}
           </Tabs>
 
