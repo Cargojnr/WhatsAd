@@ -296,8 +296,10 @@ export function FindInfluencers() {
                     Clear Filters
                   </Button>
                   <Button
+                    variant="outline"
                     type="submit"
                     onClick={() => setIsFilterDialogOpen(false)}
+                    className="bg-green-600 text-white"
                   >
                     Apply Filters
                   </Button>

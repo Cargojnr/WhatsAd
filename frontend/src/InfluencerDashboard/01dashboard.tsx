@@ -1,41 +1,6 @@
-// import { AppSidebar1 } from "@/components/app-sidebar";
-
-// for the chart
-// import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-
-// import {
-//   ChartConfig,
-//   ChartContainer,
-//   ChartTooltip,
-//   ChartTooltipContent,
-// } from "@/components/ui/chart";
-
-// const chartData = [
-//   { month: "January", earnings: 186 },
-//   { month: "February", earnings: 305 },
-//   { month: "March", earnings: 237 },
-//   { month: "April", earnings: 73 },
-//   { month: "May", earnings: 209 },
-//   { month: "June", earnings: 214 },
-// ];
-
-// const chartConfig = {
-//   earnings: {
-//     label: "Earnings",
-//     color: "hsl(var(--chart-1))",
-//   },
-// } satisfies ChartConfig;
-
+import { getPendingPromotionRequestsCount } from "./campaign-requests";
 import { useState } from "react";
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb";
-// import { Separator } from "@/components/ui/separator";
+
 import {
   Card,
   CardContent,
@@ -138,7 +103,8 @@ export default function Page() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {stats.pendingRequests}
+                  {/* {stats.pendingRequests} */}
+                  {getPendingPromotionRequestsCount()}
                 </div>
                 <p className="text-xs text-muted-foreground">
                   Awaiting your response

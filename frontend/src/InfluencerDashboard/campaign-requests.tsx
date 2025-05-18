@@ -374,3 +374,6 @@ export function CampaignRequests() {
     </SidebarProvider>
   );
 }
+export const getPendingPromotionRequestsCount = (): number => {
+  return promotionRequests.filter((promo) => promo.status === "pending").length;
+};
