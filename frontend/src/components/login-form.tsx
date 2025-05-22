@@ -43,7 +43,7 @@ export function LoginForm({
                   <span className="px-3 ">+233</span>
                   <Input
                     id="tel"
-                    name="tel"
+                    name="phone"
                     type="tel"
                     inputMode="tel"
                     placeholder="53 020 2061"
@@ -62,7 +62,7 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" name="password" type="password" required />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">

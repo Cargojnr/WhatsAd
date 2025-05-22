@@ -190,7 +190,7 @@ app.post("/register", async (req, res) => {
     const region = req.body.region
     const purpose = req.body.purpose
 
-    if(purpose == true){
+    if(purpose == "influencer"){
         try {
             const checkResult = await db.query("SELECT * FROM users WHERE phone = $1", [
                 tel
@@ -205,7 +205,7 @@ app.post("/register", async (req, res) => {
                         console.log("Error hashing passwords:", err)
                     } else {
                         const result = await db.query("INSERT INTO users(firstname,lastname, phone,email, region, password, purpose) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", [
-                            fName, lName, phone, email, region, hash, purpose
+                            fName, lName, tel, email, region, hash, purpose
                         ]);
                         const user = result.rows[0];
                         console.log(user);
