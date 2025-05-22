@@ -1,14 +1,6 @@
-// import { AppSidebar1 } from "@/components/app-sidebar";
+import { getPendingPromotionRequestsCount } from "./campaign-requests";
 import { useState } from "react";
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb";
-// import { Separator } from "@/components/ui/separator";
+
 import {
   Card,
   CardContent,
@@ -29,6 +21,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import IdashboardHeader from "./idashboard-header";
+import { EarningsCharts } from "./earnings-charts";
+import { ProfileStatsCharts } from "./profile_stats-charts";
 const campaignRequests: {
   title: string;
   brand: string;
@@ -76,7 +70,9 @@ export default function Page() {
         <div className="flex flex-1 flex-col gap-4 p-4">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+              <h2 className="text-3xl font-bold tracking-tight">
+                Influencer Dashboard
+              </h2>
               <p className="text-muted-foreground">
                 Welcome back! Here's an overview of your influencer account.
               </p>
@@ -107,7 +103,8 @@ export default function Page() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {stats.pendingRequests}
+                  {/* {stats.pendingRequests} */}
+                  {getPendingPromotionRequestsCount()}
                 </div>
                 <p className="text-xs text-muted-foreground">
                   Awaiting your response
@@ -198,7 +195,60 @@ export default function Page() {
             </Card>
           </div>
           {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
+          {/* <div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Line Chart</CardTitle>
+                <CardDescription>January - June 2024</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer config={chartConfig}>
+                  <LineChart
+                    accessibilityLayer
+                    data={chartData}
+                    margin={{
+                      left: 12,
+                      right: 12,
+                    }}
+                  >
+                    <CartesianGrid vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      tickLine={false}
+                      axisLine={false}
+                      tickMargin={8}
+                      tickFormatter={(value) => value.slice(0, 3)}
+                    />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent hideLabel />}
+                    />
+                    <Line
+                      dataKey="earnings"
+                      type="natural"
+                      stroke="#4caf50"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ChartContainer>
+              </CardContent>
+              <CardFooter className="flex-col items-start gap-2 text-sm">
+                <div className="flex gap-2 font-medium leading-none">
+                  Trending up by 5.2% this month{" "}
+                  <TrendingUp className="h-4 w-4" />
+                </div>
+                <div className="leading-none text-muted-foreground">
+                  Showing total visitors for the last 6 months
+                </div>
+              </CardFooter>
+            </Card>
+          </div> */}
 
+          <div className="grid auto-rows-min gap-4 md:grid-cols-2 mt-20">
+            <EarningsCharts />
+            <ProfileStatsCharts />
+          </div>
           <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-20">
             <Card>
               <CardHeader>
@@ -271,51 +321,6 @@ export default function Page() {
                 </Link>
               </CardFooter>
             </Card>
-            {/* <Card>
-              <CardHeader>
-                <CardTitle>Recent Messages</CardTitle>
-                <CardDescription>
-                  Your most recent conversations
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                        <MessageSquare className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          {i === 1
-                            ? "Fashion Brand Co."
-                            : i === 2
-                            ? "Tech Gadgets Inc."
-                            : "Healthy Foods"}
-                        </p>
-                        <p className="text-sm text-muted-foreground truncate">
-                          {i === 1
-                            ? "When would you like to post the status?"
-                            : i === 2
-                            ? "Great! Our budget is $200 per post."
-                            : "Thanks for your interest in our campaign."}
-                        </p>
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {i === 1 ? "5m ago" : i === 2 ? "30m ago" : "2h ago"}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Link to="/messages" className="w-full">
-                  <Button variant="outline" className="w-full">
-                    View All Messages
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card> */}
           </div>
         </div>
       </SidebarInset>

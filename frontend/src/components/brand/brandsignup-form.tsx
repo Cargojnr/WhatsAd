@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 export function SignupForm({
   className,
   ...props
@@ -53,32 +54,18 @@ export function SignupForm({
                   />
                 </div>
 
-                {/* <div className="grid gap-1 ">
-                  <Label htmlFor="tel">
-                    Phone-Number <span className="fi fi-gh"></span>
-                  </Label>
-
-                  <Input
-                    value="+233"
-                    id="code"
-                    name="code"
-                    type="text"
-                    readOnly
-                  />
-                  <Input
-                    id="tel"
-                    name="tel"
-                    type="tel"
-                    placeholder="53 020 2061"
-                    required
-                  />
-                </div> */}
                 <div className="grid gap-1">
                   <Label htmlFor="tel">
                     Phone-Number <span className="fi fi-gh"></span>
                   </Label>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                    <span className="px-3 ">+233</span>
+                    <Input
+                      name="code"
+                      value="+233"
+                      disabled
+                      className="w-20 px-3 py-2 bg-gray-100 text-gray-700 border-none rounded-lg overflow-hidden"
+                    />
+
                     <Input
                       id="tel"
                       name="tel"
@@ -133,19 +120,10 @@ export function SignupForm({
                   />
                 </div>
 
-                <div className="">
+                <div className="hidden">
                   <label className="flex items-center mb-4">
-                    <input name="purpose" type="text" value={userType} />
+                    <Input name="purpose" type="text" value={userType} />
                   </label>
-
-                  {/* <label className="flex items-center mb-4">
-                    <input
-                      type="checkbox"
-                      checked={userType === "influencer"}
-                      onChange={() => setUserType("influencer")}
-                    />
-                    <span className="ml-2">I am an Influencer</span>
-                  </label> */}
                 </div>
                 <div className="flex flex-col gap-1">
                   <Button type="submit" className="w-full">

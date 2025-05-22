@@ -67,7 +67,13 @@ export function SignupForm({
                     Phone-Number <span className="fi fi-gh"></span>
                   </Label>
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                    <span className="px-3 "><Input name="code" value="+233" disabled /></span>
+                    <Input
+                      name="code"
+                      value="+233"
+                      disabled
+                      className="w-20 px-3 py-2 bg-gray-100 text-gray-700 border-none rounded-lg overflow-hidden"
+                    />
+
                     <Input
                       id="tel"
                       name="tel"
@@ -120,7 +126,7 @@ export function SignupForm({
                     placeholder="********"
                     required
                   />
-                  <div className="">
+                  <div className="hidden">
                     <label className="flex items-center mb-4">
                       <Input name="purpose" type="text" value={userType} />
                     </label>

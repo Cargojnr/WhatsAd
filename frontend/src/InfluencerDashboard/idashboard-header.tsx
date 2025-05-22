@@ -43,9 +43,10 @@ function IdashboardHeader() {
               <DropdownMenuItem asChild>
                 <Link to="/dashboard">Dashboard</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
+
+              {/* <DropdownMenuItem asChild>
                 <Link to="/profile-stats">Profile</Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuItem asChild>
                 <Link to="/settings">Settings</Link>
               </DropdownMenuItem>

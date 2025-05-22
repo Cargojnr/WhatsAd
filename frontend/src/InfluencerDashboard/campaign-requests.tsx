@@ -21,14 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Check,
-  X,
-  MessageSquare,
-  Calendar,
-  BadgeCent,
-  Info,
-} from "lucide-react";
+import { Check, X, Calendar, BadgeCent, Info } from "lucide-react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 import { Button } from "@/components/ui/button";
@@ -37,6 +30,7 @@ import { AppSidebar } from "./app-sidebar";
 
 import IdashboardHeader from "./idashboard-header";
 
+// Mock data for promotion requests
 interface Promotion {
   id: string;
   brand: {
@@ -52,7 +46,6 @@ interface Promotion {
   submitDate?: string;
 }
 
-// Mock data for promotion requests
 const promotionRequests: Promotion[] = [
   {
     id: "promo1",
@@ -135,11 +128,6 @@ export function CampaignRequests() {
   const [isRejectionDialogOpen, setIsRejectionDialogOpen] =
     useState<boolean>(false);
 
-  // const handleAccept = (promotion: Promotion) => {
-  //   // In a real app, you would call your API to update the status
-  //   console.log("Accepted promotion:", promotion.id);
-  // };
-
   const handleAccept = (promotion: Promotion) => {
     setPromotions((prevPromotions) =>
       prevPromotions.map((promo) =>
@@ -173,20 +161,6 @@ export function CampaignRequests() {
       )
     );
   };
-  // const confirmReject = () => {
-  //   // In a real app, you would call your API to update the status
-  //   if (selectedPromotion) {
-  //     console.log(
-  //       "Rejected promotion:",
-  //       selectedPromotion.id,
-  //       "Reason:",
-  //       rejectionReason
-  //     );
-  //   }
-  //   setIsRejectionDialogOpen(false);
-  //   setRejectionReason("");
-  //   setSelectedPromotion(null);
-  // };
 
   const confirmReject = () => {
     if (selectedPromotion) {
@@ -208,9 +182,6 @@ export function CampaignRequests() {
     setSelectedPromotion(null);
   };
 
-  // const getPromotionsByStatus = (status: Promotion["status"]): Promotion[] => {
-  //   return promotionRequests.filter((promo) => promo.status === status);
-  // };
   const getPromotionsByStatus = (status: Promotion["status"]): Promotion[] => {
     return promotions.filter((promo) => promo.status === status);
   };
@@ -219,7 +190,7 @@ export function CampaignRequests() {
       <AppSidebar />
       <SidebarInset>
         <IdashboardHeader />
-        <div className="flex flex-1 flex-col gap-3 md:p-8 ">
+        <div className="flex flex-1 flex-col gap-4 p-4">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">
               Campaign Requests
@@ -229,266 +200,8 @@ export function CampaignRequests() {
             </p>
           </div>
 
-          {/* <Tabs defaultValue="pending" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="pending">
-                Pending ({getPromotionsByStatus("pending").length})
-              </TabsTrigger>
-              <TabsTrigger value="accepted">
-                Accepted ({getPromotionsByStatus("accepted").length})
-              </TabsTrigger>
-              <TabsTrigger value="completed">
-                Completed ({getPromotionsByStatus("completed").length})
-              </TabsTrigger>
-              <TabsTrigger value="rejected">
-                Rejected ({getPromotionsByStatus("rejected").length})
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="pending" className="space-y-4">
-              {getPromotionsByStatus("pending").length === 0 ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>No Pending Requests</CardTitle>
-                    <CardDescription>
-                      You don't have any pending promotion requests at the
-                      moment.
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              ) : (
-                getPromotionsByStatus("pending").map((promotion) => (
-                  <Card key={promotion.id}>
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <CardTitle>{promotion.campaign}</CardTitle>
-                          <CardDescription>
-                            {promotion.brand.name}
-                          </CardDescription>
-                        </div>
-                        <Badge>New Request</Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm">{promotion.description}</p>
-                      <div className="grid grid-cols-3 gap-4">
-                        <div className="flex items-center gap-2">
-                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Budget</p>
-                            <p className="text-sm text-muted-foreground">
-                              {promotion.budget}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Duration</p>
-                            <p className="text-sm text-muted-foreground">
-                              {promotion.duration}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Info className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Received</p>
-                            <p className="text-sm text-muted-foreground">
-                              {new Date(promotion.date).toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        Message Brand
-                      </Button>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => handleReject(promotion)}
-                        >
-                          <X className="mr-2 h-4 w-4" />
-                          Reject
-                        </Button>
-                        <Button
-                          size="sm"
-                          onClick={() => handleAccept(promotion)}
-                        >
-                          <Check className="mr-2 h-4 w-4" />
-                          Accept
-                        </Button>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                ))
-              )}
-            </TabsContent>
-
-            <TabsContent value="accepted" className="space-y-4">
-              {getPromotionsByStatus("accepted").map((promotion) => (
-                <Card key={promotion.id}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle>{promotion.campaign}</CardTitle>
-                        <CardDescription>
-                          {promotion.brand.name}
-                        </CardDescription>
-                      </div>
-                      <Badge variant="outline">In Progress</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm">{promotion.description}</p>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="flex items-center gap-2">
-                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Budget</p>
-                          <p className="text-sm text-muted-foreground">
-                            {promotion.budget}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Duration</p>
-                          <p className="text-sm text-muted-foreground">
-                            {promotion.duration}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Info className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Accepted On</p>
-                          <p className="text-sm text-muted-foreground">
-                            {new Date(promotion.date).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <Button variant="outline" size="sm">
-                      <MessageSquare className="mr-2 h-4 w-4" />
-                      Message Brand
-                    </Button>
-                    <Button size="sm">Mark as Completed</Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </TabsContent>
-
-            <TabsContent value="completed" className="space-y-4">
-              {getPromotionsByStatus("completed").map((promotion) => (
-                <Card key={promotion.id}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle>{promotion.campaign}</CardTitle>
-                        <CardDescription>
-                          {promotion.brand.name}
-                        </CardDescription>
-                      </div>
-                      <Badge variant="secondary">Completed</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm">{promotion.description}</p>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="flex items-center gap-2">
-                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Earned</p>
-                          <p className="text-sm text-muted-foreground">
-                            {promotion.budget}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Duration</p>
-                          <p className="text-sm text-muted-foreground">
-                            {promotion.duration}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Info className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Completed On</p>
-                          <p className="text-sm text-muted-foreground">
-                            {new Date(promotion.date).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-
-            <TabsContent value="rejected" className="space-y-4">
-              {getPromotionsByStatus("rejected").map((promotion) => (
-                <Card key={promotion.id}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle>{promotion.campaign}</CardTitle>
-                        <CardDescription>
-                          {promotion.brand.name}
-                        </CardDescription>
-                      </div>
-                      <Badge variant="destructive">Rejected</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm">{promotion.description}</p>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="flex items-center gap-2">
-                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Budget</p>
-                          <p className="text-sm text-muted-foreground">
-                            {promotion.budget}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Duration</p>
-                          <p className="text-sm text-muted-foreground">
-                            {promotion.duration}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Info className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Rejected On</p>
-                          <p className="text-sm text-muted-foreground">
-                            {new Date(promotion.date).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-          </Tabs> */}
-          <Tabs defaultValue="pending" className="space-y-4">
-            <TabsList>
+          <Tabs defaultValue="pending" className="space-y-4 ">
+            <TabsList className="overflow-x-auto whitespace-nowrap flex justify-between text-sm sm:text-base w-full sm:w-[25%]">
               {(["pending", "accepted", "completed", "rejected"] as const).map(
                 (status) => (
                   <TabsTrigger key={status} value={status}>
@@ -584,10 +297,6 @@ export function CampaignRequests() {
                         </CardContent>
                         {(status === "pending" || status === "accepted") && (
                           <CardFooter className="flex justify-between">
-                            <Button variant="outline" size="sm">
-                              <MessageSquare className="mr-2 h-4 w-4" />
-                              Message Brand
-                            </Button>
                             <div className="flex gap-2">
                               {status === "pending" && (
                                 <>
@@ -602,6 +311,7 @@ export function CampaignRequests() {
                                   <Button
                                     size="sm"
                                     onClick={() => handleAccept(promotion)}
+                                    className="bg-green-600"
                                   >
                                     <Check className="mr-2 h-4 w-4" />
                                     Accept
@@ -612,6 +322,7 @@ export function CampaignRequests() {
                                 <Button
                                   size="sm"
                                   onClick={() => handleCompleted(promotion)}
+                                  className="bg-green-600"
                                 >
                                   Mark as Completed
                                 </Button>
@@ -663,3 +374,6 @@ export function CampaignRequests() {
     </SidebarProvider>
   );
 }
+export const getPendingPromotionRequestsCount = (): number => {
+  return promotionRequests.filter((promo) => promo.status === "pending").length;
+};

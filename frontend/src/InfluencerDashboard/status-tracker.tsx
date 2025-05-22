@@ -167,7 +167,7 @@ export function StatusTracker() {
       <SidebarInset>
         <IdashboardHeader />
         {/* <div className="space-y-8"> */}
-        <div className="flex flex-1 flex-col gap-3 md:p-8 ">
+        <div className="flex flex-1 flex-col gap-4 p-4">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">
               Status Promotion Tracker
@@ -247,7 +247,7 @@ export function StatusTracker() {
                         </div>
                       </div>
                     </CardContent>
-                    <CardFooter className="flex justify-between">
+                    <CardFooter className="flex justify-between gap-1">
                       <Dialog
                         open={isUploadDialogOpen}
                         onOpenChange={setIsUploadDialogOpen}
@@ -261,8 +261,9 @@ export function StatusTracker() {
                               setIsUploadDialogOpen(true);
                             }}
                             disabled={promotion.proofSubmitted}
+                            className=" px-2 py-1 text-sm"
                           >
-                            <Upload className="mr-2 h-4 w-4" />
+                            <Upload className="  mr-1 h-3 w-3" />
                             {promotion.proofSubmitted
                               ? "Proof Submitted"
                               : "Upload Proof"}
@@ -314,9 +315,10 @@ export function StatusTracker() {
                           <Button
                             onClick={() => setSelectedPromotion(promotion)}
                             disabled={!promotion.proofSubmitted}
+                            className="bg-green-600"
                           >
-                            <Check className="mr-2 h-4 w-4" />
-                            Mark as Completed
+                            <Check className="mr-1 h-3 w-3" />
+                            Completed
                           </Button>
                         </DialogTrigger>
                         <DialogContent>
@@ -337,7 +339,10 @@ export function StatusTracker() {
                             >
                               Cancel
                             </Button>
-                            <Button onClick={handleMarkAsCompleted}>
+                            <Button
+                              onClick={handleMarkAsCompleted}
+                              className="bg-green-600"
+                            >
                               Mark as Completed
                             </Button>
                           </DialogFooter>

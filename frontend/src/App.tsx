@@ -14,6 +14,12 @@ import { StatusTracker } from "./InfluencerDashboard/status-tracker";
 import { EarningsOverview } from "./InfluencerDashboard/earnings";
 import { ProfileStats } from "./InfluencerDashboard/profile-stats";
 import { Settings } from "./InfluencerDashboard/settings";
+import BrandDashboardOverview from "./branddashboard/dashboard-overview";
+import { Campaigns } from "./branddashboard/campaigns";
+import { FindInfluencers } from "./branddashboard/find-influencers";
+import { BrandSettings } from "./branddashboard/settings";
+import { Payments } from "./branddashboard/payments";
+// import { BrandDashboardOverview } from "./branddashboard/dashboard-overview";
 
 function IsignupPage() {
   const location = useLocation();
@@ -37,6 +43,11 @@ function App() {
       <Route path="/isignup" element={<InfluencerSignUpPage />} /> */}
       <Route path="/signup" element={<IsignupPage />} />
       <Route path="/idashboard" element={<Page />} />
+      <Route path="/bdashboard" element={<BrandDashboardOverview />} />
+      <Route path="/campaigns" element={<Campaigns />} />
+      <Route path="/influencers" element={<FindInfluencers />} />
+      <Route path="/brandsettings" element={<BrandSettings />} />
+      <Route path="/payments" element={<Payments />} />
       <Route path="/dashboard" element={<Page />} />
       <Route path="/campaign-requests" element={<CampaignRequests />} />
       <Route path="/status-tracker" element={<StatusTracker />} />
