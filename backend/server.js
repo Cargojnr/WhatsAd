@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const server = http.createServer(app);
-const port = process.env.port || 5000;
+const port = process.env.port || 3000;
 const pgSessionStore = pgSession(session);
 
 const io = new Server(server, {
@@ -304,7 +304,7 @@ app.post("/register", async (req, res) => {
     const fName = req.body.fName
     const bName = req.body.bName
     const lName = req.body.lName
-    const code = req.body.code
+    const code = req.body.code || "233"
     const tel = req.body.tel
     const phone = code + tel
     const email = req.body.email
@@ -328,7 +328,7 @@ app.post("/register", async (req, res) => {
                         let result;
                         if(purpose == "influencer"){
                         result = await db.query("INSERT INTO users(firstname,lastname, phone,email, region, password, purpose) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", [
-                            fName, lName, tel, email, region, hash, purpose
+                            fName, lName, phone, email, region, hash, purpose
                         ]);
                        } else {
                          result = await db.query("INSERT INTO users(brandname, phone,email, region, password, purpose) VALUES($1, $2, $3, $4, $5, $6) RETURNING *", [
@@ -362,8 +362,6 @@ app.post("/login", (req, res, next) => {
             return res.json("User not found");
         }
 
-
-
         req.logIn(user, (err) => {
             if (err) {
                 console.error('Login error:', err);
@@ -379,36 +377,33 @@ app.post("/login", (req, res, next) => {
 
 
 
-passport.use(new Strategy(async function verify(tel, password, cb) {
+passport.use(new Strategy({
+    usernameField: 'phone',  // <-- this should match your form/body field
+    passwordField: 'password',
+    passReqToCallback: true
+}, async function verify(req, tel, password, cb) {
     console.log(tel)
+    const code = req.body.code || "233";  // default if needed
+const fullPhone = code + tel;
     try {
-        const result = await db.query("SELECT * FROM users WHERE phone =  $1 ", [
-            tel
-        ]);
+        const result = await db.query("SELECT * FROM users WHERE phone = $1", [fullPhone]);
 
-        if (result.rows.length > 0) {
-            const user = result.rows[0];
-            const storedHashedpassword = user.password;
-            bcrypt.compare(password, storedHashedpassword, (err, isMatch) => {
-                if (err) {
-                    return cb(err);
-                }
-                if (isMatch) {
-                    return cb(null, user);
-                } else {
-                    console.log('Incorrect password');
-                    return cb(null, false);
-                }
-            });
-        } else {
-            return cb("User not found")
-            // res.render("login", {message: `User not found.`});
+        if (result.rows.length === 0) {
+            return cb(null, false); // user not found
         }
+
+        const user = result.rows[0];
+        const storedHashedPassword = user.password;
+
+        bcrypt.compare(password, storedHashedPassword, (err, isMatch) => {
+            if (err) return cb(err);
+            if (!isMatch) return cb(null, false); // incorrect password
+            return cb(null, user);
+        });
 
     } catch (error) {
         return cb(error);
     }
-
 }));
 
 passport.serializeUser((user, cb) => {
@@ -418,7 +413,6 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((user, cb) => {
     cb(null, user);
 });
-
 
 
 server.listen(port, '0.0.0.0', () => {
