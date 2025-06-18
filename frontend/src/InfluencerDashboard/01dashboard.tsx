@@ -194,56 +194,6 @@ export default function Page() {
               </CardFooter>
             </Card>
           </div>
-          {/* <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
-          {/* <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Line Chart</CardTitle>
-                <CardDescription>January - June 2024</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ChartContainer config={chartConfig}>
-                  <LineChart
-                    accessibilityLayer
-                    data={chartData}
-                    margin={{
-                      left: 12,
-                      right: 12,
-                    }}
-                  >
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                      dataKey="month"
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={8}
-                      tickFormatter={(value) => value.slice(0, 3)}
-                    />
-                    <ChartTooltip
-                      cursor={false}
-                      content={<ChartTooltipContent hideLabel />}
-                    />
-                    <Line
-                      dataKey="earnings"
-                      type="natural"
-                      stroke="#4caf50"
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                  </LineChart>
-                </ChartContainer>
-              </CardContent>
-              <CardFooter className="flex-col items-start gap-2 text-sm">
-                <div className="flex gap-2 font-medium leading-none">
-                  Trending up by 5.2% this month{" "}
-                  <TrendingUp className="h-4 w-4" />
-                </div>
-                <div className="leading-none text-muted-foreground">
-                  Showing total visitors for the last 6 months
-                </div>
-              </CardFooter>
-            </Card>
-          </div> */}
 
           <div className="grid auto-rows-min gap-4 md:grid-cols-2 mt-20">
             <EarningsCharts />
@@ -259,40 +209,6 @@ export default function Page() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {/* {[1, 2, 3].map((i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                        <ShoppingBag className="h-5 w-5 text-muted-foreground" />
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          {i === 1
-                            ? "Summer Sale Promotion"
-                            : i === 2
-                            ? "Product Launch"
-                            : "Brand Awareness"}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {i === 1
-                            ? "Fashion Brand Co."
-                            : i === 2
-                            ? "Tech Gadgets Inc."
-                            : "Healthy Foods"}
-                        </p>
-                      </div>
-                      <Badge
-                        variant={
-                          i === 1
-                            ? "outline"
-                            : i === 2
-                            ? "secondary"
-                            : "default"
-                        }
-                      >
-                        {i === 1 ? "New" : i === 2 ? "Pending" : "Accepted"}
-                      </Badge>
-                    </div>
-                  ))} */}
                   {campaignRequests.map((req, i) => (
                     <div key={i} className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">

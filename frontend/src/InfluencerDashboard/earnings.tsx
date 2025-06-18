@@ -59,7 +59,7 @@ const earnings = [
     date: "2025-06-10",
   },
 ];
-
+//  Calculate dynamic values of earnings
 export function EarningsOverview() {
   return (
     <SidebarProvider>
