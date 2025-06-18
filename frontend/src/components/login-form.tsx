@@ -33,7 +33,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={"http://localhost:5000/login"} method="POST">
+          <form action={"http://localhost:3000/login"} method="POST">
             <div className="flex flex-col gap-6">
               <div className="grid gap-1">
                 <Label htmlFor="tel">

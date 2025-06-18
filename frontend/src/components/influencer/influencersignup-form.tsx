@@ -38,7 +38,7 @@ export function SignupForm({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form action={"http://localhost:5000/register"} method="POST">
+            <form action={"http://localhost:3000/register"} method="POST">
               <div className="flex flex-col  gap-3">
                 <div className="grid gap-1 grid-cols-2">
                   <div>

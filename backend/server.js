@@ -7,58 +7,29 @@ import pgSession from 'connect-pg-simple';
 import passport from "passport";
 import { Strategy } from "passport-local";
 import env from "dotenv";
-// import nodemailer from 'nodemailer';
 import { Server } from "socket.io";
-import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
-import os, { type } from "os";
-import { timeStamp } from "console";
-// import { WebSocketServer } from "ws";
-import fs from "fs"
 import http from "http"
-// import https from "https"
-import multer from "multer";
 
-// const options = {
-//     key: fs.readFileSync("./key.pem"),  
-//     cert: fs.readFileSync("./cert.pem")
-// };
 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
-// Ensure the 'uploads' directory exists
-const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/'); // Store the uploaded files in the "uploads" folder
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname)); // Create a unique filename
-    },
-  });
-
-  const upload = multer({ storage });
-
-
 const app = express();
 const server = http.createServer(app);
-const port = process.env.port || 5000;
+const port = process.env.port || 3000;
 const pgSessionStore = pgSession(session);
+
 const io = new Server(server, {
     cors: {
         origin: "*", // Allow frontend connections
         methods: ["GET", "POST"]
     }
 });
-// const wss = new WebSocket.Server({port});
+
 const saltRounds = 10;
 env.config();
 
@@ -67,28 +38,8 @@ const db = new pg.Client({
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-    // connectionString: process.env.DATABASE_URL,
-    //   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    port: process.env.DB_PORT
 });
-
-
-
-// Get the local IP address
-const getLocalIPAddress = () => {
-    const interfaces = os.networkInterfaces();
-    for (const ifaceName in interfaces) {
-        for (const iface of interfaces[ifaceName]) {
-            if (iface.family === 'IPv4' && !iface.internal) {
-                return iface.address; // Return the first non-internal IPv4 address
-            }
-        }
-    }
-    return 'localhost'; // Fallback to localhost if no address is found
-};
-
-// Load SSL Certificate and Key
-
 
 
 
@@ -175,6 +126,177 @@ io.on('connection', (socket) => {
 
 
 
+app.get("/all-users/:role", async(req, res) => {
+    const role = req.params.role
+    try{
+        const result = await db.query("SELECT * FROM users WHERE purpose = $1",[role])
+        const usersDetail = result.rows;
+
+        res.json({usersDetail})
+    } catch(err) {
+        console.log(err)
+    }
+})
+
+app.get("/user/:id", async(req, res) => {
+    const id = req.params.id
+    if(req.isAuthenticated){
+    try{
+        const result = await db.query("SELECT * FROM users WHERE id = $1",[id])
+        const userDetails = result.rows;
+
+        const firstName = req.user.firstname
+        const lastName = req.user.lastname
+
+        const fullName = [firstName, lastName]
+
+        res.json({userId: req.user.id,fullName, profilePicture: req.user.profile_picture, userDetails})
+    } catch(err) {
+        console.log(err)
+    }
+} else {
+    res.redirect("/login")
+}
+})
+
+
+app.get("/active-users/?role", async (req, res) => {
+    const role = req.query.role
+    try {
+      const ids = Array.from(activeUsers);
+      if (ids.length === 0) return res.json([]);
+      let result;
+      if(role !== null) {
+        result = await db.query(
+            `SELECT id, active_status,verified, username, profile_picture FROM users WHERE purpose = $1 AND id = ANY($2::int[]) `,
+            [role, ids]
+          );
+      } else {
+         result = await db.query(
+            `SELECT id, active_status,verified, username, profile_picture FROM users WHERE id = ANY($1::int[])`,
+            [ids]
+          );
+      }
+     
+      res.json(result.rows);
+    } catch (err) {
+      res.status(500).json({ error: "Could not retrieve active users" });
+    }
+  });
+
+    // routes/user.js or wherever you define routes
+app.get('/api/active-status/:user', async (req, res) => {
+    const user = req.params.user
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({ active: false });
+    }
+
+    try {
+        const result = await db.query('SELECT active_status FROM users WHERE id = $1', [user]);
+        res.json({ active: result.rows[0].active_status });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error fetching active status' });
+    }
+});
+
+app.get("/profile", async (req, res) => {
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        const role = req.user.purpose
+        try {
+            const result = await db.query("SELECT active_status,verified,profile_picture FROM users  WHERE purpose = $1 AND id = $2", [role, userId]) 
+
+            const firstName = req.user.firstname
+            const lastName = req.user.lastname
+    
+            const fullName = [firstName, lastName]
+            const userDetails = result.rows;
+
+            res.json({ userId: req.user.id, fullName, activeStatus: req.user.active_status, verification:req.user.verified, profilePicture: req.user.profile_picture, profile: userDetails});
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+})
+
+app.get("/profile/:user", async(req, res) => {
+    if(req.isAuthenticated()){
+        const userId = req.params.user;
+         try{
+            const result = await db.query("SELECT active_status, verified, profile_picture FROM users WHERE id = $1 ORDER by secrets.id DESC", [userId])
+            
+            const userProfile = result.rows;
+            const userid = userProfile[0].user_id
+            const activeStatus = userProfile.active_status;
+            const verification = userProfile[0].verified
+            const userPicture = userProfile[0].profile_picture
+
+            console.log(userPicture)
+            res.json({userId:req.user.id, profileId: userid, verification: verification, userPicture, activeStatus:  activeStatus, profilePicture: req.user.profile_picture, userProfile})
+
+         } catch(err){
+            console.log(err)
+         }
+    } else {
+        res.redirect("/login")
+    }
+})
+
+app.get("/feeds/", async (req, res) => {
+    if (req.isAuthenticated()) {
+        const userId = req.user.id
+        const role = req.params.role
+        try {
+          
+            const allUsers = await db.query("SELECT id, verified, username, profile_picture FROM users");
+
+            
+            const userInfo = await db.query(`SELECT verified, profile_picture FROM users WHERE id = $1`, [userId]);
+            const userRole = userInfo.rows[0].purpose;
+
+            let result;
+            if(userRole == "influencer"){
+              result = await db.query("SELECT timestamp, verified, campaigns.id, profile_picture, FROM campaigns JOIN users ON users.id = user_id ORDER BY campaigns.id DESC ")
+            }  else {
+               result = await db.query("SELECT timestamp, verified, gigs.id, profile_picture, FROM gigs JOIN users ON users.id = user_id ORDER BY campaigns.id DESC ")
+            }
+
+
+            const feeds = result.rows;
+            res.json({allUsers: allUsers.rows, feeds: feeds, userId: req.user.id, activeStatus: req.user.active_status, verification:req.user.verified, profilePicture: req.user.profile_picture })
+        } catch (err) {
+            console.log(err)
+        }
+    } else {
+        res.redirect("login")
+    }
+})
+
+app.get("/feeds/:role", async (req, res) => {
+    if (req.isAuthenticated()) {
+        const userId = req.user.id
+        const role = req.params.role
+        try {
+
+            let result;
+            if(role == "influencer"){
+              result = await db.query("SELECT timestamp, verified, campaigns.id, profile_picture, FROM campaigns JOIN users ON users.id = user_id ORDER BY campaigns.id DESC ")
+            }  else {
+               result = await db.query("SELECT timestamp, verified, gigs.id, profile_picture, FROM gigs JOIN users ON users.id = user_id ORDER BY campaigns.id DESC ")
+            }
+
+
+            const feeds = result.rows;
+            res.json({allUsers: allUsers.rows, feeds: feeds, userId: userId, activeStatus: req.user.active_status, verification:req.user.verified, profilePicture: req.user.profile_picture })
+        } catch (err) {
+            console.log(err)
+        }
+    } else {
+        res.redirect("login")
+    }
+})
 
 
 
@@ -182,15 +304,14 @@ app.post("/register", async (req, res) => {
     const fName = req.body.fName
     const bName = req.body.bName
     const lName = req.body.lName
-    const code = req.body.code
+    const code = req.body.code || "233"
     const tel = req.body.tel
     const phone = code + tel
     const email = req.body.email
     const password = req.body.password
     const region = req.body.region
     const purpose = req.body.purpose
-
-    if(purpose == "influencer"){
+  
         try {
             const checkResult = await db.query("SELECT * FROM users WHERE phone = $1", [
                 tel
@@ -204,38 +325,16 @@ app.post("/register", async (req, res) => {
                     if (err) {
                         console.log("Error hashing passwords:", err)
                     } else {
-                        const result = await db.query("INSERT INTO users(firstname,lastname, phone,email, region, password, purpose) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", [
-                            fName, lName, tel, email, region, hash, purpose
+                        let result;
+                        if(purpose == "influencer"){
+                        result = await db.query("INSERT INTO users(firstname,lastname, phone,email, region, password, purpose) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *", [
+                            fName, lName, phone, email, region, hash, purpose
                         ]);
-                        const user = result.rows[0];
-                        console.log(user);
-                        req.login(user, (err) => {
-                            console.log(err);
-                            res.json("Registered Successfully");
-                        })
-                    }
-                })
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        try {
-            const checkResult = await db.query("SELECT * FROM users WHERE phone = $1", [
-                tel
-            ]);
-    
-            if (checkResult.rows.length > 0) {
-                res.json(`Account already exists. Try logging in.`)
-            } else {
-                //Password hashing
-                bcrypt.hash(password, saltRounds, async (err, hash) => {
-                    if (err) {
-                        console.log("Error hashing passwords:", err)
-                    } else {
-                        const result = await db.query("INSERT INTO users(brandname, phone,email, region, password, purpose) VALUES($1, $2, $3, $4, $5, $6) RETURNING *", [
+                       } else {
+                         result = await db.query("INSERT INTO users(brandname, phone,email, region, password, purpose) VALUES($1, $2, $3, $4, $5, $6) RETURNING *", [
                             bName, phone, email, region, hash, purpose
                         ]);
+                       }
                         const user = result.rows[0];
                         console.log(user);
                         req.login(user, (err) => {
@@ -248,11 +347,8 @@ app.post("/register", async (req, res) => {
         } catch (error) {
             console.log(error);
         }
-    }
-  
-
-
 });
+
 
 app.post("/login", (req, res, next) => {
 
@@ -265,8 +361,6 @@ app.post("/login", (req, res, next) => {
             console.log('User not found, redirecting to login')
             return res.json("User not found");
         }
-
-
 
         req.logIn(user, (err) => {
             if (err) {
@@ -283,36 +377,33 @@ app.post("/login", (req, res, next) => {
 
 
 
-passport.use(new Strategy(async function verify(phone, password, cb) {
-    console.log(phone)
+passport.use(new Strategy({
+    usernameField: 'phone',  // <-- this should match your form/body field
+    passwordField: 'password',
+    passReqToCallback: true
+}, async function verify(req, tel, password, cb) {
+    console.log(tel)
+    const code = req.body.code || "233";  // default if needed
+const fullPhone = code + tel;
     try {
-        const result = await db.query("SELECT * FROM users WHERE phone =  $1 ", [
-            phone
-        ]);
+        const result = await db.query("SELECT * FROM users WHERE phone = $1", [fullPhone]);
 
-        if (result.rows.length > 0) {
-            const user = result.rows[0];
-            const storedHashedpassword = user.password;
-            bcrypt.compare(password, storedHashedpassword, (err, isMatch) => {
-                if (err) {
-                    return cb(err);
-                }
-                if (isMatch) {
-                    return cb(null, user);
-                } else {
-                    console.log('Incorrect password');
-                    return cb(null, false);
-                }
-            });
-        } else {
-            return cb("User not found")
-            // res.render("login", {message: `User not found.`});
+        if (result.rows.length === 0) {
+            return cb(null, false); // user not found
         }
+
+        const user = result.rows[0];
+        const storedHashedPassword = user.password;
+
+        bcrypt.compare(password, storedHashedPassword, (err, isMatch) => {
+            if (err) return cb(err);
+            if (!isMatch) return cb(null, false); // incorrect password
+            return cb(null, user);
+        });
 
     } catch (error) {
         return cb(error);
     }
-
 }));
 
 passport.serializeUser((user, cb) => {
@@ -324,8 +415,6 @@ passport.deserializeUser((user, cb) => {
 });
 
 
-
 server.listen(port, '0.0.0.0', () => {
-    const localIP = getLocalIPAddress();
-    console.log(`Server started on http://${localIP}:${port}`);
+    console.log(`Server started on http://localhost:${port}`);
 });
