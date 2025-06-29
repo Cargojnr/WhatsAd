@@ -11,22 +11,69 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import "/node_modules/flag-icons/css/flag-icons.min.css";
-import { useSearchParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+// import { useSearchParams } from "react-router-dom";
+// import { useState, useEffect } from "react";
+
+// new imports
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [searchParams] = useSearchParams();
-  const [userType, setUserType] = useState<string>("");
+  //  const [searchParams] = useSearchParams();
+  //   const [userType, setUserType] = useState<string>("");
 
-  useEffect(() => {
-    const role = searchParams.get("role");
+  //   useEffect(() => {
+  //     const role = searchParams.get("role");
 
-    if (role === "influencer") {
-      setUserType(role);
+  //     if (role === "influencer") {
+  //       setUserType(role);
+  //     }
+  //   }, [searchParams]);
+
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fName: "",
+    lName: "",
+    tel: "",
+    email: "",
+    region: "",
+    password: "",
+    purpose: "influencer",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handlesubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const payload = {
+      ...formData,
+      code: "+233",
+    };
+
+    const res = await fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      credentials: "include",
+    });
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/idashboard");
+    } else {
+      alert(data.message || "Registration failed");
     }
-  }, [searchParams]);
+  };
+
   return (
     <div>
       <div className={cn("flex flex-col gap-6 ", className)} {...props}>
@@ -38,7 +85,8 @@ export function SignupForm({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form action={"http://localhost:3000/register"} method="POST">
+            {/* <form action={"http://localhost:3000/register"} method="POST"> */}
+            <form onSubmit={handlesubmit}>
               <div className="flex flex-col  gap-3">
                 <div className="grid gap-1 grid-cols-2">
                   <div>
@@ -47,7 +95,9 @@ export function SignupForm({
                       id="firstName"
                       name="fName"
                       type="text"
-                      placeholder="John"
+                      placeholder="First Name"
+                      value={formData.fName}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -57,7 +107,9 @@ export function SignupForm({
                       name="lName"
                       id="lastName"
                       type="text"
-                      placeholder="Doe"
+                      placeholder="Last Name"
+                      value={formData.lName}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -79,7 +131,9 @@ export function SignupForm({
                       name="tel"
                       type="tel"
                       inputMode="tel"
-                      placeholder="53 020 2061"
+                      placeholder="Phone Number"
+                      value={formData.tel}
+                      onChange={handleChange}
                       required
                       className="flex-1 border-none focus:ring-0"
                     />
@@ -91,13 +145,20 @@ export function SignupForm({
                     name="email"
                     id="email"
                     type="email"
-                    placeholder="example@gmail.com"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="grid gap-1">
                   <Label htmlFor="region">Region</Label>
-                  <select name="region">
+                  <select
+                    name="region"
+                    value={formData.region}
+                    onChange={handleChange}
+                    required
+                  >
                     <option value="Ashanti">Ashanti</option>
                     <option value=" Central"> Central</option>
                     <option value="Greater Accra">Greater Accra</option>
@@ -112,25 +173,28 @@ export function SignupForm({
                     name="password"
                     id="password"
                     type="password"
-                    placeholder="********"
-                    required
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="grid gap-1">
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <Label htmlFor="password">Comfirm Password</Label>
                   </div>
                   <Input
                     id="password"
                     type="password"
-                    placeholder="********"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
                     required
-                  />
-                  <div className="hidden">
+                  /> */}
+                  {/* <div className="hidden">
                     <label className="flex items-center mb-4">
                       <Input name="purpose" type="text" value={userType} />
                     </label>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="flex flex-col gap-1">
                   <Button type="submit" className="w-full">

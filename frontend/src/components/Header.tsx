@@ -96,12 +96,12 @@ function Header() {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-              <NavigationMenuItem>
+              {/* <NavigationMenuItem>
                 <a href="/Business">
                   <NavigationMenuLink className="">Business</NavigationMenuLink>
                 </a>
-              </NavigationMenuItem>
-              <NavigationMenuItem className="ml-4">
+              </NavigationMenuItem> */}
+              {/* <NavigationMenuItem className="ml-4">
                 <a href="/dashboard">
                   <NavigationMenuLink className="">
                     Dashboards
@@ -114,7 +114,7 @@ function Header() {
                     bDashboards
                   </NavigationMenuLink>
                 </a>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -219,12 +219,12 @@ function Header() {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-              <NavigationMenuItem>
+              {/* <NavigationMenuItem>
                 <a href="/Business">
                   <NavigationMenuLink className="">Business</NavigationMenuLink>
                 </a>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
+              </NavigationMenuItem> */}
+              {/* <NavigationMenuItem>
                 <a href="/dashboard">
                   <NavigationMenuLink className="">
                     Dashboards
@@ -237,7 +237,7 @@ function Header() {
                     bDashboards
                   </NavigationMenuLink>
                 </a>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
             </NavigationMenuList>
           </NavigationMenu>
         </div>

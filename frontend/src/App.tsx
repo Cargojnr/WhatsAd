@@ -8,17 +8,17 @@ import LoginPage from "./components/LoginDialog";
 import BrandSignUpPage from "./components/brand/brandSignupDialog";
 import InfluencerSignUpPage from "./components/influencer/influencerSignupDialog";
 
-import Page from "./InfluencerDashboard/01dashboard";
-import { CampaignRequests } from "./InfluencerDashboard/campaign-requests";
-import { StatusTracker } from "./InfluencerDashboard/status-tracker";
-import { EarningsOverview } from "./InfluencerDashboard/earnings";
-import { ProfileStats } from "./InfluencerDashboard/profile-stats";
-import { Settings } from "./InfluencerDashboard/settings";
-import BrandDashboardOverview from "./branddashboard/dashboard-overview";
-import { Campaigns } from "./branddashboard/campaigns";
-import { FindInfluencers } from "./branddashboard/find-influencers";
-import { BrandSettings } from "./branddashboard/settings";
-import { Payments } from "./branddashboard/payments";
+import Page from "./pages/InfluencerDashboard/01dashboard";
+import { CampaignRequests } from "./pages/InfluencerDashboard/campaign-requests";
+import { StatusTracker } from "./pages/InfluencerDashboard/status-tracker";
+import { EarningsOverview } from "./pages/InfluencerDashboard/earnings";
+import { ProfileStats } from "./pages/InfluencerDashboard/profile-stats";
+import { Settings } from "./pages/InfluencerDashboard/settings";
+import BrandDashboardOverview from "./pages/branddashboard/dashboard-overview";
+import { Campaigns } from "./pages/branddashboard/campaigns";
+import { FindInfluencers } from "./pages/branddashboard/find-influencers";
+import { BrandSettings } from "./pages/branddashboard/settings";
+import { Payments } from "./pages/branddashboard/payments";
 // import { BrandDashboardOverview } from "./branddashboard/dashboard-overview";
 
 function IsignupPage() {

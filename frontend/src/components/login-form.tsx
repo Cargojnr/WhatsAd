@@ -19,10 +19,51 @@ import {
 } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 
+// new import
+
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({ phone: "", password: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const payload = {
+      code: "+233",
+      phone: formData.phone,
+      password: formData.password,
+    };
+    const res = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      credentials: "include",
+    });
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      if (data.user.purpose === "brand") {
+        navigate("/bdashboard");
+      } else if (data.user.purpose === "influencer") {
+        navigate("/idashboard");
+      }
+    } else {
+      alert(data.message || "Login failed");
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -33,7 +74,8 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={"http://localhost:3000/login"} method="POST">
+          {/* <form action={"http://localhost:3000/login"} method="POST"> */}
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-1">
                 <Label htmlFor="tel">
@@ -47,6 +89,8 @@ export function LoginForm({
                     className="w-20 px-3 py-2 bg-gray-100 text-gray-700 border-none rounded-lg overflow-hidden"
                   />
                   <Input
+                    value={formData.phone}
+                    onChange={handleChange}
                     id="tel"
                     name="phone"
                     type="tel"
@@ -67,7 +111,15 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" name="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Insert your Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
