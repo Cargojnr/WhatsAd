@@ -19,9 +19,10 @@ export function BrandDashboardHeader() {
       <div className="container flex h-16 items-center justify-between py-4">
         <div className="flex items-center gap-2">
           <SidebarTrigger className="-ml-1" />
-          <Link to="/" className="flex items-center gap-2">
+          {/* <Link to="/" className="flex items-center gap-2">
             <span className="text-xl font-bold text-green-600">WhasAd</span>
-          </Link>
+          </Link> */}
+          <span className="text-xl font-bold text-green-600">WhasAd</span>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" asChild>
