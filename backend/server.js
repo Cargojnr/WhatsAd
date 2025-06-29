@@ -11,6 +11,8 @@ import { Server } from "socket.io";
 import path from "path";
 import { fileURLToPath } from "url";
 import http from "http"
+ // new imports
+ import cors from 'cors';
 
 
 
@@ -298,7 +300,10 @@ app.get("/feeds/:role", async (req, res) => {
     }
 })
 
-
+app.use(cors({
+  origin: "http://127.0.0.1:3001", // Your frontend URL
+  credentials: true
+}));
 
 app.post("/register", async (req, res) => {
     const fName = req.body.fName
@@ -335,46 +340,104 @@ app.post("/register", async (req, res) => {
                             bName, phone, email, region, hash, purpose
                         ]);
                        }
-                        const user = result.rows[0];
-                        console.log(user);
-                        req.login(user, (err) => {
+                        // const user = result.rows[0];
+                        // console.log(user);
+                        // req.login(user, (err) => {
+                        //     console.log(err);
+                        //     res.json("Registered Successfully");
+                        // }) /* first from adeyemi */
+
+    /* updated version  according to react  */         
+               const user = result.rows[0];
+                        req.login(user, (err) =>{
+                             if (err) {
                             console.log(err);
-                            res.json("Registered Successfully");
+                            return res.json({ success: false, message: "Login failed after registration." });
+                        }
+                         res.json({
+                            success: true,
+                            user: {
+                                id: user.id,
+                                purpose: user.purpose,
+                                firstname: user.firstname,
+                                lastname: user.lastname,
+                                brandname: user.brandname,
+                                email: user.email,
+                                region: user.region
+                            }
+                        });
                         })
                     }
                 })
             }
-        } catch (error) {
-            console.log(error);
         }
+        
+        // catch (error) {
+        //     console.log(error);
+        // } /* first from adeyemi */
+        catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Registration failed." });
+    }
 });
 
 
-app.post("/login", (req, res, next) => {
+// app.post("/login", (req, res, next) => {
 
+//     passport.authenticate("local", (err, user, info) => {
+//         if (err) {
+//             console.log('Authenticate error:', err)
+//             return next(err);
+//         }
+//         if (!user) {
+//             console.log('User not found, redirecting to login')
+//             return res.json("User not found");
+//         }
+
+//         req.logIn(user, (err) => {
+//             if (err) {
+//                 console.error('Login error:', err);
+//                 return next(err);
+//             }
+
+//             req.session.userId = user.user_id;
+//             res.json("Logged in");
+//         });
+//     })(req, res, next);
+
+// }) /* first from adeyemi */
+
+// Updated version according to react of the login route
+app.post("/login", (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
         if (err) {
             console.log('Authenticate error:', err)
             return next(err);
         }
         if (!user) {
-            console.log('User not found, redirecting to login')
-            return res.json("User not found");
+            return res.json({ success: false, message: "User not found" });
         }
-
         req.logIn(user, (err) => {
             if (err) {
                 console.error('Login error:', err);
                 return next(err);
             }
-
             req.session.userId = user.user_id;
-            res.json("Logged in");
+            res.json({
+                success: true,
+                user: {
+                    id: user.id,
+                    purpose: user.purpose,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    brandname: user.brandname,
+                    email: user.email,
+                    region: user.region
+                }
+            });
         });
     })(req, res, next);
-
-})
-
+});
 
 
 passport.use(new Strategy({
