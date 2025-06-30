@@ -45,72 +45,126 @@ interface Campaign {
   influencers: number;
   totalViews: number;
 }
-const campaigns: Campaign[] = [
-  {
-    id: "campaign1",
-    name: "Summer Collection Promotion",
-    description:
-      "Promote our new summer collection on WhatsApp Status. Highlight our colorful summer dresses and accessories.",
-    budget: "GH₵1,000",
-    status: "active",
-    startDate: "2023-07-01",
-    endDate: "2023-07-15",
-    influencers: 8,
-    totalViews: 48000,
-  },
-  {
-    id: "campaign2",
-    name: "New Product Launch",
-    description:
-      "Help us launch our newest product. We need influencers to showcase the key features in their WhatsApp Status.",
-    budget: "GH₵1,500",
-    status: "pending",
-    startDate: "2023-07-20",
-    endDate: "2023-08-05",
-    influencers: 3,
-    totalViews: 0,
-  },
-  {
-    id: "campaign3",
-    name: "Brand Awareness Campaign",
-    description:
-      "Increase visibility of our brand among your WhatsApp audience with organic mentions.",
-    budget: "GH₵800",
-    status: "draft",
-    startDate: "",
-    endDate: "",
-    influencers: 0,
-    totalViews: 0,
-  },
-  {
-    id: "campaign4",
-    name: "Holiday Special",
-    description: "Promote our special holiday offers and limited-time deals.",
-    budget: "GH₵1,200",
-    status: "completed",
-    startDate: "2023-05-01",
-    endDate: "2023-05-15",
-    influencers: 10,
-    totalViews: 62000,
-  },
-];
+//old
+// const campaigns: Campaign[] = [
+//   {
+//     id: "campaign1",
+//     name: "Summer Collection Promotion",
+//     description:
+//       "Promote our new summer collection on WhatsApp Status. Highlight our colorful summer dresses and accessories.",
+//     budget: "GH₵1,000",
+//     status: "active",
+//     startDate: "2023-07-01",
+//     endDate: "2023-07-15",
+//     influencers: 8,
+//     totalViews: 48000,
+//   },
+// {
+//   id: "campaign2",
+//   name: "New Product Launch",
+//   description:
+//     "Help us launch our newest product. We need influencers to showcase the key features in their WhatsApp Status.",
+//   budget: "GH₵1,500",
+//   status: "pending",
+//   startDate: "2023-07-20",
+//   endDate: "2023-08-05",
+//   influencers: 3,
+//   totalViews: 0,
+// },
+// {
+//   id: "campaign3",
+//   name: "Brand Awareness Campaign",
+//   description:
+//     "Increase visibility of our brand among your WhatsApp audience with organic mentions.",
+//   budget: "GH₵800",
+//   status: "draft",
+//   startDate: "",
+//   endDate: "",
+//   influencers: 0,
+//   totalViews: 0,
+// },
+// {
+//   id: "campaign4",
+//   name: "Holiday Special",
+//   description: "Promote our special holiday offers and limited-time deals.",
+//   budget: "GH₵1,200",
+//   status: "completed",
+//   startDate: "2023-05-01",
+//   endDate: "2023-05-15",
+//   influencers: 10,
+//   totalViews: 62000,
+// },
+// ];
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { BrandSidebar } from "./app-sidebar";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
 export function Campaigns() {
+  //new
+
+  const [campaignsList, setCampaignsList] = useState<Campaign[]>([
+    {
+      id: "campaign1",
+      name: "Summer Collection Promotion",
+      description: "Promote our new summer collection...",
+      budget: "GH₵1,000",
+      status: "active",
+      startDate: "2023-07-01",
+      endDate: "2023-07-15",
+      influencers: 8,
+      totalViews: 48000,
+    },
+  ]);
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
     null
   );
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [newCampaign, setNewCampaign] = useState<Partial<Campaign>>({});
+
+  const handleCreateCampaign = () => {
+    const newId = `campaign${campaignsList.length + 1}`;
+    const newEntry = {
+      ...newCampaign,
+      id: newId,
+      status: "active",
+      influencers: 0,
+      totalViews: 0,
+    } as Campaign;
+
+    setCampaignsList((prev) => [...prev, newEntry]);
+    setIsCreateDialogOpen(false);
+    setNewCampaign({});
+  };
 
   const handleDeleteCampaign = () => {
-    // In a real app, you would call your API to delete the campaign
-    console.log("Deleting campaign:", selectedCampaign?.id);
+    if (!selectedCampaign) return;
+    setCampaignsList((prev) =>
+      prev.filter((c) => c.id !== selectedCampaign.id)
+    );
     setIsDeleteDialogOpen(false);
   };
 
+  //old
+
+  // const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
+  //   null
+  // );
+  // const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  // const handleDeleteCampaign = () => {
+  //   // In a real app, you would call your API to delete the campaign
+  //   console.log("Deleting campaign:", selectedCampaign?.id);
+  //   setIsDeleteDialogOpen(false);
+  // };
+
+  // const getCampaignsByStatus = (status: string) => {
+  //   return campaigns.filter((campaign) => campaign.status === status);
+  // };
+
   const getCampaignsByStatus = (status: string) => {
-    return campaigns.filter((campaign) => campaign.status === status);
+    return campaignsList.filter((campaign) => campaign.status === status);
   };
 
   return (
@@ -126,9 +180,15 @@ export function Campaigns() {
                 Manage your WhatsApp Status promotion campaigns
               </p>
             </div>
-            <Button asChild className="bg-green-600 text-white">
-              <Link to="/dashboard/brand/campaigns/new">Create Campaign</Link>
+            <Button
+              onClick={() => setIsCreateDialogOpen(true)}
+              className="bg-green-600 text-white"
+            >
+              Create Campaign
             </Button>
+            {/* <Button asChild className="bg-green-600 text-white">
+              <Link to="/dashboard/brand/campaigns/new">Create Campaign</Link>
+            </Button> */}
           </div>
           <Tabs defaultValue="all" className="space-y-4">
             <TabsList className="w-full sm:w-[60%] overflow-x-auto whitespace-nowrap flex justify-between text-sm">
@@ -148,7 +208,7 @@ export function Campaigns() {
             </TabsList>
 
             <TabsContent value="all" className="space-y-4">
-              {campaigns.map((campaign) => (
+              {campaignsList.map((campaign) => (
                 <Card key={campaign.id}>
                   <CardHeader>
                     <div className="flex items-start justify-between">
@@ -720,6 +780,111 @@ export function Campaigns() {
           </Tabs>
 
           <Dialog
+            open={isCreateDialogOpen}
+            onOpenChange={setIsCreateDialogOpen}
+          >
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create New Campaign</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Campaign Name"
+                  className="w-full border px-2 py-1"
+                  value={newCampaign.name || ""}
+                  onChange={(e) =>
+                    setNewCampaign({ ...newCampaign, name: e.target.value })
+                  }
+                />
+                <textarea
+                  placeholder="Description"
+                  className="w-full border px-2 py-1"
+                  value={newCampaign.description || ""}
+                  onChange={(e) =>
+                    setNewCampaign({
+                      ...newCampaign,
+                      description: e.target.value,
+                    })
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder="Budget"
+                  className="w-full border px-2 py-1"
+                  value={newCampaign.budget || ""}
+                  onChange={(e) =>
+                    setNewCampaign({ ...newCampaign, budget: e.target.value })
+                  }
+                />
+                <div className="flex gap-2">
+                  <input
+                    type="date"
+                    className="border px-2 py-1"
+                    value={newCampaign.startDate || ""}
+                    onChange={(e) =>
+                      setNewCampaign({
+                        ...newCampaign,
+                        startDate: e.target.value,
+                      })
+                    }
+                  />
+                  <input
+                    type="date"
+                    className="border px-2 py-1"
+                    value={newCampaign.endDate || ""}
+                    onChange={(e) =>
+                      setNewCampaign({
+                        ...newCampaign,
+                        endDate: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsCreateDialogOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  className="bg-green-600 text-white"
+                  onClick={handleCreateCampaign}
+                >
+                  Create
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+          >
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Delete Campaign</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to delete this campaign?
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsDeleteDialogOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button variant="destructive" onClick={handleDeleteCampaign}>
+                  Delete Campaign
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {/* <Dialog
             open={isDeleteDialogOpen}
             onOpenChange={setIsDeleteDialogOpen}
           >
@@ -743,7 +908,7 @@ export function Campaigns() {
                 </Button>
               </DialogFooter>
             </DialogContent>
-          </Dialog>
+          </Dialog> */}
         </div>
       </SidebarInset>
     </SidebarProvider>
