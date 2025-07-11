@@ -48,7 +48,7 @@ export default function BrandDashboardOverview() {
               </p>
             </div>
             <Button asChild className="bg-green-600 text-white">
-              <Link to="/campaigns/new">Create New Campaign</Link>
+              <Link to="/campaigns">Create New Campaign</Link>
             </Button>
           </div>
 

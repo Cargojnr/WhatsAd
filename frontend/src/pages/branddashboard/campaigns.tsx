@@ -360,10 +360,11 @@ export function Campaigns() {
                     </CardDescription>
                   </CardHeader>
                   <CardFooter>
-                    <Button asChild>
-                      <Link to="/dashboard/brand/campaigns/new">
-                        Create Campaign
-                      </Link>
+                    <Button
+                      onClick={() => setIsCreateDialogOpen(true)}
+                      className="bg-green-600 text-white"
+                    >
+                      Create Campaign
                     </Button>
                   </CardFooter>
                 </Card>
@@ -487,10 +488,11 @@ export function Campaigns() {
                     </CardDescription>
                   </CardHeader>
                   <CardFooter>
-                    <Button asChild>
-                      <Link to="/dashboard/brand/campaigns/new">
-                        Create Campaign
-                      </Link>
+                    <Button
+                      onClick={() => setIsCreateDialogOpen(true)}
+                      className="bg-green-600 text-white"
+                    >
+                      Create Campaign
                     </Button>
                   </CardFooter>
                 </Card>
@@ -593,10 +595,11 @@ export function Campaigns() {
                     </CardDescription>
                   </CardHeader>
                   <CardFooter>
-                    <Button asChild>
-                      <Link to="/dashboard/brand/campaigns/new">
-                        Create Campaign
-                      </Link>
+                    <Button
+                      onClick={() => setIsCreateDialogOpen(true)}
+                      className="bg-green-600 text-white"
+                    >
+                      Create Campaign
                     </Button>
                   </CardFooter>
                 </Card>

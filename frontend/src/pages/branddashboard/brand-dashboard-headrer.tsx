@@ -44,9 +44,9 @@ export function BrandDashboardHeader() {
               <DropdownMenuItem asChild>
                 <Link to="/bdashboard">Dashboard</Link>
               </DropdownMenuItem>
-              {/* <DropdownMenuItem asChild>
+              <DropdownMenuItem asChild>
                 <Link to="/profile">Profile</Link>
-              </DropdownMenuItem> */}
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/brandsettings">Settings</Link>
               </DropdownMenuItem>
