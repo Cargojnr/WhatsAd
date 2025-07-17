@@ -44,6 +44,7 @@ interface Campaign {
   endDate: string;
   influencers: number;
   totalViews: number;
+  bannerUrl?: string; // Optional banner URL for campaign
 }
 //old
 // const campaigns: Campaign[] = [
@@ -112,6 +113,45 @@ export function Campaigns() {
       endDate: "2023-07-15",
       influencers: 8,
       totalViews: 48000,
+      bannerUrl: "/img/img01.jpg", // Use public folder image
+    },
+    {
+      id: "campaign2",
+      name: "New Product Launch",
+      description:
+        "Help us launch our newest product. We need influencers to showcase the key features in their WhatsApp Status.",
+      budget: "GH₵1,500",
+      status: "pending",
+      startDate: "2023-07-20",
+      endDate: "2023-08-05",
+      influencers: 3,
+      totalViews: 0,
+      bannerUrl: "/img/img02.jpg", // Use public  folder image
+    },
+    {
+      id: "campaign3",
+      name: "Brand Awareness Campaign",
+      description:
+        "Increase visibility of our brand among your WhatsApp audience with organic mentions.",
+      budget: "GH₵800",
+      status: "draft",
+      startDate: "",
+      endDate: "",
+      influencers: 0,
+      totalViews: 0,
+      bannerUrl: "/img/img03.jpg", // Use public folder image
+    },
+    {
+      id: "campaign4",
+      name: "Holiday Special",
+      description: "Promote our special holiday offers and limited-time deals.",
+      budget: "GH₵1,200",
+      status: "completed",
+      startDate: "2023-05-01",
+      endDate: "2023-05-15",
+      influencers: 10,
+      totalViews: 62000,
+      bannerUrl: "/img/img04.jpg", // Use public folder image
     },
   ]);
 
@@ -146,26 +186,10 @@ export function Campaigns() {
     setIsDeleteDialogOpen(false);
   };
 
-  //old
-
-  // const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
-  //   null
-  // );
-  // const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
-  // const handleDeleteCampaign = () => {
-  //   // In a real app, you would call your API to delete the campaign
-  //   console.log("Deleting campaign:", selectedCampaign?.id);
-  //   setIsDeleteDialogOpen(false);
-  // };
-
-  // const getCampaignsByStatus = (status: string) => {
-  //   return campaigns.filter((campaign) => campaign.status === status);
-  // };
-
   const getCampaignsByStatus = (status: string) => {
     return campaignsList.filter((campaign) => campaign.status === status);
   };
+  const [previewBannerUrl, setPreviewBannerUrl] = useState<string | null>(null);
 
   return (
     <SidebarProvider>
@@ -208,146 +232,158 @@ export function Campaigns() {
             </TabsList>
 
             <TabsContent value="all" className="space-y-4">
-              {campaignsList.map((campaign) => (
-                <Card key={campaign.id}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle>{campaign.name}</CardTitle>
-                        <CardDescription>
-                          {campaign.status === "active" ||
-                          campaign.status === "completed"
-                            ? `${campaign.startDate} to ${campaign.endDate}`
-                            : campaign.status === "pending"
-                            ? "Starts on " + campaign.startDate
-                            : "Draft"}
-                        </CardDescription>
-                      </div>
-                      <Badge
-                        className={
-                          campaign.status === "active" ? "bg-green-600 " : ""
-                        }
-                        variant={
-                          campaign.status === "active"
-                            ? "default"
-                            : campaign.status === "pending"
-                            ? "secondary"
-                            : campaign.status === "draft"
-                            ? "outline"
-                            : "secondary"
-                        }
-                      >
-                        {campaign.status.charAt(0).toUpperCase() +
-                          campaign.status.slice(1)}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm">{campaign.description}</p>
-                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                      <div className="flex items-center gap-2">
-                        <BadgeCent className="h-4 w-4 text-muted-foreground" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {campaignsList.map((campaign) => (
+                  <Card key={campaign.id}>
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-sm font-medium">Budget</p>
-                          <p className="text-sm text-muted-foreground">
-                            {campaign.budget}
-                          </p>
+                          <CardTitle>{campaign.name}</CardTitle>
+                          <CardDescription>
+                            {campaign.status === "active" ||
+                            campaign.status === "completed"
+                              ? `${campaign.startDate} to ${campaign.endDate}`
+                              : campaign.status === "pending"
+                              ? "Starts on " + campaign.startDate
+                              : "Draft"}
+                          </CardDescription>
+                        </div>
+                        <Badge
+                          className={
+                            campaign.status === "active" ? "bg-green-600 " : ""
+                          }
+                          variant={
+                            campaign.status === "active"
+                              ? "default"
+                              : campaign.status === "pending"
+                              ? "secondary"
+                              : campaign.status === "draft"
+                              ? "outline"
+                              : "secondary"
+                          }
+                        >
+                          {campaign.status.charAt(0).toUpperCase() +
+                            campaign.status.slice(1)}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm">{campaign.description}</p>
+                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                        <div className="flex items-center gap-2">
+                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Budget</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.budget}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Duration</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.startDate && campaign.endDate
+                                ? `${Math.ceil(
+                                    (new Date(campaign.endDate).getTime() -
+                                      new Date(campaign.startDate).getTime()) /
+                                      (1000 * 60 * 60 * 24)
+                                  )} days`
+                                : "Not set"}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Influencers</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.influencers}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm font-medium">Total Views</p>
+                            <p className="text-sm text-muted-foreground">
+                              {campaign.totalViews > 0
+                                ? campaign.totalViews.toLocaleString()
+                                : "No data"}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Duration</p>
-                          <p className="text-sm text-muted-foreground">
-                            {campaign.startDate && campaign.endDate
-                              ? `${Math.ceil(
-                                  (new Date(campaign.endDate).getTime() -
-                                    new Date(campaign.startDate).getTime()) /
-                                    (1000 * 60 * 60 * 24)
-                                )} days`
-                              : "Not set"}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Influencers</p>
-                          <p className="text-sm text-muted-foreground">
-                            {campaign.influencers}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Total Views</p>
-                          <p className="text-sm text-muted-foreground">
-                            {campaign.totalViews > 0
-                              ? campaign.totalViews.toLocaleString()
-                              : "No data"}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex flex-wrap gap-2">
-                    {campaign.status !== "completed" && (
-                      <>
-                        <Button variant="outline" size="sm" asChild>
-                          <Link
-                            to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
-                          >
-                            <FileEdit className="mr-2 h-4 w-4" />
-                            Edit
-                          </Link>
-                        </Button>
-                        {campaign.status === "active" && (
+                    </CardContent>
+                    <CardFooter className="flex flex-wrap gap-2">
+                      {campaign.status !== "completed" && (
+                        <>
                           <Button variant="outline" size="sm" asChild>
                             <Link
-                              to={`/dashboard/brand/campaigns/${campaign.id}/influencers`}
+                              to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
                             >
-                              <Users className="mr-2 h-4 w-4" />
-                              Manage Influencers
+                              <FileEdit className="mr-2 h-4 w-4" />
+                              Edit
                             </Link>
                           </Button>
-                        )}
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            setSelectedCampaign(campaign);
-                            setIsDeleteDialogOpen(true);
-                          }}
-                        >
-                          <Trash className="mr-2 h-4 w-4" />
-                          Delete
-                        </Button>
-                      </>
-                    )}
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
-                        <Info className="mr-2 h-4 w-4" />
-                        Details
-                      </Link>
-                    </Button>
-                    {campaign.status === "active" && (
-                      <Button
-                        size="sm"
-                        asChild
-                        className="bg-green-600 text-white"
-                      >
-                        <Link
-                          to={`/dashboard/brand/campaigns/${campaign.id}/analytics`}
-                        >
-                          <BarChart3 className="mr-2 h-4 w-4" />
-                          View Analytics
+                          {campaign.status === "active" && (
+                            <Button variant="outline" size="sm" asChild>
+                              <Link
+                                to={`/dashboard/brand/campaigns/${campaign.id}/influencers`}
+                              >
+                                <Users className="mr-2 h-4 w-4" />
+                                Manage Influencers
+                              </Link>
+                            </Button>
+                          )}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setSelectedCampaign(campaign);
+                              setIsDeleteDialogOpen(true);
+                            }}
+                          >
+                            <Trash className="mr-2 h-4 w-4" />
+                            Delete
+                          </Button>
+                        </>
+                      )}
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
+                          <Info className="mr-2 h-4 w-4" />
+                          Details
                         </Link>
                       </Button>
-                    )}
-                  </CardFooter>
-                </Card>
-              ))}
+                      {campaign.status === "active" && (
+                        <Button
+                          size="sm"
+                          asChild
+                          className="bg-green-600 text-white"
+                        >
+                          <Link
+                            to={`/dashboard/brand/campaigns/${campaign.id}/analytics`}
+                          >
+                            <BarChart3 className="mr-2 h-4 w-4" />
+                            View Analytics
+                          </Link>
+                        </Button>
+                      )}
+                      {campaign.bannerUrl && (
+                        <img
+                          src={campaign.bannerUrl}
+                          alt="Campaign Banner"
+                          className="w-full h-32 object-cover rounded-t cursor-pointer"
+                          onClick={() =>
+                            setPreviewBannerUrl(campaign.bannerUrl)
+                          }
+                        />
+                      )}
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
             </TabsContent>
 
             <TabsContent value="active" className="space-y-4">
@@ -781,6 +817,19 @@ export function Campaigns() {
 
             {/* Similar content for other tabs - pending, draft, completed */}
           </Tabs>
+          {/* Simple Image Preview */}
+          {previewBannerUrl && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60"
+              onClick={() => setPreviewBannerUrl(null)}
+            >
+              <img
+                src={previewBannerUrl}
+                alt="Banner Preview"
+                className="max-w-full max-h-[80vh] rounded shadow-lg"
+              />
+            </div>
+          )}
 
           <Dialog
             open={isCreateDialogOpen}
@@ -820,6 +869,31 @@ export function Campaigns() {
                     setNewCampaign({ ...newCampaign, budget: e.target.value })
                   }
                 />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="w-full border px-2 py-1"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = (ev) => {
+                        setNewCampaign({
+                          ...newCampaign,
+                          bannerUrl: ev.target?.result as string,
+                        });
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+                {newCampaign.bannerUrl && (
+                  <img
+                    src={newCampaign.bannerUrl}
+                    alt="Banner Preview"
+                    className="w-full h-32 object-cover rounded mt-2"
+                  />
+                )}
                 <div className="flex gap-2">
                   <input
                     type="date"
@@ -886,32 +960,6 @@ export function Campaigns() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
-
-          {/* <Dialog
-            open={isDeleteDialogOpen}
-            onOpenChange={setIsDeleteDialogOpen}
-          >
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Delete Campaign</DialogTitle>
-                <DialogDescription>
-                  Are you sure you want to delete this campaign? This action
-                  cannot be undone.
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter>
-                <Button
-                  variant="outline"
-                  onClick={() => setIsDeleteDialogOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button variant="destructive" onClick={handleDeleteCampaign}>
-                  Delete Campaign
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog> */}
         </div>
       </SidebarInset>
     </SidebarProvider>
