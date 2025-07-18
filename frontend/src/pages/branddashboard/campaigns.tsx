@@ -46,56 +46,7 @@ interface Campaign {
   totalViews: number;
   bannerUrl?: string; // Optional banner URL for campaign
 }
-//old
-// const campaigns: Campaign[] = [
-//   {
-//     id: "campaign1",
-//     name: "Summer Collection Promotion",
-//     description:
-//       "Promote our new summer collection on WhatsApp Status. Highlight our colorful summer dresses and accessories.",
-//     budget: "GH₵1,000",
-//     status: "active",
-//     startDate: "2023-07-01",
-//     endDate: "2023-07-15",
-//     influencers: 8,
-//     totalViews: 48000,
-//   },
-// {
-//   id: "campaign2",
-//   name: "New Product Launch",
-//   description:
-//     "Help us launch our newest product. We need influencers to showcase the key features in their WhatsApp Status.",
-//   budget: "GH₵1,500",
-//   status: "pending",
-//   startDate: "2023-07-20",
-//   endDate: "2023-08-05",
-//   influencers: 3,
-//   totalViews: 0,
-// },
-// {
-//   id: "campaign3",
-//   name: "Brand Awareness Campaign",
-//   description:
-//     "Increase visibility of our brand among your WhatsApp audience with organic mentions.",
-//   budget: "GH₵800",
-//   status: "draft",
-//   startDate: "",
-//   endDate: "",
-//   influencers: 0,
-//   totalViews: 0,
-// },
-// {
-//   id: "campaign4",
-//   name: "Holiday Special",
-//   description: "Promote our special holiday offers and limited-time deals.",
-//   budget: "GH₵1,200",
-//   status: "completed",
-//   startDate: "2023-05-01",
-//   endDate: "2023-05-15",
-//   influencers: 10,
-//   totalViews: 62000,
-// },
-// ];
+
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { BrandSidebar } from "./app-sidebar";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
@@ -376,7 +327,7 @@ export function Campaigns() {
                           alt="Campaign Banner"
                           className="w-full h-32 object-cover rounded-t cursor-pointer"
                           onClick={() =>
-                            setPreviewBannerUrl(campaign.bannerUrl)
+                            setPreviewBannerUrl(campaign.bannerUrl ?? null)
                           }
                         />
                       )}
