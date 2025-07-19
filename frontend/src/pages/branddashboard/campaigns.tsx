@@ -33,7 +33,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// Mock data for campaigns
+// campaign typa definition
 interface Campaign {
   id: string;
   name: string;
@@ -51,7 +51,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { BrandSidebar } from "./app-sidebar";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
 export function Campaigns() {
-  //new
+  // Mock data for campaigns (initial state)
 
   const [campaignsList, setCampaignsList] = useState<Campaign[]>([
     {
@@ -105,7 +105,7 @@ export function Campaigns() {
       bannerUrl: "/img/img04.jpg", // Use public folder image
     },
   ]);
-
+  // Dialog and form state
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
     null
@@ -113,7 +113,7 @@ export function Campaigns() {
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [newCampaign, setNewCampaign] = useState<Partial<Campaign>>({});
-
+  //handle the creation of new campaigns
   const handleCreateCampaign = () => {
     const newId = `campaign${campaignsList.length + 1}`;
     const newEntry = {
@@ -128,7 +128,7 @@ export function Campaigns() {
     setIsCreateDialogOpen(false);
     setNewCampaign({});
   };
-
+  //handle the deletion of campaigns
   const handleDeleteCampaign = () => {
     if (!selectedCampaign) return;
     setCampaignsList((prev) =>
@@ -136,10 +136,13 @@ export function Campaigns() {
     );
     setIsDeleteDialogOpen(false);
   };
+  // Helper to filter campaigns by status
 
   const getCampaignsByStatus = (status: string) => {
     return campaignsList.filter((campaign) => campaign.status === status);
   };
+  // State for previewing banner images
+
   const [previewBannerUrl, setPreviewBannerUrl] = useState<string | null>(null);
 
   return (
@@ -161,10 +164,8 @@ export function Campaigns() {
             >
               Create Campaign
             </Button>
-            {/* <Button asChild className="bg-green-600 text-white">
-              <Link to="/dashboard/brand/campaigns/new">Create Campaign</Link>
-            </Button> */}
           </div>
+          {/* Tabs for campaign status */}
           <Tabs defaultValue="all" className="space-y-4">
             <TabsList className="w-full sm:w-[60%] overflow-x-auto whitespace-nowrap flex justify-between text-sm">
               <TabsTrigger value="all">All Campaigns</TabsTrigger>
@@ -181,7 +182,7 @@ export function Campaigns() {
                 Completed ({getCampaignsByStatus("completed").length})
               </TabsTrigger>
             </TabsList>
-
+            {/* All Campaigns Tab */}
             <TabsContent value="all" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {campaignsList.map((campaign) => (
@@ -220,6 +221,8 @@ export function Campaigns() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <p className="text-sm">{campaign.description}</p>
+
+                      {/* Campaign details grid */}
                       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                         <div className="flex items-center gap-2">
                           <BadgeCent className="h-4 w-4 text-muted-foreground" />
@@ -268,6 +271,7 @@ export function Campaigns() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex flex-wrap gap-2">
+                      {/* Action buttons */}
                       {campaign.status !== "completed" && (
                         <>
                           <Button variant="outline" size="sm" asChild>
@@ -321,6 +325,7 @@ export function Campaigns() {
                           </Link>
                         </Button>
                       )}
+                      {/* Banner image preview */}
                       {campaign.bannerUrl && (
                         <img
                           src={campaign.bannerUrl}
@@ -782,6 +787,8 @@ export function Campaigns() {
             </div>
           )}
 
+          {/* Create Campaign Dialog */}
+
           <Dialog
             open={isCreateDialogOpen}
             onOpenChange={setIsCreateDialogOpen}
@@ -791,6 +798,8 @@ export function Campaigns() {
                 <DialogTitle>Create New Campaign</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
+                {/* Campaign creation form */}
+
                 <input
                   type="text"
                   placeholder="Campaign Name"
@@ -820,6 +829,8 @@ export function Campaigns() {
                     setNewCampaign({ ...newCampaign, budget: e.target.value })
                   }
                 />
+                {/* Banner image upload */}
+
                 <input
                   type="file"
                   accept="image/*"
@@ -838,6 +849,8 @@ export function Campaigns() {
                     }
                   }}
                 />
+                {/* Preview uploaded banner */}
+
                 {newCampaign.bannerUrl && (
                   <img
                     src={newCampaign.bannerUrl}
@@ -886,6 +899,7 @@ export function Campaigns() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+          {/* Delete Campaign Dialog */}
 
           <Dialog
             open={isDeleteDialogOpen}
