@@ -72,7 +72,7 @@ export function Campaigns() {
       description:
         "Help us launch our newest product. We need influencers to showcase the key features in their WhatsApp Status.",
       budget: "GH₵1,500",
-      status: "pending",
+      status: "completed",
       startDate: "2023-07-20",
       endDate: "2023-08-05",
       influencers: 3,
@@ -85,7 +85,7 @@ export function Campaigns() {
       description:
         "Increase visibility of our brand among your WhatsApp audience with organic mentions.",
       budget: "GH₵800",
-      status: "draft",
+      status: "active",
       startDate: "",
       endDate: "",
       influencers: 0,
@@ -172,12 +172,12 @@ export function Campaigns() {
               <TabsTrigger value="active">
                 Active ({getCampaignsByStatus("active").length})
               </TabsTrigger>
-              <TabsTrigger value="pending">
+              {/* <TabsTrigger value="pending">
                 Pending ({getCampaignsByStatus("pending").length})
-              </TabsTrigger>
-              <TabsTrigger value="draft">
+              </TabsTrigger> */}
+              {/* <TabsTrigger value="draft">
                 Drafts ({getCampaignsByStatus("draft").length})
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger value="completed">
                 Completed ({getCampaignsByStatus("completed").length})
               </TabsTrigger>
@@ -192,12 +192,14 @@ export function Campaigns() {
                         <div>
                           <CardTitle>{campaign.name}</CardTitle>
                           <CardDescription>
-                            {campaign.status === "active" ||
-                            campaign.status === "completed"
-                              ? `${campaign.startDate} to ${campaign.endDate}`
-                              : campaign.status === "pending"
-                              ? "Starts on " + campaign.startDate
-                              : "Draft"}
+                            {
+                              campaign.status === "active" ||
+                                campaign.status === "completed"
+                              // ? `${campaign.startDate} to ${campaign.endDate}`
+                              // : campaign.status === "pending"
+                              // ? "Starts on " + campaign.startDate
+                              // : "Draft"
+                            }
                           </CardDescription>
                         </div>
                         <Badge
@@ -207,11 +209,11 @@ export function Campaigns() {
                           variant={
                             campaign.status === "active"
                               ? "default"
-                              : campaign.status === "pending"
-                              ? "secondary"
-                              : campaign.status === "draft"
-                              ? "outline"
-                              : "secondary"
+                              : // : campaign.status === "pending"
+                                // ? "secondary"
+                                // : campaign.status === "draft"
+                                // ? "outline"
+                                "secondary"
                           }
                         >
                           {campaign.status.charAt(0).toUpperCase() +
@@ -220,6 +222,18 @@ export function Campaigns() {
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                      {/* Banner image preview */}
+                      {campaign.bannerUrl && (
+                        <img
+                          src={campaign.bannerUrl}
+                          alt="Campaign Banner"
+                          className="w-full h-32 object-cover rounded-t cursor-pointer"
+                          onClick={() =>
+                            setPreviewBannerUrl(campaign.bannerUrl ?? null)
+                          }
+                        />
+                      )}
+
                       <p className="text-sm">{campaign.description}</p>
 
                       {/* Campaign details grid */}
@@ -326,7 +340,7 @@ export function Campaigns() {
                         </Button>
                       )}
                       {/* Banner image preview */}
-                      {campaign.bannerUrl && (
+                      {/* {campaign.bannerUrl && (
                         <img
                           src={campaign.bannerUrl}
                           alt="Campaign Banner"
@@ -335,7 +349,7 @@ export function Campaigns() {
                             setPreviewBannerUrl(campaign.bannerUrl ?? null)
                           }
                         />
-                      )}
+                      )} */}
                     </CardFooter>
                   </Card>
                 ))}
@@ -361,116 +375,130 @@ export function Campaigns() {
                   </CardFooter>
                 </Card>
               ) : (
-                getCampaignsByStatus("active").map((campaign) => (
-                  <Card key={campaign.id}>
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <CardTitle>{campaign.name}</CardTitle>
-                          <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
-                        </div>
-                        <Badge className="bg-green-600 text-white">
-                          Active
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm">{campaign.description}</p>
-                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                        <div className="flex items-center gap-2">
-                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {getCampaignsByStatus("active").map((campaign) => (
+                    <Card key={campaign.id}>
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
                           <div>
-                            <p className="text-sm font-medium">Budget</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.budget}
-                            </p>
+                            <CardTitle>{campaign.name}</CardTitle>
+                            <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
+                          </div>
+                          <Badge className="bg-green-600 text-white">
+                            Active
+                          </Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {campaign.bannerUrl && (
+                          <img
+                            src={campaign.bannerUrl}
+                            alt="Campaign Banner"
+                            className="w-full h-32 object-cover rounded-t cursor-pointer"
+                            onClick={() =>
+                              setPreviewBannerUrl(campaign.bannerUrl ?? null)
+                            }
+                          />
+                        )}
+                        <p className="text-sm">{campaign.description}</p>
+                        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                          <div className="flex items-center gap-2">
+                            <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Budget</p>
+                              <p className="text-sm text-muted-foreground">
+                                {campaign.budget}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Duration</p>
+                              <p className="text-sm text-muted-foreground">
+                                {`${Math.ceil(
+                                  (new Date(campaign.endDate).getTime() -
+                                    new Date(campaign.startDate).getTime()) /
+                                    (1000 * 60 * 60 * 24)
+                                )} days`}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Users className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Influencers</p>
+                              <p className="text-sm text-muted-foreground">
+                                {campaign.influencers}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Total Views</p>
+                              <p className="text-sm text-muted-foreground">
+                                {campaign.totalViews.toLocaleString()}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Duration</p>
-                            <p className="text-sm text-muted-foreground">
-                              {`${Math.ceil(
-                                (new Date(campaign.endDate).getTime() -
-                                  new Date(campaign.startDate).getTime()) /
-                                  (1000 * 60 * 60 * 24)
-                              )} days`}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Influencers</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.influencers}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Total Views</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.totalViews.toLocaleString()}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="flex flex-wrap gap-2">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link
-                          to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
+                      </CardContent>
+                      <CardFooter className="flex flex-wrap gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <Link
+                            to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
+                          >
+                            <FileEdit className="mr-2 h-4 w-4" />
+                            Edit
+                          </Link>
+                        </Button>
+                        <Button variant="outline" size="sm" asChild>
+                          <Link
+                            to={`/dashboard/brand/campaigns/${campaign.id}/influencers`}
+                          >
+                            <Users className="mr-2 h-4 w-4" />
+                            Manage Influencers
+                          </Link>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedCampaign(campaign);
+                            setIsDeleteDialogOpen(true);
+                          }}
                         >
-                          <FileEdit className="mr-2 h-4 w-4" />
-                          Edit
-                        </Link>
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link
-                          to={`/dashboard/brand/campaigns/${campaign.id}/influencers`}
+                          <Trash className="mr-2 h-4 w-4" />
+                          Delete
+                        </Button>
+                        <Button variant="outline" size="sm" asChild>
+                          <Link
+                            to={`/dashboard/brand/campaigns/${campaign.id}`}
+                          >
+                            <Info className="mr-2 h-4 w-4" />
+                            Details
+                          </Link>
+                        </Button>
+                        <Button
+                          size="sm"
+                          asChild
+                          className="bg-green-600 text-white"
                         >
-                          <Users className="mr-2 h-4 w-4" />
-                          Manage Influencers
-                        </Link>
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedCampaign(campaign);
-                          setIsDeleteDialogOpen(true);
-                        }}
-                      >
-                        <Trash className="mr-2 h-4 w-4" />
-                        Delete
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
-                          <Info className="mr-2 h-4 w-4" />
-                          Details
-                        </Link>
-                      </Button>
-                      <Button
-                        size="sm"
-                        asChild
-                        className="bg-green-600 text-white"
-                      >
-                        <Link
-                          to={`/dashboard/brand/campaigns/${campaign.id}/analytics`}
-                        >
-                          <BarChart3 className="mr-2 h-4 w-4" />
-                          View Analytics
-                        </Link>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))
+                          <Link
+                            to={`/dashboard/brand/campaigns/${campaign.id}/analytics`}
+                          >
+                            <BarChart3 className="mr-2 h-4 w-4" />
+                            View Analytics
+                          </Link>
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
               )}
             </TabsContent>
-            <TabsContent value="pending" className="space-y-4">
+            {/* <TabsContent value="pending" className="space-y-4">
               {getCampaignsByStatus("pending").length === 0 ? (
                 <Card>
                   <CardHeader>
@@ -576,8 +604,8 @@ export function Campaigns() {
                   </Card>
                 ))
               )}
-            </TabsContent>
-            <TabsContent value="draft" className="space-y-4">
+            </TabsContent> */}
+            {/* <TabsContent value="draft" className="space-y-4">
               {getCampaignsByStatus("draft").length === 0 ? (
                 <Card>
                   <CardHeader>
@@ -683,7 +711,7 @@ export function Campaigns() {
                   </Card>
                 ))
               )}
-            </TabsContent>
+            </TabsContent> */}
             <TabsContent value="completed" className="space-y-4">
               {getCampaignsByStatus("completed").length === 0 ? (
                 <Card>
@@ -702,72 +730,86 @@ export function Campaigns() {
                   </CardFooter>
                 </Card>
               ) : (
-                getCampaignsByStatus("completed").map((campaign) => (
-                  <Card key={campaign.id}>
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <CardTitle>{campaign.name}</CardTitle>
-                          <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
-                        </div>
-                        <Badge variant="secondary">completed</Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm">{campaign.description}</p>
-                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                        <div className="flex items-center gap-2">
-                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {getCampaignsByStatus("completed").map((campaign) => (
+                    <Card key={campaign.id}>
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
                           <div>
-                            <p className="text-sm font-medium">Budget</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.budget}
-                            </p>
+                            <CardTitle>{campaign.name}</CardTitle>
+                            <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
+                          </div>
+                          <Badge variant="secondary">completed</Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {campaign.bannerUrl && (
+                          <img
+                            src={campaign.bannerUrl}
+                            alt="Campaign Banner"
+                            className="w-full h-32 object-cover rounded-t cursor-pointer"
+                            onClick={() =>
+                              setPreviewBannerUrl(campaign.bannerUrl ?? null)
+                            }
+                          />
+                        )}
+                        <p className="text-sm">{campaign.description}</p>
+                        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                          <div className="flex items-center gap-2">
+                            <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Budget</p>
+                              <p className="text-sm text-muted-foreground">
+                                {campaign.budget}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Duration</p>
+                              <p className="text-sm text-muted-foreground">
+                                {`${Math.ceil(
+                                  (new Date(campaign.endDate).getTime() -
+                                    new Date(campaign.startDate).getTime()) /
+                                    (1000 * 60 * 60 * 24)
+                                )} days`}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Users className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Influencers</p>
+                              <p className="text-sm text-muted-foreground">
+                                {campaign.influencers}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                            <div>
+                              <p className="text-sm font-medium">Total Views</p>
+                              <p className="text-sm text-muted-foreground">
+                                {campaign.totalViews.toLocaleString()}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Duration</p>
-                            <p className="text-sm text-muted-foreground">
-                              {`${Math.ceil(
-                                (new Date(campaign.endDate).getTime() -
-                                  new Date(campaign.startDate).getTime()) /
-                                  (1000 * 60 * 60 * 24)
-                              )} days`}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Influencers</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.influencers}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Total Views</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.totalViews.toLocaleString()}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="flex flex-wrap gap-2">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
-                          <Info className="mr-2 h-4 w-4" />
-                          Details
-                        </Link>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))
+                      </CardContent>
+                      <CardFooter className="flex flex-wrap gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <Link
+                            to={`/dashboard/brand/campaigns/${campaign.id}`}
+                          >
+                            <Info className="mr-2 h-4 w-4" />
+                            Details
+                          </Link>
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
               )}
             </TabsContent>
 
