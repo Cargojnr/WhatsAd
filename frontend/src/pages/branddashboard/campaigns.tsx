@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -51,60 +51,15 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { BrandSidebar } from "./app-sidebar";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
 export function Campaigns() {
-  // Mock data for campaigns (initial state)
+  // State to manage campaigns list, initialized from localStorage or empty array
+  const [campaignsList, setCampaignsList] = useState<Campaign[]>(() => {
+    const stored = localStorage.getItem("campaignsList");
+    return stored ? JSON.parse(stored) : [];
+  });
 
-  const [campaignsList, setCampaignsList] = useState<Campaign[]>([
-    {
-      id: "campaign1",
-      name: "Summer Collection Promotion",
-      description: "Promote our new summer collection...",
-      budget: "GH₵1,000",
-      status: "active",
-      startDate: "2023-07-01",
-      endDate: "2023-07-15",
-      influencers: 8,
-      totalViews: 48000,
-      bannerUrl: "/img/img01.jpg", // Use public folder image
-    },
-    {
-      id: "campaign2",
-      name: "New Product Launch",
-      description:
-        "Help us launch our newest product. We need influencers to showcase the key features in their WhatsApp Status.",
-      budget: "GH₵1,500",
-      status: "completed",
-      startDate: "2023-07-20",
-      endDate: "2023-08-05",
-      influencers: 3,
-      totalViews: 0,
-      bannerUrl: "/img/img02.jpg", // Use public  folder image
-    },
-    {
-      id: "campaign3",
-      name: "Brand Awareness Campaign",
-      description:
-        "Increase visibility of our brand among your WhatsApp audience with organic mentions.",
-      budget: "GH₵800",
-      status: "active",
-      startDate: "",
-      endDate: "",
-      influencers: 0,
-      totalViews: 0,
-      bannerUrl: "/img/img03.jpg", // Use public folder image
-    },
-    {
-      id: "campaign4",
-      name: "Holiday Special",
-      description: "Promote our special holiday offers and limited-time deals.",
-      budget: "GH₵1,200",
-      status: "completed",
-      startDate: "2023-05-01",
-      endDate: "2023-05-15",
-      influencers: 10,
-      totalViews: 62000,
-      bannerUrl: "/img/img04.jpg", // Use public folder image
-    },
-  ]);
+  useEffect(() => {
+    localStorage.setItem("campaignsList", JSON.stringify(campaignsList));
+  }, [campaignsList]);
   // Dialog and form state
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(
@@ -172,12 +127,7 @@ export function Campaigns() {
               <TabsTrigger value="active">
                 Active ({getCampaignsByStatus("active").length})
               </TabsTrigger>
-              {/* <TabsTrigger value="pending">
-                Pending ({getCampaignsByStatus("pending").length})
-              </TabsTrigger> */}
-              {/* <TabsTrigger value="draft">
-                Drafts ({getCampaignsByStatus("draft").length})
-              </TabsTrigger> */}
+
               <TabsTrigger value="completed">
                 Completed ({getCampaignsByStatus("completed").length})
               </TabsTrigger>
@@ -192,14 +142,8 @@ export function Campaigns() {
                         <div>
                           <CardTitle>{campaign.name}</CardTitle>
                           <CardDescription>
-                            {
-                              campaign.status === "active" ||
-                                campaign.status === "completed"
-                              // ? `${campaign.startDate} to ${campaign.endDate}`
-                              // : campaign.status === "pending"
-                              // ? "Starts on " + campaign.startDate
-                              // : "Draft"
-                            }
+                            {campaign.status === "active" ||
+                              campaign.status === "completed"}
                           </CardDescription>
                         </div>
                         <Badge
@@ -209,11 +153,7 @@ export function Campaigns() {
                           variant={
                             campaign.status === "active"
                               ? "default"
-                              : // : campaign.status === "pending"
-                                // ? "secondary"
-                                // : campaign.status === "draft"
-                                // ? "outline"
-                                "secondary"
+                              : "secondary"
                           }
                         >
                           {campaign.status.charAt(0).toUpperCase() +
@@ -339,17 +279,6 @@ export function Campaigns() {
                           </Link>
                         </Button>
                       )}
-                      {/* Banner image preview */}
-                      {/* {campaign.bannerUrl && (
-                        <img
-                          src={campaign.bannerUrl}
-                          alt="Campaign Banner"
-                          className="w-full h-32 object-cover rounded-t cursor-pointer"
-                          onClick={() =>
-                            setPreviewBannerUrl(campaign.bannerUrl ?? null)
-                          }
-                        />
-                      )} */}
                     </CardFooter>
                   </Card>
                 ))}
@@ -498,220 +427,7 @@ export function Campaigns() {
                 </div>
               )}
             </TabsContent>
-            {/* <TabsContent value="pending" className="space-y-4">
-              {getCampaignsByStatus("pending").length === 0 ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>No Active Campaigns</CardTitle>
-                    <CardDescription>
-                      You don't have any active campaigns at the moment.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter>
-                    <Button
-                      onClick={() => setIsCreateDialogOpen(true)}
-                      className="bg-green-600 text-white"
-                    >
-                      Create Campaign
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ) : (
-                getCampaignsByStatus("pending").map((campaign) => (
-                  <Card key={campaign.id}>
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <CardTitle>{campaign.name}</CardTitle>
-                          <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
-                        </div>
-                        <Badge variant="secondary">Pending</Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm">{campaign.description}</p>
-                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                        <div className="flex items-center gap-2">
-                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Budget</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.budget}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Duration</p>
-                            <p className="text-sm text-muted-foreground">
-                              {`${Math.ceil(
-                                (new Date(campaign.endDate).getTime() -
-                                  new Date(campaign.startDate).getTime()) /
-                                  (1000 * 60 * 60 * 24)
-                              )} days`}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Influencers</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.influencers}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Total Views</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.totalViews.toLocaleString()}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="flex flex-wrap gap-2">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link
-                          to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
-                        >
-                          <FileEdit className="mr-2 h-4 w-4" />
-                          Edit
-                        </Link>
-                      </Button>
 
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedCampaign(campaign);
-                          setIsDeleteDialogOpen(true);
-                        }}
-                      >
-                        <Trash className="mr-2 h-4 w-4" />
-                        Delete
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
-                          <Info className="mr-2 h-4 w-4" />
-                          Details
-                        </Link>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))
-              )}
-            </TabsContent> */}
-            {/* <TabsContent value="draft" className="space-y-4">
-              {getCampaignsByStatus("draft").length === 0 ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>No Active Campaigns</CardTitle>
-                    <CardDescription>
-                      You don't have any active campaigns at the moment.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardFooter>
-                    <Button
-                      onClick={() => setIsCreateDialogOpen(true)}
-                      className="bg-green-600 text-white"
-                    >
-                      Create Campaign
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ) : (
-                getCampaignsByStatus("draft").map((campaign) => (
-                  <Card key={campaign.id}>
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <CardTitle>{campaign.name}</CardTitle>
-                          <CardDescription>{`${campaign.startDate} to ${campaign.endDate}`}</CardDescription>
-                        </div>
-                        <Badge variant="outline">Draft</Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-sm">{campaign.description}</p>
-                      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                        <div className="flex items-center gap-2">
-                          <BadgeCent className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Budget</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.budget}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Duration</p>
-                            <p className="text-sm text-muted-foreground">
-                              {`${Math.ceil(
-                                (new Date(campaign.endDate).getTime() -
-                                  new Date(campaign.startDate).getTime()) /
-                                  (1000 * 60 * 60 * 24)
-                              )} days`}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Influencers</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.influencers}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                          <div>
-                            <p className="text-sm font-medium">Total Views</p>
-                            <p className="text-sm text-muted-foreground">
-                              {campaign.totalViews.toLocaleString()}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="flex flex-wrap gap-2">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link
-                          to={`/dashboard/brand/campaigns/${campaign.id}/edit`}
-                        >
-                          <FileEdit className="mr-2 h-4 w-4" />
-                          Edit
-                        </Link>
-                      </Button>
-
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedCampaign(campaign);
-                          setIsDeleteDialogOpen(true);
-                        }}
-                      >
-                        <Trash className="mr-2 h-4 w-4" />
-                        Delete
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to={`/dashboard/brand/campaigns/${campaign.id}`}>
-                          <Info className="mr-2 h-4 w-4" />
-                          Details
-                        </Link>
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))
-              )}
-            </TabsContent> */}
             <TabsContent value="completed" className="space-y-4">
               {getCampaignsByStatus("completed").length === 0 ? (
                 <Card>
