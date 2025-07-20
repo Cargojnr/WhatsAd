@@ -44,6 +44,7 @@ interface Promotion {
   status: "pending" | "accepted" | "completed" | "rejected";
   date: string;
   submitDate?: string;
+  bannerUrl?: string; // Optional banner URL for the campaign
 }
 
 const promotionRequests: Promotion[] = [
@@ -60,6 +61,7 @@ const promotionRequests: Promotion[] = [
     duration: "1 week",
     status: "pending",
     date: "2023-07-15",
+    bannerUrl: "/img/img01.jpg", // Example banner URL
   },
   {
     id: "promo2",
@@ -74,6 +76,7 @@ const promotionRequests: Promotion[] = [
     duration: "3 days",
     status: "pending",
     date: "2023-07-18",
+    bannerUrl: "/img/img02.jpg", // Example banner URL
   },
   {
     id: "promo3",
@@ -88,6 +91,7 @@ const promotionRequests: Promotion[] = [
     duration: "5 days",
     status: "accepted",
     date: "2023-07-10",
+    bannerUrl: "/img/img03.jpg", // Example banner URL
   },
   {
     id: "promo4",
@@ -102,6 +106,7 @@ const promotionRequests: Promotion[] = [
     duration: "1 week",
     status: "completed",
     date: "2023-06-25",
+    bannerUrl: "/img/img05.jpg", // Example banner URL
   },
   {
     id: "promo5",
@@ -116,14 +121,16 @@ const promotionRequests: Promotion[] = [
     duration: "10 days",
     status: "rejected",
     date: "2023-06-20",
+    bannerUrl: "/img/img07.jpg", // Example banner URL
   },
 ];
 
 export function CampaignRequests() {
-  const [promotions, setPromotions] = useState<Promotion[]>(promotionRequests);
+  const [previewBannerUrl, setPreviewBannerUrl] = useState<string | null>(null); // State to hold the preview banner URL
+  const [promotions, setPromotions] = useState<Promotion[]>(promotionRequests); // State to hold the promotion requests
   const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null>(
     null
-  );
+  ); // State to hold the selected promotion for rejection
   const [rejectionReason, setRejectionReason] = useState<string>("");
   const [isRejectionDialogOpen, setIsRejectionDialogOpen] =
     useState<boolean>(false);
@@ -201,7 +208,7 @@ export function CampaignRequests() {
           </div>
 
           <Tabs defaultValue="pending" className="space-y-4 ">
-            <TabsList className="overflow-x-auto whitespace-nowrap flex justify-between text-sm sm:text-base w-full sm:w-[25%]">
+            <TabsList className="w-full sm:w-[60%] overflow-x-auto whitespace-nowrap flex justify-between text-sm">
               {(["pending", "accepted", "completed", "rejected"] as const).map(
                 (status) => (
                   <TabsTrigger key={status} value={status}>
@@ -228,116 +235,146 @@ export function CampaignRequests() {
                       </CardHeader>
                     </Card>
                   ) : (
-                    getPromotionsByStatus(status).map((promotion) => (
-                      <Card key={promotion.id}>
-                        <CardHeader>
-                          <div className="flex items-start justify-between">
-                            <div>
-                              <CardTitle>{promotion.campaign}</CardTitle>
-                              <CardDescription>
-                                {promotion.brand.name}
-                              </CardDescription>
-                            </div>
-                            <Badge>
-                              {status === "pending"
-                                ? "New Request"
-                                : status === "accepted"
-                                ? "In Progress"
-                                : status === "completed"
-                                ? "Completed"
-                                : "Rejected"}
-                            </Badge>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                          <p className="text-sm">{promotion.description}</p>
-                          <div className="grid grid-cols-3 gap-4">
-                            <div className="flex items-center gap-2">
-                              <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {getPromotionsByStatus(status).map((promotion) => (
+                        <Card key={promotion.id}>
+                          <CardHeader>
+                            <div className="flex items-start justify-between">
                               <div>
-                                <p className="text-sm font-medium">
-                                  {status === "completed" ? "Earned" : "Budget"}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                  {promotion.budget}
-                                </p>
+                                <CardTitle>{promotion.campaign}</CardTitle>
+                                <CardDescription>
+                                  {promotion.brand.name}
+                                </CardDescription>
+                              </div>
+                              <Badge>
+                                {status === "pending"
+                                  ? "New Request"
+                                  : status === "accepted"
+                                  ? "In Progress"
+                                  : status === "completed"
+                                  ? "Completed"
+                                  : "Rejected"}
+                              </Badge>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            {/* Banner image preview */}
+                            {promotion.bannerUrl && (
+                              <img
+                                src={promotion.bannerUrl}
+                                alt="Campaign Banner"
+                                className="w-full h-32 object-cover rounded-t mb-2"
+                                onClick={() =>
+                                  setPreviewBannerUrl(
+                                    promotion.bannerUrl ?? null
+                                  )
+                                }
+                              />
+                            )}
+                            <p className="text-sm">{promotion.description}</p>
+                            <div className="grid grid-cols-3 gap-4">
+                              <div className="flex items-center gap-2">
+                                <BadgeCent className="h-4 w-4 text-muted-foreground" />
+                                <div>
+                                  <p className="text-sm font-medium">
+                                    {status === "completed"
+                                      ? "Earned"
+                                      : "Budget"}
+                                  </p>
+                                  <p className="text-sm text-muted-foreground">
+                                    {promotion.budget}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Calendar className="h-4 w-4 text-muted-foreground" />
+                                <div>
+                                  <p className="text-sm font-medium">
+                                    Duration
+                                  </p>
+                                  <p className="text-sm text-muted-foreground">
+                                    {promotion.duration}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Info className="h-4 w-4 text-muted-foreground" />
+                                <div>
+                                  <p className="text-sm font-medium">
+                                    {status === "pending"
+                                      ? "Received"
+                                      : status === "accepted"
+                                      ? "Accepted On"
+                                      : status === "completed"
+                                      ? "Completed On"
+                                      : "Rejected On"}
+                                  </p>
+                                  <p className="text-sm text-muted-foreground">
+                                    {promotion.submitDate
+                                      ? new Date(
+                                          promotion.submitDate
+                                        ).toLocaleDateString()
+                                      : "N/A"}
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                              <Calendar className="h-4 w-4 text-muted-foreground" />
-                              <div>
-                                <p className="text-sm font-medium">Duration</p>
-                                <p className="text-sm text-muted-foreground">
-                                  {promotion.duration}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Info className="h-4 w-4 text-muted-foreground" />
-                              <div>
-                                <p className="text-sm font-medium">
-                                  {status === "pending"
-                                    ? "Received"
-                                    : status === "accepted"
-                                    ? "Accepted On"
-                                    : status === "completed"
-                                    ? "Completed On"
-                                    : "Rejected On"}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                  {promotion.submitDate
-                                    ? new Date(
-                                        promotion.submitDate
-                                      ).toLocaleDateString()
-                                    : "N/A"}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                        {(status === "pending" || status === "accepted") && (
-                          <CardFooter className="flex justify-between">
-                            <div className="flex gap-2">
-                              {status === "pending" && (
-                                <>
+                          </CardContent>
+                          {(status === "pending" || status === "accepted") && (
+                            <CardFooter className="flex justify-between">
+                              <div className="flex gap-2">
+                                {status === "pending" && (
+                                  <>
+                                    <Button
+                                      variant="destructive"
+                                      size="sm"
+                                      onClick={() => handleReject(promotion)}
+                                    >
+                                      <X className="mr-2 h-4 w-4" />
+                                      Reject
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      onClick={() => handleAccept(promotion)}
+                                      className="bg-green-600"
+                                    >
+                                      <Check className="mr-2 h-4 w-4" />
+                                      Accept
+                                    </Button>
+                                  </>
+                                )}
+                                {status === "accepted" && (
                                   <Button
-                                    variant="destructive"
                                     size="sm"
-                                    onClick={() => handleReject(promotion)}
-                                  >
-                                    <X className="mr-2 h-4 w-4" />
-                                    Reject
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    onClick={() => handleAccept(promotion)}
+                                    onClick={() => handleCompleted(promotion)}
                                     className="bg-green-600"
                                   >
-                                    <Check className="mr-2 h-4 w-4" />
-                                    Accept
+                                    Mark as Completed
                                   </Button>
-                                </>
-                              )}
-                              {status === "accepted" && (
-                                <Button
-                                  size="sm"
-                                  onClick={() => handleCompleted(promotion)}
-                                  className="bg-green-600"
-                                >
-                                  Mark as Completed
-                                </Button>
-                              )}
-                            </div>
-                          </CardFooter>
-                        )}
-                      </Card>
-                    ))
+                                )}
+                              </div>
+                            </CardFooter>
+                          )}
+                        </Card>
+                      ))}
+                    </div>
                   )}
                 </TabsContent>
               )
             )}
           </Tabs>
-
+          {previewBannerUrl && (
+            <div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60"
+              onClick={() => setPreviewBannerUrl(null)}
+            >
+              <img
+                src={previewBannerUrl}
+                alt="Banner Preview"
+                className="max-w-full max-h-[80vh] rounded shadow-lg"
+              />
+            </div>
+          )}
           <Dialog
             open={isRejectionDialogOpen}
             onOpenChange={setIsRejectionDialogOpen}

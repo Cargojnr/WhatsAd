@@ -29,7 +29,7 @@ const sidebarLinks = [
     icon: Home,
   },
   {
-    title: "Campaign Requests",
+    title: "Orders",
     href: "/campaign-requests",
     icon: ShoppingBag,
   },
