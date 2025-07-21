@@ -104,18 +104,6 @@ export function StatusTracker() {
     }
   };
 
-  // const handleUploadProof = () => {
-  //   // In a real app, you would upload the file to your backend
-  //   console.log(
-  //     "Uploading proof for promotion:",
-  //     selectedPromotion?.id,
-  //     "File:",
-  //     selectedFile
-  //   );
-  //   setIsUploadDialogOpen(false);
-  //   setSelectedFile(null);
-  // };
-
   const handleUploadProof = () => {
     if (selectedPromotion) {
       setPromotions((prevPromotions) =>
@@ -134,11 +122,6 @@ export function StatusTracker() {
     setSelectedPromotion(null); // optional
   };
 
-  // const handleMarkAsCompleted = () => {
-  //   // In a real app, you would call your API to update the status
-  //   console.log("Marking promotion as completed:", selectedPromotion?.id);
-  //   setIsCompleteDialogOpen(false);
-  // };
   const handleMarkAsCompleted = () => {
     if (selectedPromotion) {
       setPromotions((prevPromotions) =>
