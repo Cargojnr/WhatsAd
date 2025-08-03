@@ -24,9 +24,36 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { BrandDashboardHeader } from "./brand-dashboard-headrer";
 
+import { useEffect, useState } from "react";
+
 export default function BrandDashboardOverview() {
+  // const stats = {
+  //   activeCampaigns: 3,
+  //   totalBudget: 2500,
+  //   activatedInfluencers: 12,
+  //   averageReach: 45600,
+  // };
+
+  const [activeCampaigns, setActiveCampaigns] = useState(0);
+
+  interface Campaign {
+    status: string;
+    // add other properties if needed
+  }
+
+  useEffect(() => {
+    const stored = localStorage.getItem("campaignsList");
+    if (stored) {
+      const campaigns: Campaign[] = JSON.parse(stored);
+      const activeCount = campaigns.filter(
+        (c: Campaign) => c.status === "active"
+      ).length;
+      setActiveCampaigns(activeCount);
+    }
+  }, []);
+
   const stats = {
-    activeCampaigns: 3,
+    activeCampaigns: activeCampaigns,
     totalBudget: 2500,
     activatedInfluencers: 12,
     averageReach: 45600,
